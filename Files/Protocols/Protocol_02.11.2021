@@ -1,0 +1,24 @@
+Meeting 02.11.2021
+
+
+Uhrzeit : 17:42
+Teilnehmer : Jonas, Amine
+
+Inhalt :
+
+•  Design Beschprechung und Änderung
+
+Register Seite  : Ähnlich wie Log in
+
+Home Seite :  Sortieren nach Datum Ort und Kategorie
+
+Setting auf Profile Seite : gemeint für Pop Ups Verwarlung (Inhalt Settings Seite noch zu gestalten)
+
+Detail Seite : Favourites Button zum hinzufügen der Events auf Favoriten Seite(Bereich Favoriten) ,
+Join Button zum hinzufügen der gewünschte Events auf Favoriten Seite (Bereich Teilnahme)
+
+Favorites Seite : wie Home aber geteilt -> Favoriten und Beigetretenen ohne Filter mit möglichkeit Events zu löschen (Optionsmenü) oder nicht mehr abonnieren
+
+My Events Seite + Add Event Seite + Edit my Event : noch zu gestalten
+
+Aufgaben : Design fertig machen + erste Klassen implementieren
