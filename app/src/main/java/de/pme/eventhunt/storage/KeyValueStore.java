@@ -22,7 +22,7 @@ public class KeyValueStore {
         return this.app.getSharedPreferences( KEY_VALUE_STORE_FILE_NAME, Context.MODE_PRIVATE);
     }
 
-    public void writeValue(String key, int value )
+    public void writeIntValue(String key, int value )
     {
         this.getPreferences().edit().putInt(key, value).apply();
     }

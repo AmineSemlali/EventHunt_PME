@@ -1,0 +1,19 @@
+Meeting 10.11.2021
+
+
+Uhrzeit : 18:00
+Teilnehmer : Jonas, Amine, Sarah
+
+Inhalt :
+
+•  Design  Änderungen besprochen
+•  Fortschritt Repository zeigen
+    -added Packages
+    -KeyValueStore
+    -main Application
+
+
+Aufgaben : Models + DAO + Repository
+•  Sarah - Events
+•  Amine - User
+•  Jonas - Notifications
