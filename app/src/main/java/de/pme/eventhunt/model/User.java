@@ -5,12 +5,15 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.room.TypeConverters;
 
+import de.pme.eventhunt.model.utilities.LocalDateConverter;
 import de.pme.eventhunt.model.utilities.PasswordHashing;
 
 @Entity
@@ -33,11 +36,13 @@ public class User {
     private long version;
 
     @ColumnInfo(name = "created")
+    @TypeConverters(LocalDateConverter.class)
     private LocalDate created;
 
 
     @NonNull
     @ColumnInfo(name = "updated")
+    @TypeConverters(LocalDateConverter.class)
     private LocalDate updated;
 
     @NonNull
@@ -65,6 +70,19 @@ public class User {
     @NonNull
     @ColumnInfo(name = "securePassword")
     private String securePassword;
+
+    /* /////////////////////Constructors/////////////////////////// */
+
+    public User(@NonNull String firstName, @NonNull String lastName, @NonNull String email, @NonNull String securePassword, @NonNull String profileImageUrl) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.profileImageUrl = profileImageUrl;
+        //Generate the Random salt and create the secure password
+        this.salt = PasswordHashing.getSalt(SALT_LENGTH);
+        this.securePassword = PasswordHashing.generateSecurePassword(securePassword, salt);
+    }
+
 
     /* /////////////////////Getter/Setter///////////////////////// */
 

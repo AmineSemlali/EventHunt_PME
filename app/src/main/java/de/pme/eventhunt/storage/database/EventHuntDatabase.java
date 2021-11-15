@@ -99,9 +99,8 @@ public abstract class EventHuntDatabase extends RoomDatabase {
                 for (int i = 0; i < 10; i++)
                 {
 
-                    User user = new User(faker.name().lastName(), faker.name().firstName());
+                    User user = new User(faker.name().firstName(), faker.name().lastName(),faker.internet().emailAddress(),faker.internet().password(),faker.internet().url());
                     user.setCreated( LocalDate.now() );
-                    user.setUpdated( user.getCreated() );
                     user.setVersion( 1 );
                     dao.insert(user);
                 }
