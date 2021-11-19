@@ -1,5 +1,6 @@
 package de.pme.eventhunt.storage.repository;
 
+import android.app.Application;
 import android.content.Context;
 
 import java.time.LocalDate;
@@ -16,6 +17,21 @@ public class NotificationRepository {
     public static final String LOG_TAG = "NotificationRepository";
 
     private NotificationDao notificationDao;
+
+    private static NotificationRepository INSTANCE;
+
+    public static NotificationRepository getRepository( Application application )
+    {
+        if( INSTANCE == null ) {
+            synchronized ( NotificationRepository.class ) {
+                if( INSTANCE == null ) {
+                    INSTANCE = new NotificationRepository( application );
+                }
+            }
+        }
+
+        return INSTANCE;
+    }
 
     public NotificationRepository( Context context ) {
         EventHuntDatabase db = EventHuntDatabase.getDatabase( context );

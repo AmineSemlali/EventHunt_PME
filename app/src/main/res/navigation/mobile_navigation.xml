@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="de.pme.eventhunt.view.ui.home.home"
+        android:name="de.pme.eventhunt.view.ui.home.homeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_events"
-        android:name="de.pme.eventhunt.view.ui.events.events"
+        android:name="de.pme.eventhunt.view.ui.events.eventsFragment"
         android:label="fragment_events"
         tools:layout="@layout/fragment_events" />
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="de.pme.eventhunt.view.ui.notifications.notifications"
+        android:name="de.pme.eventhunt.view.ui.notifications.notificationsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="de.pme.eventhunt.view.ui.profile.profile"
+        android:name="de.pme.eventhunt.view.ui.profile.profileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

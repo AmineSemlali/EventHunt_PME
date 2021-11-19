@@ -2,6 +2,7 @@ package de.pme.eventhunt.storage.repository;
 
 
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Debug;
 import android.util.Log;
@@ -20,8 +21,24 @@ import java.util.concurrent.ExecutionException;
 
 public class UserRepository {
     public static final String LOG_TAG = "UserRepository";
-
     private UserDao userDao;
+
+
+    private static UserRepository INSTANCE;
+
+    public static UserRepository getRepository( Application application )
+    {
+        if( INSTANCE == null ) {
+            synchronized ( UserRepository.class ) {
+                if( INSTANCE == null ) {
+                    INSTANCE = new UserRepository( application );
+                }
+            }
+        }
+
+        return INSTANCE;
+    }
+
 
     public UserRepository( Context context ) {
         EventHuntDatabase db = EventHuntDatabase.getDatabase( context );
