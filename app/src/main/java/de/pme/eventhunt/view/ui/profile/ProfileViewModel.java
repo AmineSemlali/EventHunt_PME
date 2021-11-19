@@ -7,11 +7,11 @@ import androidx.lifecycle.AndroidViewModel;
 
 import de.pme.eventhunt.storage.repository.UserRepository;
 
-public class profileViewModel extends AndroidViewModel {
+public class ProfileViewModel extends AndroidViewModel {
 
     private final UserRepository userRepository;
 
-    public profileViewModel(@NonNull Application application) {
+    public ProfileViewModel(@NonNull Application application) {
         super(application);
         this.userRepository = UserRepository.getRepository(application);
     }
