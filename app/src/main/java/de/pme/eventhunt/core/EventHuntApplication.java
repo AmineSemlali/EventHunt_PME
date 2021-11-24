@@ -7,9 +7,6 @@ import android.util.Log;
 import java.util.List;
 
 import de.pme.eventhunt.storage.KeyValueStore;
-import de.pme.eventhunt.model.User;
-import de.pme.eventhunt.storage.repository.NotificationRepository;
-import de.pme.eventhunt.storage.repository.UserRepository;
 
 
 public class EventHuntApplication extends Application {
@@ -20,7 +17,6 @@ public class EventHuntApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        testDatabase();
     }
 
 
@@ -32,16 +28,6 @@ public class EventHuntApplication extends Application {
         return this.store;
     }
 
-    private void testDatabase() {
-
-        // Create Repo instance - which in turn will init the Contact DB
-        UserRepository userRepository = new UserRepository( this );
-
-        // Query all contacts and log them
-        List<User> allUsers = userRepository.getUsers();
-        Log.i("LOG_TAG", allUsers.toString() );
-
-    }
 }
 
 

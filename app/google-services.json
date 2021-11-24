@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "378955785079",
+    "project_id": "eventhuntpme",
+    "storage_bucket": "eventhuntpme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378955785079:android:c9f29e4dd9b0b42ef67772",
+        "android_client_info": {
+          "package_name": "de.pme.eventhunt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378955785079-01j2sogsn7trndkcqttbk3tadiqko87m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6hn2Es779_e-sh16g-9LGao0liATtKck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378955785079-01j2sogsn7trndkcqttbk3tadiqko87m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

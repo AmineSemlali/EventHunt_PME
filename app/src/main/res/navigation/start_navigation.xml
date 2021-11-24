@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start_navigation"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/registationFragment"
+        android:name="de.pme.eventhunt.view.ui.registration.RegistrationFragment"
+        android:label="fragment_registation"
+        tools:layout="@layout/fragment_registation" >
+        <action
+            android:id="@+id/action_registationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="de.pme.eventhunt.view.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registationFragment"
+            app:destination="@id/registationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_main_navigation"
+            app:destination="@id/main_navigation" />
+    </fragment>
+    <include app:graph="@navigation/main_navigation" />
+</navigation>
