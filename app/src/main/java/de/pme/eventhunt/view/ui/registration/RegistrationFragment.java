@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.TextUtils;
@@ -22,20 +21,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import de.pme.eventhunt.R;
+import de.pme.eventhunt.model.documents.User;
+import de.pme.eventhunt.model.repositories.UserRepository;
 
 
 public class RegistrationFragment extends Fragment {
 
     private TextInputEditText email;
     private TextInputEditText password;
+    private TextInputEditText firstName;
+    private TextInputEditText lastName;
     private Button registrationButton;
 
     //firebase
     private FirebaseAuth auth;
+    FirebaseFirestore db;
     private RegistrationViewModel registrationViewModel;
     NavController navController;
+    UserRepository userRepository;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -51,6 +57,8 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
+        userRepository = new UserRepository();
 
     }
 
@@ -70,6 +78,8 @@ public class RegistrationFragment extends Fragment {
 
         email = view.findViewById(R.id.email_registration);
         password = view.findViewById(R.id.password_registration);
+        firstName = view.findViewById(R.id.firstName_registration);
+        lastName = view.findViewById(R.id.lastName_registration);
         registrationButton = view.findViewById(R.id.finish_registration);
 
 
@@ -79,8 +89,11 @@ public class RegistrationFragment extends Fragment {
             public void onClick(View view) {
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
+                String txt_firstName = firstName.getText().toString();
+                String txt_lastName = lastName.getText().toString();
 
-                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password))
+                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)
+                        || TextUtils.isEmpty(txt_firstName) || TextUtils.isEmpty(txt_lastName))
                 {
                     Toast.makeText(getActivity(), "Empty credentials!", Toast.LENGTH_SHORT).show();
                 }
@@ -90,7 +103,7 @@ public class RegistrationFragment extends Fragment {
                 }
                 else
                 {
-                    registerUser(txt_email, txt_password);
+                    registerUser(txt_email, txt_password, txt_firstName, txt_lastName);
                 }
             }
         });
@@ -99,11 +112,17 @@ public class RegistrationFragment extends Fragment {
         return view;
     }
 
-        private void registerUser(String email, String password) {
+        private void registerUser(String email, String password, String firstName, String lastName) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        User user = new User();
+                        user.setId(auth.getCurrentUser().getUid());
+                        user.setEmail(email);
+                        user.setFirstName(firstName);
+                        user.setLastName(lastName);
+                        userRepository.createUser(user);
                         Toast.makeText(getActivity(), "Registering user succesful!", Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.action_registationFragment_to_loginFragment);
                     } else {
