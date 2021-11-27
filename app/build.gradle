@@ -60,4 +60,7 @@ dependencies {
 
     // Faker Lib for test data generation
     implementation 'com.github.javafaker:javafaker:1.0.2'
+
+    //Google Maps location picker: https://github.com/AdevintaSpain/Leku
+    implementation 'com.adevinta.android:leku:9.1.1'
 }
