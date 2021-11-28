@@ -24,6 +24,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -40,6 +43,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -61,6 +66,9 @@ dependencies {
     // Faker Lib for test data generation
     implementation 'com.github.javafaker:javafaker:1.0.2'
 
-    //Google Maps location picker: https://github.com/AdevintaSpain/Leku
-    implementation 'com.adevinta.android:leku:9.1.1'
+    //Google Maps location picker
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.libraries.places:places:2.5.0'
+
+
 }

@@ -1,13 +1,21 @@
 package de.pme.eventhunt.view.ui.create_event;
 
+import static android.provider.CallLog.Locations.LATITUDE;
+import static android.provider.CallLog.Locations.LONGITUDE;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.CallLog.Locations;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,12 +25,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.adevinta.leku.LocationPickerActivity;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.time.LocalDateTime;
 
+import de.pme.eventhunt.MapsActivity;
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.repositories.EventRepository;
@@ -35,6 +46,7 @@ public class createEventFragment extends Fragment {
     FirebaseAuth auth;
     EventRepository eventRepository;
     CreateEventViewModel createEventViewModel;
+    FirebaseStorage storage;
 
     public createEventFragment() {
         // Required empty public constructor
@@ -56,6 +68,7 @@ public class createEventFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -65,6 +78,7 @@ public class createEventFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_create_event, container, false);
         createEventViewModel = new ViewModelProvider(this).get(CreateEventViewModel.class);
         auth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
         eventRepository = new EventRepository();
 
 
@@ -243,35 +257,11 @@ public class createEventFragment extends Fragment {
     }
 
 
-    static void pickLocation(View view){
-        Intent locationPickerIntent = new LocationPickerActivity.Builder()
-                .withLocation(41.4036299, 2.1743558)
-                .withSearchZone("es_ES")
-                .withDefaultLocaleSearchZone()
-                .shouldReturnOkOnBackPressed()
-                .withStreetHidden()
-                .withCityHidden()
-                .withZipCodeHidden()
-                .withSatelliteViewHidden()
-                .withGoogleTimeZoneEnabled()
-                .withVoiceSearchHidden()
-                .withUnnamedRoadHidden()
-                .build(view.getContext());
-
-        // registerForActivityResult(locationPickerIntent, new ActivityResultContract<I, O>() {
-        //     @NonNull
-        //     @Override
-        //     public Intent createIntent(@NonNull Context context, Object input) {
-        //         return null;
-        //     }
-
-        //     @Override
-        //     public Object parseResult(int resultCode, @Nullable Intent intent) {
-        //         return null;
-        //     }
-        // });
+    void pickLocation(View view){
+        startActivity(new Intent(getActivity(), MapsActivity.class));
 
     }
+
 
 
 }
