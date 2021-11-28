@@ -11,5 +11,6 @@
     <color name="purple_200">#5F0085</color>
     <color name="orange">#e76f51</color>
     <color name="secondaryColor_yellow">#E9C46A</color>
+    <color name="primaryColor_blue">#264653</color>
     <color name="textInput_grey">#D9D9D9</color>
 </resources>

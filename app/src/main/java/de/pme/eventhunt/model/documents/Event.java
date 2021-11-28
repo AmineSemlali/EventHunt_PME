@@ -1,6 +1,8 @@
 package de.pme.eventhunt.model.documents;
 
 
+import android.util.Log;
+
 public class Event {
 
     public static String collection = "event";
@@ -9,8 +11,24 @@ public class Event {
     private String Title;
     private String Description;
     private String Category;
+    private String Location;
     private String StartTime;
     private String EndTime;
+
+
+    public Event(String creatorId, String title, String description, String category,
+                     String location, String startTime, String endTime)
+    {
+        this.CreatorId = creatorId;
+        this.Title = title;
+        this.Description = description;
+        this.Category = category;
+        this.Location = location;
+        this.StartTime = startTime;
+        this.EndTime = endTime;
+    }
+
+
 
 
     public String getCreatorId() {
@@ -43,6 +61,14 @@ public class Event {
 
     public void setCategory(String category) {
         Category = category;
+    }
+
+    public String getLocation() {
+        return Location;
+    }
+
+    public void setLocation(String location) {
+        Location = location;
     }
 
     public String getStartTime() {

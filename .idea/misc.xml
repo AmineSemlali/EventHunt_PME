@@ -4,11 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/drawable/ic_baseline_date_range_24.xml" value="0.2140625" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_start.xml" value="0.33" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/dropdown_item.xml" value="0.75" />
-        <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/fragment_create_event.xml" value="0.35507246376811596" />
+        <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/fragment_create_event.xml" value="0.25" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/fragment_events.xml" value="0.20520833333333333" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/fragment_login.xml" value="0.25" />
