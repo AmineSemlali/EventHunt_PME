@@ -7,14 +7,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog.Locations;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -30,13 +36,19 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import de.pme.eventhunt.MapsActivity;
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.repositories.EventRepository;
+import de.pme.eventhunt.model.utilities.Image;
+import de.pme.eventhunt.view.MainActivity;
+import de.pme.eventhunt.view.StartActivity;
 import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 import de.pme.eventhunt.view.ui.utilities.DateAndTimePicker;
 
@@ -47,6 +59,12 @@ public class createEventFragment extends Fragment {
     EventRepository eventRepository;
     CreateEventViewModel createEventViewModel;
     FirebaseStorage storage;
+
+    Image eventImage = new Image();
+
+    private static final int PICK_IMAGE = 1;
+    Uri imageUri;
+    ImageView getEventImageView;
 
     public createEventFragment() {
         // Required empty public constructor
@@ -82,18 +100,30 @@ public class createEventFragment extends Fragment {
         eventRepository = new EventRepository();
 
 
+
         TextInputEditText titleEditText = view.findViewById(R.id.editTextTitle);
         TextInputEditText descriptionEditText = view.findViewById(R.id.editTextDescription);
         AutoCompleteTextView categoryEditText = view.findViewById(R.id.editTextCategory);
         TextInputEditText locationEditText = view.findViewById(R.id.editTextLocation);
         TextInputEditText dateStartEditText = view.findViewById(R.id.editTextDateStart);
         TextInputEditText dateEndEditText = view.findViewById(R.id.editTextDateEnd);
+
+        getEventImageView = view.findViewById(R.id.imageViewGetImage);
+
+
         Button createButton = view.findViewById(R.id.buttonCreateEvent);
 
         DateAndTimePicker dateAndTimePickerStart = new DateAndTimePicker(getContext(), dateStartEditText);
         DateAndTimePicker dateAndTimePickerEnd = new DateAndTimePicker(getContext(), dateEndEditText);
 
 
+
+        getEventImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getImage();
+            }
+        });
 
         locationEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -173,12 +203,42 @@ public class createEventFragment extends Fragment {
         return view;
     }
 
+    private void getImage() {
+        Intent gallery = new Intent();
+        gallery.setType("image/*");
+        gallery.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode== PICK_IMAGE && resultCode==Activity.RESULT_OK)
+        {
+            imageUri = data.getData();
+            eventImage.CreateBitmapSmall(imageUri);
+            eventImage.CreateBitmapLarge(imageUri, getEventImageView);
+        }
+    }
+
     private void createEvent(String title, String description, String category,
                              DateAndTimePicker dateAndTimePickerStart, DateAndTimePicker dateAndTimePickerEnd, String location) {
 
         Context context = getContext();
 
         String creatorId = auth.getUid();
+
+        if(imageUri == null)
+        {
+            Toast.makeText(context, "Select an image!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else
+        {
+            eventImage.LoadIntoStorage();
+        }
 
         //Check title
         if(title.length() < 3) {
@@ -250,10 +310,18 @@ public class createEventFragment extends Fragment {
          ///////// CHECK LOCATION /////////
         //////////////////////////////////
 
-        Event newEvent = new Event(creatorId, title, description, category,
-                location, startDateString, endDateString);
+        Event newEvent = new Event(creatorId, title, description,
+                category, location, startDateString, endDateString,
+                eventImage.getDownloadUrlSmall(), eventImage.getDownloadUrlLarge());
 
-        eventRepository.createEvent(newEvent);
+        if(!eventImage.IsFinished())
+        {
+            Toast.makeText(getContext(), "Image processing isn't finished yet!", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            eventRepository.createEvent(newEvent);
+        }
     }
 
 

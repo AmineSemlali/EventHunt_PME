@@ -14,17 +14,6 @@
         android:layout_height="wrap_content"
         tools:context=".view.ui.createEventFragment">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dip"
-            android:layout_height="150dip"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginEnd="200dp"
-            android:src="@drawable/image_placeholder_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView_CreateEventLogo"
@@ -35,6 +24,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/imageViewGetImage"
+            android:layout_width="150dip"
+            android:layout_height="150dip"
+            android:layout_marginTop="108dp"
+            android:src="@drawable/image_placeholder_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -52,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewGetImage"
             app:layout_constraintVertical_bias="0.0" />
 
 
@@ -375,6 +374,8 @@
             android:textColor="@color/primaryColor_blue"
             android:fontFamily="@font/archivo_black"
             app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescription" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -15,9 +15,13 @@ public class Event {
     private String StartTime;
     private String EndTime;
 
+    private String ImageSmallRef;
+    private String ImageLargeRef;
 
-    public Event(String creatorId, String title, String description, String category,
-                     String location, String startTime, String endTime)
+
+    public Event(String creatorId, String title, String description,
+                 String category, String location, String startTime,
+                 String endTime, String imageSmallRef, String imageLargeRef)
     {
         this.CreatorId = creatorId;
         this.Title = title;
@@ -26,6 +30,8 @@ public class Event {
         this.Location = location;
         this.StartTime = startTime;
         this.EndTime = endTime;
+        this.ImageSmallRef = imageSmallRef;
+        this.ImageLargeRef = imageLargeRef;
     }
 
 
@@ -87,5 +93,19 @@ public class Event {
         EndTime = endTime;
     }
 
+    public String getImageSmallRef() {
+        return ImageSmallRef;
+    }
 
+    public void setImageSmallRef(String imageSmallRef) {
+        this.ImageSmallRef = imageSmallRef;
+    }
+
+    public String getImageLargeRef() {
+        return ImageLargeRef;
+    }
+
+    public void setImageLargeRef(String imageLargeRef) {
+        this.ImageLargeRef = imageLargeRef;
+    }
 }
