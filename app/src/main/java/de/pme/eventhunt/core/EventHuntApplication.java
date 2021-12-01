@@ -19,7 +19,7 @@ import de.pme.eventhunt.storage.KeyValueStore;
 public class EventHuntApplication extends Application {
 
     private KeyValueStore store;
-    private boolean autoLogin = true;
+    private boolean autoLogin = false;
 
     @Override
     public void onCreate() {
@@ -36,7 +36,7 @@ public class EventHuntApplication extends Application {
     private void loginAdmin() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        auth.signInWithEmailAndPassword("skdk2@web.de", "joker123");
+        auth.signInWithEmailAndPassword("amine.semlali@fh-erfurt.de", "pass123");
 
     }
 

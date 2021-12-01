@@ -11,4 +11,5 @@
         <item>Trip</item>
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="no_content">no content</string>
 </resources>
