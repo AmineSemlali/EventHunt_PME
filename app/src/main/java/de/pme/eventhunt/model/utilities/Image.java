@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.github.javafaker.Bool;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -29,14 +28,15 @@ public class Image {
     private Bitmap bitmapSmall;
     private Bitmap bitmapLarge;
 
-    public void LoadIntoStorage()
+
+    private boolean uploadStarted = false;
+
+    public void StartUpload()
     {
-        if(bitmapSmall != null && bitmapLarge != null)
-        {
-            UploadImage(bitmapSmall, 0);
-            UploadImage(bitmapLarge, 1);
-        }
+        UploadImage(bitmapSmall, 0);
+        UploadImage(bitmapLarge, 1);
     }
+
 
     public void CreateBitmapSmall(Uri imageUri)
     {
@@ -132,11 +132,14 @@ public class Image {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
+        uploadStarted = true;
+
         UploadTask uploadTask = imageRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-               exception.printStackTrace();
+                uploadStarted = false;
+                exception.printStackTrace();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -186,5 +189,9 @@ public class Image {
 
     public Bitmap getBitmapLarge() {
         return bitmapLarge;
+    }
+
+    public boolean isUploadStarted() {
+        return uploadStarted;
     }
 }

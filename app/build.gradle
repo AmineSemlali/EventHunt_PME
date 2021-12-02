@@ -68,7 +68,11 @@ dependencies {
 
     //Google Maps location picker
     implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'com.google.android.libraries.places:places:2.5.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
+    implementation "com.google.android.gms:play-services-places:17.0.0"
+    implementation 'com.adevinta.android:leku:9.1.1'
+
+
 
     //Images
     implementation 'com.squareup.picasso:picasso:2.71828'
