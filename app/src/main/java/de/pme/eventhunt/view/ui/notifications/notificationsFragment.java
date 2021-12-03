@@ -49,7 +49,7 @@ public class notificationsFragment extends Fragment {
         // Configure RecyclerView with Adapter and LayoutManager
         notificationView.setAdapter( adapter );
         notificationView.setLayoutManager( new LinearLayoutManager(this.requireActivity() ) );
-        notificationsViewModel.getNotifications().observe(this.requireActivity(), adapter::setNotifications); // requires livedata??
+        //notificationsViewModel.getNotifications().observe(this.requireActivity(), adapter::setNotifications); // requires livedata??
         return root;
     }
 }

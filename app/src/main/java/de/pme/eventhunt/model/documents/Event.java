@@ -1,9 +1,7 @@
 package de.pme.eventhunt.model.documents;
 
 
-import android.util.Log;
-
-import de.pme.eventhunt.model.utilities.Location;
+import de.pme.eventhunt.model.utilities.EventLocation;
 
 public class Event {
 
@@ -13,7 +11,7 @@ public class Event {
     private String Title;
     private String Description;
     private String Category;
-    private Location Location;
+    private EventLocation Location;
     private String StartTime;
     private String EndTime;
 
@@ -22,7 +20,7 @@ public class Event {
 
 
     public Event(String creatorId, String title, String description,
-                 String category, Location location, String startTime,
+                 String category, EventLocation location, String startTime,
                  String endTime, String imageSmallRef, String imageLargeRef)
     {
         this.CreatorId = creatorId;
@@ -35,6 +33,8 @@ public class Event {
         this.ImageSmallRef = imageSmallRef;
         this.ImageLargeRef = imageLargeRef;
     }
+
+    public Event() {};
 
 
 
@@ -71,11 +71,11 @@ public class Event {
         Category = category;
     }
 
-    public Location getLocation() {
+    public EventLocation getLocation() {
         return Location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(EventLocation location) {
         Location = location;
     }
 
