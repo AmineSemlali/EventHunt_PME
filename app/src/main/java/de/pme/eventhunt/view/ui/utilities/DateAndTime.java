@@ -57,5 +57,13 @@ public class DateAndTime {
                 }
         }
 
+        public boolean isComplete(){
+                if(year.isEmpty() || month.isEmpty() || day.isEmpty() || hour.isEmpty() || minute.isEmpty())
+                {
+                        return false;
+                }
+                else return true;
+        }
+
         public DateAndTime(){};
 }

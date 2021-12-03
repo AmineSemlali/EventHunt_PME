@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_createEvent"
             app:destination="@id/createEvent" />
+        <action
+            android:id="@+id/action_navigation_home_to_filter_events"
+            app:destination="@id/filter_events" />
     </fragment>
     <fragment
         android:id="@+id/navigation_events"
@@ -34,4 +37,13 @@
         android:name="de.pme.eventhunt.view.ui.create_event.createEventFragment"
         android:label="fragment_create_event"
         tools:layout="@layout/fragment_create_event" />
+    <fragment
+        android:id="@+id/filter_events"
+        android:name="de.pme.eventhunt.view.ui.filter_event.FilterEventFragment"
+        android:label="fragment_filter_events"
+        tools:layout="@layout/fragment_filter_events" >
+        <action
+            android:id="@+id/action_filter_events_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

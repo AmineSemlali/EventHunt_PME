@@ -1,13 +1,10 @@
 package de.pme.eventhunt.view.ui.home;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -17,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import de.pme.eventhunt.R;
-import de.pme.eventhunt.model.repositories.EventRepository;
+import de.pme.eventhunt.model.documents.Event;
+import de.pme.eventhunt.model.utilities.EventFilter;
 import de.pme.eventhunt.view.ui.core.BaseFragment;
 
 public class HomeFragment extends BaseFragment {
@@ -31,6 +28,7 @@ public class HomeFragment extends BaseFragment {
     private NavHostFragment navHostFragment;
 
     ImageView addEvent;
+    ImageView filterEvent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +39,8 @@ public class HomeFragment extends BaseFragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         NavHostFragment navHostFragment = (NavHostFragment)fragmentManager.findFragmentById(R.id.nav_host_fragment_main);
         navController = navHostFragment.getNavController();
+
+
 
         homeViewModel = this.getViewModel(HomeViewModel.class);
 
@@ -67,6 +67,28 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_navigation_home_to_createEvent);
+            }
+        });
+
+
+
+        //Set up filter events navigation + observer for filter data
+        filterEvent = view.findViewById(R.id.button_filterEvent);
+
+        Observer observer = new Observer() {
+            @Override
+            public void onChanged(Object o) {
+
+            }
+        };
+
+        navController.getCurrentBackStackEntry().getSavedStateHandle().
+                getLiveData("filter").observe(getViewLifecycleOwner(), observer);
+
+        filterEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_navigation_home_to_filter_events);
             }
         });
 
