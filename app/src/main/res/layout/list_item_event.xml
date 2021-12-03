@@ -9,8 +9,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/view2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/listImageView_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
             android:src="@drawable/image_placeholder_icon" />
     </androidx.cardview.widget.CardView>
@@ -32,7 +32,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/archivo_black"
         android:maxLines="2"
         android:text="Title"
@@ -45,8 +45,8 @@
         android:id="@+id/listTextView_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/archivo_black"
         android:text="Location"
         android:textColor="@color/textInput_grey"
@@ -57,7 +57,7 @@
         android:id="@+id/listTextView_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="110dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/archivo_black"
         android:text="Date"
@@ -65,13 +65,31 @@
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/listTextView_location" />
 
-    <TextView
-        android:id="@+id/listTextView_category"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/listCategoryCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:text="Category"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/listTextView_title"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/listTextView_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/yellow"
+            android:paddingLeft="3dp"
+            android:paddingTop="1dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="1dp"
+            android:minWidth="70dp"
+            android:gravity="center"
+            android:text="cat"
+            android:textColor="@color/black"
+
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

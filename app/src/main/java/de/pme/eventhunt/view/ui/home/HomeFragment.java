@@ -1,6 +1,8 @@
 package de.pme.eventhunt.view.ui.home;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +46,12 @@ public class HomeFragment extends BaseFragment {
 
         // For Recyclerview
         RecyclerView eventListView = view.findViewById(R.id.list_events);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        //itemDecoration.setDrawable(context.getDrawable(R.drawable.recyclerview_divider));
+        //itemDecoration.setDrawable(new ColorDrawable(getResources().getColor(R.color.yellow)));
+
+        eventListView.addItemDecoration(itemDecoration);
 
         // Create Adapter
         final EventListAdapter adapter = new EventListAdapter(context);

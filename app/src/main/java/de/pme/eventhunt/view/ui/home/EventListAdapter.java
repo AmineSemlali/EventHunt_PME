@@ -1,6 +1,8 @@
 package de.pme.eventhunt.view.ui.home;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,19 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
             holder.eventTitle.setText(current.getTitle());
 
             // Set category
-            holder.eventCategory.setText(current.getCategory());
+            String category = current.getCategory();
+
+            if(category.equals("Socializing")) {
+                holder.eventCategory.setBackgroundColor(Color.parseColor("#D63230"));
+            }
+            else if(category.equals("Party")) {
+                holder.eventCategory.setBackgroundColor(Color.parseColor("#772D8B"));
+            }
+            else if(category.equals("Trip")) {
+                holder.eventCategory.setBackgroundColor(Color.parseColor("#F39237"));
+            }
+
+            holder.eventCategory.setText(category);
 
             // Set date
             DateAndTime eventDate = null;

@@ -307,6 +307,14 @@ public class createEventFragment extends Fragment {
         String startDateString = startDate.toLocalDateTimeString();
         String endDateString = endDate.toLocalDateTimeString();
 
+
+        // Check image
+        if(imageUri == null)
+        {
+            Toast.makeText(context, "Please select an image!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!eventImage.isUploadStarted()) {
             eventImage.StartUpload();
             Toast.makeText(context, "Image processing isn't finished yet!", Toast.LENGTH_SHORT).show();

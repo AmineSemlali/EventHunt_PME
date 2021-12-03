@@ -7,12 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".view.MainActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:backgroundTint="@color/yellow"
+        android:background="@color/yellow"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toStartOf="parent"
+        android:translationZ="90dp"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
+        android:paddingTop="5dp"
         android:background="@color/blue"
         app:itemIconTint="@color/yellow"
         app:itemTextColor="@color/yellow"
@@ -32,8 +42,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/main_navigation" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
