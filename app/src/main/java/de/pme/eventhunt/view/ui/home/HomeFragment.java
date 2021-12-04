@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -20,10 +21,12 @@ import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.utilities.EventFilter;
 import de.pme.eventhunt.view.ui.core.BaseFragment;
+import de.pme.eventhunt.view.ui.filter_event.FilterEventViewModel;
 
 public class HomeFragment extends BaseFragment {
 
     private HomeViewModel homeViewModel;
+    private FilterEventViewModel filterEventViewModel;
     private NavController navController;
     private NavHostFragment navHostFragment;
 
@@ -43,6 +46,9 @@ public class HomeFragment extends BaseFragment {
 
 
         homeViewModel = this.getViewModel(HomeViewModel.class);
+        homeViewModel.activity = getActivity();
+        //filterEventViewModel = this.getViewModel(FilterEventViewModel.class);
+        filterEventViewModel = new ViewModelProvider(requireActivity()).get(FilterEventViewModel.class);
 
         // For Recyclerview
         RecyclerView eventListView = view.findViewById(R.id.list_events);
@@ -58,7 +64,7 @@ public class HomeFragment extends BaseFragment {
         eventListView.setAdapter(adapter);
         eventListView.setLayoutManager(new LinearLayoutManager(context));
 
-        homeViewModel.setAdapterList(adapter);
+        homeViewModel.setAdapterList(adapter, filterEventViewModel);
 
 
         addEvent = view.findViewById(R.id.button_addEvent);
@@ -72,18 +78,7 @@ public class HomeFragment extends BaseFragment {
 
 
 
-        //Set up filter events navigation + observer for filter data
         filterEvent = view.findViewById(R.id.button_filterEvent);
-
-        Observer observer = new Observer() {
-            @Override
-            public void onChanged(Object o) {
-
-            }
-        };
-
-        navController.getCurrentBackStackEntry().getSavedStateHandle().
-                getLiveData("filter").observe(getViewLifecycleOwner(), observer);
 
         filterEvent.setOnClickListener(new View.OnClickListener() {
             @Override

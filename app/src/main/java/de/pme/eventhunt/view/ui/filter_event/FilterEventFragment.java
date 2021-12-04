@@ -6,9 +6,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDateTime;
+
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.utilities.EventFilter;
 import de.pme.eventhunt.view.ui.core.BaseFragment;
@@ -30,10 +34,14 @@ import de.pme.eventhunt.view.ui.utilities.DateAndTimePicker;
 public class FilterEventFragment extends BaseFragment {
 
     View view;
+    FilterEventViewModel filterEventViewModel;
 
     private NavController navController;
     private NavHostFragment navHostFragment;
 
+    TextInputEditText titleEditText;
+    AutoCompleteTextView categoryEditText;
+    AutoCompleteTextView distanceEditText;
     TextInputEditText firstDateEditText;
     TextInputEditText lastDateEditText;
 
@@ -72,14 +80,20 @@ public class FilterEventFragment extends BaseFragment {
         navController = navHostFragment.getNavController();
 
         Context context = getContext();
+        //filterEventViewModel = this.getViewModel(FilterEventViewModel.class);
+        filterEventViewModel = new ViewModelProvider(requireActivity()).get(FilterEventViewModel.class);
 
+        titleEditText = view.findViewById(R.id.editTextTitleFilter);
+        categoryEditText = view.findViewById(R.id.editTextCategoryFilter);
         firstDateEditText = view.findViewById(R.id.editTextDateFirstDateFilter);
         lastDateEditText = view.findViewById(R.id.editTextLastDateFilter);
+        distanceEditText = view.findViewById(R.id.editTextDistance);
 
         DateAndTimePicker dateAndTimePickerFirst = new DateAndTimePicker(context, firstDateEditText);
         DateAndTimePicker dateAndTimePickerLast = new DateAndTimePicker(context, lastDateEditText);
 
         Button applyFilterButton = view.findViewById(R.id.buttonFilterEvent);
+        Button resetFilterButton = view.findViewById(R.id.buttonResetFilter);
         ImageView closeFilterButton = view.findViewById(R.id.closeFilter);
 
         EventFilter newFilter = new EventFilter();
@@ -88,9 +102,20 @@ public class FilterEventFragment extends BaseFragment {
         closeFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Navigate back up and make filter empty
-                Object object = (Object) new EventFilter();
-                navController.getPreviousBackStackEntry().getSavedStateHandle().set("filter", object);
+                navController.navigate(R.id.action_filter_events_to_navigation_home);
+            }
+        });
+
+        resetFilterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                filterEventViewModel.resetFilter();
+                titleEditText.setText("");
+                categoryEditText.setText("");
+                firstDateEditText.setText("");
+                lastDateEditText.setText("");
+                distanceEditText.setText("");
             }
         });
 
@@ -130,12 +155,36 @@ public class FilterEventFragment extends BaseFragment {
         applyFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Editable title_editable = titleEditText.getText();
+                String title_txt = "";
+                if(title_editable != null) title_txt = title_editable.toString();
+
+                Editable category_editable = categoryEditText.getText();
+                String category_txt = "";
+                if(category_editable != null) category_txt = category_editable.toString();
+
+                Editable distance_editable = distanceEditText.getText();
+                Integer distance_int = 0;
+                if(distance_editable != null && !distance_editable.toString().isEmpty()) distance_int = Integer.parseInt(
+                                                        distance_editable.toString().replaceAll("km", ""));
+
+                filterEventViewModel.eventFilter.filterTitle = title_txt;
+                filterEventViewModel.eventFilter.filterDistance = distance_int;
+                filterEventViewModel.eventFilter.filterCategory = category_txt;
+
                 DateAndTime firstDate = dateAndTimePickerFirst.getDateAndTime();
                 DateAndTime lastDate = dateAndTimePickerLast.getDateAndTime();
+                if(firstDate.isComplete())
+                    filterEventViewModel.eventFilter.filterFirstDate = firstDate.toLocalDateTimeString();
+                else
+                    filterEventViewModel.eventFilter.filterFirstDate = LocalDateTime.now().toString();
 
+                if(lastDate.isComplete())
+                    filterEventViewModel.eventFilter.filterLastDate = lastDate.toLocalDateTimeString();
+                else
+                    filterEventViewModel.eventFilter.filterLastDate = "2100-01-01T12:00:00";
 
-
-                navController.getPreviousBackStackEntry().getSavedStateHandle().set("filter", newFilter);
+                navController.navigate(R.id.action_filter_events_to_navigation_home);
 
             }
         });

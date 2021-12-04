@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -212,9 +213,17 @@ public class createEventFragment extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title_txt = titleEditText.getText().toString();
-                String description_txt = descriptionEditText.getText().toString();
-                String category_txt = categoryEditText.getText().toString();
+                String title_txt = "";
+                Editable title_editable = titleEditText.getText();
+                if(title_editable != null) title_txt = title_editable.toString();
+
+                String description_txt = "";
+                Editable description_editable = descriptionEditText.getText();
+                if(description_editable != null) description_txt = descriptionEditText.getText().toString();
+
+                String category_txt = "";
+                Editable category_editable = categoryEditText.getText();
+                if(category_editable != null) category_txt = category_editable.toString();
 
                 createEvent(title_txt, description_txt, category_txt,
                         dateAndTimePickerStart, dateAndTimePickerEnd, eventLocation);

@@ -27,17 +27,63 @@
         app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/distanceFilter"
+        android:id="@+id/titleFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="110dp"
+        android:layout_marginEnd="250dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Title"
+        android:textColor="@color/secondaryColor_yellow"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:id="@+id/textInputLayoutTitleFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="45dp"
+        android:textColorHint="#000000"
+        app:hintTextColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleFilter">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTitleFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D9D9D9"
+            android:fontFamily="@font/archivo_black"
+            android:hint=""
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/distanceFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/archivo_black"
         android:text="Distance"
         android:textColor="@color/secondaryColor_yellow"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTitleFilter" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutDistance"
@@ -246,11 +292,26 @@
         android:layout_marginEnd="50dp"
         android:backgroundTint="@color/secondaryColor_yellow"
         android:fontFamily="@font/archivo_black"
-        android:text="Create"
+        android:text="Apply"
         android:textColor="@color/primaryColor_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutCategoryFilter" />
+
+    <Button
+        android:id="@+id/buttonResetFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:backgroundTint="@color/secondaryColor_yellow"
+        android:fontFamily="@font/archivo_black"
+        android:text="Reset"
+        android:textColor="@color/primaryColor_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonFilterEvent" />
 
     <ImageView
         android:id="@+id/closeFilter"
