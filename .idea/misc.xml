@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/list_item_event.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/list_item_notification.xml" value="0.1" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/drawable/ic_baseline_date_range_24.xml" value="0.2140625" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />

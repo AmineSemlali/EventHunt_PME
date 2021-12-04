@@ -33,7 +33,7 @@ public class NotificationRepository {
         auth = FirebaseAuth.getInstance();
         eventUserRepository = new EventUserRepository();
     }
-
+    List<Notification> notifications;
 
     public void addNotification(Notification notification)
     {

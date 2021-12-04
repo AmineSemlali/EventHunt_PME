@@ -6,12 +6,13 @@ public class Notification
 
     public static String collection = "notification";
     private String EventId;
-//    private String NotificationType;
     private String NotificationDescription;
+    private String NotificationCategory;
     private String CreatedAt;
     private String EventImage;
 
 
+    public Notification() {};
 
     public String getEventId() {
         return EventId;
@@ -21,19 +22,20 @@ public class Notification
         EventId = eventId;
     }
 
-//    public String getNotificationType() {
-//        return NotificationType;
-//    }
-//
-//    public void setNotificationType(String notificationType) {
-//        NotificationType = notificationType;
-//    }
+
     public String getNotificationDescription() {
         return NotificationDescription ;
     }
 
     public void setNotificationDescription(String notificationDescription) {
         NotificationDescription = notificationDescription;
+    }
+    public String getNotificationCategory() {
+        return NotificationCategory;
+    }
+
+    public void setNotificationCategory(String notificationCategory) {
+        NotificationDescription = notificationCategory;
     }
 
     public String getCreatedAt() {

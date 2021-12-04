@@ -14,20 +14,81 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.squareup.picasso.Picasso;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
+import de.pme.eventhunt.model.documents.Event;
+import de.pme.eventhunt.model.documents.EventUser;
 import de.pme.eventhunt.model.documents.Notification;
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.repositories.NotificationRepository;
+import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 
 public class notificationAdapter extends RecyclerView.Adapter<notificationAdapter.NotificationViewHolder> {
 
     // Counter for the number of child items - demo/debug purpose only
     static int counter = 0;
 
+    private final LayoutInflater inflater;
+    private List<Notification> notificationList; // Cached Copy of Notifications
+    FirebaseFirestore db;
+    FirebaseAuth auth;
+
+
+
+    public notificationAdapter(Context context) {
+        this.inflater = LayoutInflater.from(context);
+    }
+
+
+    @NonNull
+    @Override
+    public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = this.inflater.inflate(R.layout.list_item_notification, parent, false);
+        Log.i( "OnCreateViewHolder", "Count: " + ++notificationAdapter.counter);
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        return new NotificationViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
+        if (this.notificationList != null && !this.notificationList.isEmpty())
+        {
+            Notification current = this.notificationList.get(position);
+
+            holder.notificationDescription.setText(String.format("%s", current.getNotificationDescription()));
+
+
+            DateAndTime createdAt = null;
+            try {
+                createdAt = new DateAndTime(current.getCreatedAt());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            assert createdAt != null;
+            holder.notificationTime.setText(createdAt.formatString());
+
+            // Set image
+            String eventImageUrl = current.getEventImage();
+            Picasso p = Picasso.get();
+            p.setIndicatorsEnabled(true);
+            p.load(eventImageUrl)
+                    .into(holder.eventImage);
+        }
+
+
+        else {
+            // Covers the case of data not being ready yet.
+            holder.notificationDescription.setText(R.string.no_content);
+        }
+    }
 
     // View Holder definition
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
@@ -43,49 +104,13 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         }
     }
 
-    private final LayoutInflater inflater;
-    private List<Notification> notificationList; // Cached Copy of Notifications
 
 
-    public notificationAdapter(Context context) {
-        this.inflater = LayoutInflater.from(context);
-    }
 
-    @NonNull
-    @Override
-    public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = this.inflater.inflate(R.layout.list_item_notification, parent, false);
-        Log.i( "OnCreateViewHolder", "Count: " + ++notificationAdapter.counter);
-        return new NotificationViewHolder(itemView);
-    }
 
-    @Override
-    public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        if (this.notificationList != null && !this.notificationList.isEmpty())
-        {
-            Notification current = this.notificationList.get(position);
 
-            holder.notificationDescription.setText(String.format("%s", current.getNotificationDescription()));
-            holder.notificationTime.setText(String.format("%s", current.getCreatedAt()));
 
-            // We use Picasso to load, cache, transform and display profile images
-            Picasso p = Picasso.get();
-            p.setIndicatorsEnabled(true);                   // Show indicators for debugging
 
-            p.load(current.getEventImage())            // Which image to load
-                    .placeholder(R.drawable.image_placeholder_icon)   // Placeholder during loading
-                    .error(R.drawable.icon_error)           // Image shown in case of an error
-                    .resize(80, 80) // Resizing
-                    .rotate(-15.0f)                         // Rotation (15° to the left)
-                    .centerCrop()                           // Crop Image
-                    .into( holder.eventImage );           // Target ImageView
-
-        }
-        else {
-            // Covers the case of data not being ready yet.
-            holder.notificationDescription.setText(R.string.no_content);
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -99,6 +124,8 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         this.notificationList = notificationList;
         notifyDataSetChanged();
     }
+
+
 
 }
 
