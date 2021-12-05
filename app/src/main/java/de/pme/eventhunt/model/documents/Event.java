@@ -7,6 +7,15 @@ public class Event {
 
     public static String collection = "event";
 
+    public String getEventId() {
+        return EventId;
+    }
+
+    public void setEventId(String eventId) {
+        EventId = eventId;
+    }
+
+    private String EventId;
     private String CreatorId;
     private String Title;
     private String Description;
@@ -19,10 +28,11 @@ public class Event {
     private String ImageLargeRef;
 
 
-    public Event(String creatorId, String title, String description,
+    public Event(String eventId, String creatorId, String title, String description,
                  String category, EventLocation location, String startTime,
                  String endTime, String imageSmallRef, String imageLargeRef)
     {
+        this.EventId = eventId;
         this.CreatorId = creatorId;
         this.Title = title;
         this.Description = description;

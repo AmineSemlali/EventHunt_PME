@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".view.ui.detail_view.DetailViewFragment"
+    android:background="@color/blue">
+
+
+    <ImageView
+        android:id="@+id/imageViewEventImage"
+        android:layout_width="match_parent"
+        android:layout_height="275dp"
+        android:src="@drawable/image_placeholder_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/tranparent_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:alpha="0.5"
+        android:background="@color/black"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewEventImage"
+        app:layout_constraintEnd_toStartOf="parent">
+
+    </View>
+
+    <TextView
+        android:id="@+id/textViewTitleDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="Title"
+        android:textColor="@color/secondaryColor_yellow"
+        android:textSize="24sp"
+        android:translationZ="95dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tranparent_view" />
+
+    <TextView
+        android:id="@+id/textViewCityDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:text="City, Country"
+        android:textColor="@color/secondaryColor_yellow"
+        android:textSize="16sp"
+        android:translationZ="95dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitleDetail" />
+
+    <Button
+        android:id="@+id/buttonJoinEvent"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/secondaryColor_yellow"
+        android:fontFamily="@font/archivo_black"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Join"
+        android:textColor="@color/primaryColor_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewEventImage" />
+
+    <ImageView
+        android:id="@+id/buttonEditEvent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonJoinEvent"
+        app:layout_constraintStart_toEndOf="@+id/buttonJoinEvent"
+        app:layout_constraintTop_toTopOf="@+id/buttonJoinEvent" />
+
+    <ImageView
+        android:id="@+id/buttonOpenMapsLocation"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_location_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonJoinEvent"
+        app:layout_constraintStart_toEndOf="@+id/buttonEditEvent"
+        app:layout_constraintTop_toTopOf="@+id/buttonJoinEvent"
+        app:tint="@color/textInput_grey" />
+
+    <ImageView
+        android:id="@+id/buttonShareEvent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_baseline_share_24"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonJoinEvent"
+        app:layout_constraintStart_toEndOf="@+id/buttonOpenMapsLocation"
+        app:layout_constraintTop_toTopOf="@+id/buttonJoinEvent" />
+
+    <ImageView
+        android:id="@+id/buttonOpenChat"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_baseline_chat_24"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonJoinEvent"
+        app:layout_constraintStart_toEndOf="@+id/buttonShareEvent"
+        app:layout_constraintTop_toTopOf="@+id/buttonJoinEvent" />
+
+    <ImageView
+        android:id="@+id/imageViewDateIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/ic_baseline_date_range_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonJoinEvent" />
+
+    <TextView
+        android:id="@+id/textViewDateStartDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="Start:   "
+        android:fontFamily="@font/archivo_black"
+        android:textColor="@color/textInput_grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDateIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDateIcon" />
+
+    <TextView
+        android:id="@+id/textViewDateEndDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="End:     "
+        android:fontFamily="@font/archivo_black"
+        android:textColor="@color/textInput_grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDateIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateStartDetail" />
+
+
+    <ImageView
+        android:id="@+id/imageViewLocationIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_location_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewDateIcon"
+        app:tint="@color/yellow" />
+
+    <TextView
+        android:id="@+id/textViewLocationStreetDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="Location Street"
+        android:fontFamily="@font/archivo_black"
+        android:textColor="@color/textInput_grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLocationIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewLocationIcon" />
+
+    <TextView
+        android:id="@+id/textViewLocationCityDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Location City"
+        android:fontFamily="@font/archivo_black"
+        android:textColor="@color/textInput_grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLocationIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationStreetDetail" />
+
+
+    <ImageView
+        android:id="@+id/imageViewDetailIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_baseline_description_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLocationIcon"
+        app:tint="@color/yellow" />
+
+    <TextView
+        android:id="@+id/textViewLocationCityDescriptionCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Description"
+        android:textColor="@color/textInput_grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDetailIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDetailIcon" />
+
+    <TextView
+        android:id="@+id/textViewDescriptionDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:paddingBottom="100dp"
+        android:text="Description"
+        android:fontFamily="@font/archivo_black"
+        android:textColor="@color/textInput_grey"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDetailIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationCityDescriptionCaption" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

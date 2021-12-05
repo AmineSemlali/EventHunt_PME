@@ -12,6 +12,7 @@
     <color name="orange">#e76f51</color>
     <color name="secondaryColor_yellow">#E9C46A</color>
     <color name="primaryColor_blue">#264653</color>
+    <color name="tertiaryColor_red">#e76f51</color>
     <color name="textInput_grey">#D9D9D9</color>
     <color name="category_party">#772D8B</color>
     <color name="category_trip">#F39237</color>

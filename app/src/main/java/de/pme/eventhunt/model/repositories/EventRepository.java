@@ -34,7 +34,7 @@ public class EventRepository {
 
     public void createEvent(Event event)
     {
-        db.collection("event").document().set(event).addOnFailureListener(e -> {
+        db.collection(Event.collection).document(event.getEventId()).set(event).addOnFailureListener(e -> {
             Log.e("createEvent: ", e.toString());
         });
 

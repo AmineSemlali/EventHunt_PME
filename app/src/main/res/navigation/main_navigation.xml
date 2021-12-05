@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_filter_events"
             app:destination="@id/filter_events" />
+        <action
+            android:id="@+id/action_navigation_home_to_detail_view"
+            app:destination="@id/detail_view" />
     </fragment>
     <fragment
         android:id="@+id/navigation_events"
@@ -45,5 +48,14 @@
         <action
             android:id="@+id/action_filter_events_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/detail_view"
+        android:name="de.pme.eventhunt.view.ui.detail_view.DetailViewFragment"
+        android:label="fragment_detail_view"
+        tools:layout="@layout/fragment_detail_view" >
+        <argument
+            android:name="eventId"
+            app:argType="string" />
     </fragment>
 </navigation>

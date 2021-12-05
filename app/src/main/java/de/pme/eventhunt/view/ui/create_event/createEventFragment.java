@@ -48,6 +48,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.Executor;
 
 import de.pme.eventhunt.R;
@@ -334,7 +335,8 @@ public class createEventFragment extends Fragment {
             Toast.makeText(context, "Image processing isn't finished yet!", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            Event newEvent = new Event(creatorId, title, description,
+            String eventId = UUID.randomUUID().toString();
+            Event newEvent = new Event(eventId, creatorId, title, description,
                     category, eventLocation, startDateString, endDateString,
                     eventImage.getDownloadUrlSmall(), eventImage.getDownloadUrlLarge());
             eventRepository.createEvent(newEvent);

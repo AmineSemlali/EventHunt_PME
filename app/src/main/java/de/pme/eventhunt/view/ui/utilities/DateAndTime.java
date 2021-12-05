@@ -3,11 +3,36 @@ package de.pme.eventhunt.view.ui.utilities;
 import java.time.LocalDateTime;
 
 public class DateAndTime {
-        public String day = "";
-        public String month = "";
-        public String year = "";
-        public String hour = "";
-        public String minute = "";
+        public String day = "";;
+        public String month = "";;
+        public String year = "";;
+        public String hour = "";;
+        public String minute = "";;
+
+        public void setDateAndTime(LocalDateTime localDateTime)
+        {
+                Integer yearInt = localDateTime.getYear();
+                String yearString = yearInt.toString();
+                this.year = yearString;
+
+                Integer monthInt = localDateTime.getMonthValue();
+                if(monthInt < 10) this.month = "0" + monthInt;
+                else this.month = monthInt.toString();
+
+                Integer dayInt = localDateTime.getDayOfMonth();
+                if(dayInt < 10) this.day = "0" + dayInt;
+                else this.day = dayInt.toString();
+
+                Integer hourInt = localDateTime.getHour();
+                if(hourInt < 10) this.hour = "0" + hourInt;
+                else this.hour = hourInt.toString();
+
+                Integer minuteInt = localDateTime.getMinute();
+                if(minuteInt < 10) this.minute = "0" + minuteInt;
+                else this.minute = minuteInt.toString();
+        }
+
+
 
         public LocalDateTime toLocalDateTime()
         {

@@ -62,6 +62,77 @@ public class EventLocation {
         return addressString;
     }
 
+    public String getStreetString(Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context);
+
+        List<Address> adressList = geocoder.getFromLocation(latitude, longitude, 1);
+        Address address = adressList.get(0);
+
+        String feature = address.getFeatureName();
+        String thoroughfare = address.getThoroughfare();
+
+        String addressString = "";
+
+        if(thoroughfare != null) addressString += thoroughfare;
+
+        if(feature != null && !feature.equals(thoroughfare)) addressString += " " + feature;
+
+        return addressString;
+    }
+
+    public String getCityString(Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context);
+
+        List<Address> adressList = geocoder.getFromLocation(latitude, longitude, 1);
+        Address address = adressList.get(0);
+
+        Log.d("address", address.toString());
+
+        String postalCode = address.getPostalCode();
+        String locality = address.getLocality();
+
+        String addressString = "";
+
+        if(postalCode != null)
+        {
+            addressString += postalCode;
+        }
+
+        if(locality != null)
+        {
+            addressString += " " + locality;
+        }
+
+        return addressString;
+    }
+
+    public String getCityCountryString(Context context) throws IOException {
+        Geocoder geocoder = new Geocoder(context);
+
+        List<Address> adressList = geocoder.getFromLocation(latitude, longitude, 1);
+        Address address = adressList.get(0);
+
+        Log.d("address", address.toString());
+
+        String locality = address.getLocality();
+        String country = address.getCountryName();
+
+        String addressString = "";
+
+        if(locality != null)
+        {
+            addressString += locality;
+        }
+
+        if(country != null)
+        {
+            if (addressString.isEmpty()) addressString += country;
+            else addressString += ", " + country;
+        }
+
+        return addressString;
+    }
+
     public List<Event> GetLocationsInRange(Integer range)
     {
         List<Event> eventsInRage = null;

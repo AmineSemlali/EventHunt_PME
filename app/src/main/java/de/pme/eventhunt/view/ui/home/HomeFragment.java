@@ -23,12 +23,14 @@ import de.pme.eventhunt.model.utilities.EventFilter;
 import de.pme.eventhunt.view.ui.core.BaseFragment;
 import de.pme.eventhunt.view.ui.filter_event.FilterEventViewModel;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements EventListAdapter.EventListViewHolder.OnNoteListener {
 
     private HomeViewModel homeViewModel;
     private FilterEventViewModel filterEventViewModel;
     private NavController navController;
     private NavHostFragment navHostFragment;
+
+    RecyclerView eventListView;
 
     ImageView addEvent;
     ImageView filterEvent;
@@ -51,7 +53,7 @@ public class HomeFragment extends BaseFragment {
         filterEventViewModel = new ViewModelProvider(requireActivity()).get(FilterEventViewModel.class);
 
         // For Recyclerview
-        RecyclerView eventListView = view.findViewById(R.id.list_events);
+        eventListView = view.findViewById(R.id.list_events);
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
         //itemDecoration.setDrawable(context.getDrawable(R.drawable.recyclerview_divider));
@@ -60,7 +62,7 @@ public class HomeFragment extends BaseFragment {
         eventListView.addItemDecoration(itemDecoration);
 
         // Create Adapter
-        final EventListAdapter adapter = new EventListAdapter(context);
+        final EventListAdapter adapter = new EventListAdapter(context, this);
         eventListView.setAdapter(adapter);
         eventListView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -91,5 +93,13 @@ public class HomeFragment extends BaseFragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onNoteClick(int position) {
+        String eventId = homeViewModel.events.get(position).getEventId();
+        Bundle bundle = new Bundle();
+        bundle.putString("eventId", eventId);
+        navController.navigate(R.id.action_navigation_home_to_detail_view, bundle);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -30,8 +31,12 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
 
     private final LayoutInflater inflater;
     private List<Event> eventList;
+    private EventListViewHolder.OnNoteListener mOnNoteListener;
 
-    public EventListAdapter(Context context) {this.inflater = LayoutInflater.from(context); }
+    public EventListAdapter(Context context, EventListViewHolder.OnNoteListener onNoteListener) {
+        this.inflater = LayoutInflater.from(context);
+        this.mOnNoteListener = onNoteListener;
+    }
 
 
     @NonNull
@@ -41,7 +46,7 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
 
         Log.i("OnCreateViewHolder", "Count " + ++EventListAdapter.counter);
 
-        return new EventListViewHolder(itemView);
+        return new EventListViewHolder(itemView, mOnNoteListener);
     }
 
     @Override
@@ -50,6 +55,8 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
         {
             Event current = this.eventList.get(position);
 
+            // Set id
+            holder.eventId = current.getEventId();
 
             // Set title
             holder.eventTitle.setText(current.getTitle());
@@ -114,15 +121,18 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
     }
 
     // View Holder definition
-    static class EventListViewHolder extends RecyclerView.ViewHolder {
+    static class EventListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private String eventId = "";
         private final TextView eventTitle;
         private final TextView eventLocation;
         private final TextView eventCategory;
         private final TextView eventDate;
         private final ImageView eventImage;
 
+        OnNoteListener onNoteListener;
 
-        public EventListViewHolder(@NonNull View itemView) {
+
+        public EventListViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             this.eventTitle = itemView.findViewById(R.id.listTextView_title);
             this.eventLocation = itemView.findViewById(R.id.listTextView_location);;
@@ -130,6 +140,19 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
             this.eventDate = itemView.findViewById(R.id.listTextView_date);
 
             this.eventImage = itemView.findViewById(R.id.listImageView_image);
+
+            this.onNoteListener = onNoteListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.onNoteListener.onNoteClick(getAdapterPosition());
+        }
+
+        public interface OnNoteListener{
+            void onNoteClick(int position);
         }
     }
 }
