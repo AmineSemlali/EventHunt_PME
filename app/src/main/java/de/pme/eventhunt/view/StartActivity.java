@@ -18,6 +18,8 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        getSupportActionBar().hide();
+
         auth = FirebaseAuth.getInstance();
 
         if(auth.getCurrentUser() != null)

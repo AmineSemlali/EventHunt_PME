@@ -22,8 +22,10 @@
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/drawable/bottombar_background_drawable.xml" value="0.22135416666666666" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/drawable/image_placeholder_icon.xml" value="0.22135416666666666" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/drawable/recyclerview_divider.xml" value="0.203125" />
+        <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/activity_login.xml" value="0.28306159420289856" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/activity_maps.xml" value="0.20520833333333333" />
+        <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/activity_start.xml" value="0.28306159420289856" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/dropdown_item.xml" value="0.190625" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/fragment_create_event.xml" value="0.25" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/fragment_detail_view.xml" value="0.28940217391304346" />
@@ -33,6 +35,7 @@
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/fragment_home.xml" value="0.3254759746146872" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/fragment_login.xml" value="0.34057971014492755" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/fragment_notifications.xml" value="0.190625" />
+        <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/fragment_registation.xml" value="0.28306159420289856" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/list_item_event.xml" value="0.34057971014492755" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/list_item_notification.xml" value="0.190625" />
         <entry key="..\:/dev/pme/new/EventHunt_PME/app/src/main/res/layout/recyclerview_divider.xml" value="0.18697916666666667" />

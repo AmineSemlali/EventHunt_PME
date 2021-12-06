@@ -87,23 +87,25 @@ public class RegistrationFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                String txt_email = email.getText().toString();
-                String txt_password = password.getText().toString();
-                String txt_firstName = firstName.getText().toString();
-                String txt_lastName = lastName.getText().toString();
-
-                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)
-                        || TextUtils.isEmpty(txt_firstName) || TextUtils.isEmpty(txt_lastName))
+                if (email == null || email.toString().isEmpty() ||
+                        password == null || password.toString().isEmpty() ||
+                        firstName == null || firstName.toString().isEmpty() ||
+                        lastName == null || lastName.toString().isEmpty())
                 {
                     Toast.makeText(getActivity(), "Empty credentials!", Toast.LENGTH_SHORT).show();
                 }
-                else if(txt_password.length() < 6)
-                {
-                    Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
-                }
                 else
                 {
-                    registerUser(txt_email, txt_password, txt_firstName, txt_lastName);
+                    String txt_email = email.getText().toString();
+                    String txt_password = password.getText().toString();
+                    String txt_firstName = firstName.getText().toString();
+                    String txt_lastName = lastName.getText().toString();
+
+                    if(txt_password.length() < 6)
+                    {
+                        Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
+                    }
+                    else registerUser(txt_email, txt_password, txt_firstName, txt_lastName);
                 }
             }
         });

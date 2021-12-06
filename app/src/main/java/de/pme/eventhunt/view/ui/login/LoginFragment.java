@@ -1,5 +1,6 @@
 package de.pme.eventhunt.view.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -37,6 +40,8 @@ public class LoginFragment extends BaseFragment {
     TextInputEditText email;
     TextInputEditText password;
 
+    Context context;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,8 @@ public class LoginFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        context = getContext();
+
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         NavHostFragment navHostFragment = (NavHostFragment)fragmentManager.findFragmentById(R.id.nav_host_fragment_start);
@@ -64,8 +71,26 @@ public class LoginFragment extends BaseFragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt_email = email.getText().toString();
-                String txt_password = password.getText().toString();
+                String txt_email, txt_password;
+                if(!(email.getText() == null) && !(email.getText().toString().isEmpty()))
+                {
+                    txt_email = email.getText().toString();
+                }
+                else
+                {
+                    Toast.makeText(context, "E-Mail missing!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(!(password.getText() == null) && !(password.getText().toString().isEmpty()))
+                {
+                    txt_password = password.getText().toString();
+                }
+                else
+                {
+                    Toast.makeText(context, "Password missing!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 loginUser(txt_email, txt_password);
             }
@@ -89,8 +114,14 @@ public class LoginFragment extends BaseFragment {
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(getActivity(), "succesfully logged in", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Succesfully logged in", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Login unsuccessful!", Toast.LENGTH_SHORT).show();
             }
         });
 
