@@ -43,7 +43,7 @@ public class EventRepository {
                 EventUser eventUser = new EventUser();
                 eventUser.setEventId(event.getEventId());
                 eventUser.setUserId(auth.getCurrentUser().getUid());
-                eventUser.setEventId(LocalDateTime.now().toString());
+                eventUser.setJoinedAt(LocalDateTime.now().toString());
                 db.collection(EventUser.collection).document().set(eventUser);
             }
         })

@@ -39,7 +39,6 @@ public class HomeViewModel extends AndroidViewModel {
     FirebaseFirestore db;
     List<Event> events;
     EventListAdapter adapter;
-    FilterEventViewModel filterEventViewModel;
     Location lastLocation;
     Activity activity;
 

@@ -4,7 +4,7 @@ package de.pme.eventhunt.model.documents;
 // Class for managing m:n relation between User and Event
 public class EventUser {
 
-    public static String collection = "event_user";
+    public static String collection = "eventUser";
 
     private String UserId;
     private String EventId;

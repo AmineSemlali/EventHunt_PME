@@ -22,9 +22,13 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_events"
-        android:name="de.pme.eventhunt.view.ui.events.eventsFragment"
+        android:name="de.pme.eventhunt.view.ui.events.EventsFragment"
         android:label="fragment_events"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_navigation_events_to_detail_view"
+            app:destination="@id/detail_view" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="de.pme.eventhunt.view.ui.notifications.notificationsFragment"
