@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,9 @@ public class notificationsFragment extends Fragment {
 
         // Create Adapter
         final notificationAdapter adapter = new notificationAdapter(context);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
+        notificationView.addItemDecoration(itemDecoration);
 
         // Configure RecyclerView with Adapter and LayoutManager
         notificationView.setAdapter( adapter );
