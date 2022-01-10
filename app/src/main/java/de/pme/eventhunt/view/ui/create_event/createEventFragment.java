@@ -123,6 +123,7 @@ public class createEventFragment extends Fragment {
         activity = getActivity();
 
         view = inflater.inflate(R.layout.fragment_create_event, container, false);
+
         createEventViewModel = new ViewModelProvider(this).get(CreateEventViewModel.class);
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();

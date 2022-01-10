@@ -108,7 +108,7 @@ public class DetailViewFragment extends BaseFragment {
         locationCityTextView = view.findViewById(R.id.textViewLocationCityDetail);
         descriptionTextView = view.findViewById(R.id.textViewDescriptionDetail);
 
-        /*assert savedInstanceState != null;
+        /* assert savedInstanceState != null;
         String eventId = savedInstanceState.getString("eventId");*/
         String eventId = getArguments().getString("eventId");
 
@@ -128,6 +128,7 @@ public class DetailViewFragment extends BaseFragment {
                                     .into(eventImage);
 
                             captionTitleTextView.setText(event.getTitle());
+
                             try {
                                 captionLocationTextView.setText(eventLocation.getCityCountryString(context));
                             } catch (IOException e) {

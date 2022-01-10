@@ -16,7 +16,7 @@ public class UserRepository {
 
     public void createUser(User user)
     {
-            db.collection("user").document().set(user).addOnFailureListener(e -> {
+            db.collection("user").document(user.getId()).set(user).addOnFailureListener(e -> {
                 Log.e("createUser: ", e.toString());
             });
     }

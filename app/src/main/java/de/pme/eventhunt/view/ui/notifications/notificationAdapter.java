@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 //import com.squareup.picasso.Picasso;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,7 +40,9 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     private List<Notification> notificationList; // Cached Copy of Notifications
     FirebaseFirestore db;
     FirebaseAuth auth;
-
+    NotificationRepository notificationRepository;
+    Notification mRecentlyDeletedItem;
+    int mRecentlyDeletedItemPosition;
 
 
     public notificationAdapter(Context context) {
@@ -108,9 +111,23 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
 
 
 
+    public void deleteItem(int position) {
+        //mRecentlyDeletedItem = notificationList.get(position);
+        //mRecentlyDeletedItemPosition = position;
+        //notificationRepository.deleteNotification(mRecentlyDeletedItem.getNotificationId());
+        notificationList.remove(position);
+        notifyItemRemoved(position);
 
+//        showUndoSnackbar();
+    }
 
-
+//    private void showUndoSnackbar() {
+//        View view = mActivity.findViewById(R.id.coordinator_layout);
+//        Snackbar snackbar = Snackbar.make(view, R.string.snack_bar_text,
+//                Snackbar.LENGTH_LONG);
+//        snackbar.setAction(R.string.snack_bar_undo, v -> undoDelete());
+//        snackbar.show();
+//    }
 
     @Override
     public int getItemCount() {

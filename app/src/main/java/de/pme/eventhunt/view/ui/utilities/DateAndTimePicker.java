@@ -47,6 +47,13 @@ public class DateAndTimePicker implements DatePickerDialog.OnDateSetListener, Ti
         hour = cal.get(Calendar.HOUR);
         minute = cal.get(Calendar.MINUTE);
     }
+    private void getDateCalendar() {
+        Calendar cal = Calendar.getInstance();
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
+
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     public void pickDate()
@@ -55,6 +62,12 @@ public class DateAndTimePicker implements DatePickerDialog.OnDateSetListener, Ti
     new DatePickerDialog(context, this, year, month, day).show();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    public void pickOnlyDate()
+    {
+        getDateCalendar();
+        new DatePickerDialog(context, this, year, month, day).show();
+    }
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
