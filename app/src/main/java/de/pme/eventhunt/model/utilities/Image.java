@@ -1,10 +1,12 @@
 package de.pme.eventhunt.model.utilities;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -19,6 +21,9 @@ import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
+
+import de.pme.eventhunt.model.documents.User;
+import de.pme.eventhunt.model.repositories.UserRepository;
 
 public class Image {
 
@@ -37,6 +42,54 @@ public class Image {
         UploadImage(bitmapLarge, 1);
     }
 
+    public void UploadProfileImage(User user, Activity activity)
+    {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        String referenceId = UUID.randomUUID().toString();
+        StorageReference imageRef = storageRef.child(referenceId);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmapLarge.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        uploadStarted = true;
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                uploadStarted = false;
+                exception.printStackTrace();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
+                firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        String url = uri.toString();
+                        Log.e("TAG:", "the url is: " + url);
+
+                        String ref = imageRef.getName();
+                        Log.e("TAG:", "the ref is: " + ref);
+
+                        downloadUrlSmall = url;
+                        user.setImageSmallRef(downloadUrlSmall);
+                        UserRepository userRepository = new UserRepository();
+                        userRepository.createUser(user);
+
+                        Toast.makeText(activity, "Registering user successful!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+
+    }
 
     public void CreateBitmapSmall(Uri imageUri)
     {

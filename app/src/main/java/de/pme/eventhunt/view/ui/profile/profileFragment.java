@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Calendar;
@@ -36,6 +37,7 @@ import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.utilities.UserLocation;
 import de.pme.eventhunt.view.ui.core.BaseFragment;
 import de.pme.eventhunt.view.ui.detail_view.DetailViewViewModel;
+import de.pme.eventhunt.view.ui.utilities.Date;
 import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 
 public class profileFragment extends BaseFragment {
@@ -109,18 +111,22 @@ public class profileFragment extends BaseFragment {
                                     .load(user.getImageSmallRef())
                                     .into(profileImage);
 
-                            DateAndTime dateOfBirth = new DateAndTime();
+                            Date dateOfBirth = new Date();
 
-                            dateOfBirth.setDateAndTime(LocalDateTime.parse(user.getDateOfBirth()));
+                            dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
 
 
                             dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
                             emailTextView.setText(user.getEmail());
                             String dobString = user.getDateOfBirth();
-                            LocalDateTime dobLDT = LocalDateTime.parse(dobString);
-                            String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
+                            LocalDate dobLDT = LocalDate.parse(dobString);
+                            Period period = Period.between(dobLDT, LocalDate.now());
+                            String age = period.toString();
+                          //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
                             ageTextView.setText(age);
-                            nameTextView.setText(user.getFirstName() + user.getLastName());
+
+
+                            nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
 
                             settingsButton.setOnClickListener(new View.OnClickListener() {
                                 @Override

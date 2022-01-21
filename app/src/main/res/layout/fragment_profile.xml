@@ -135,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
+            android:background="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
@@ -155,6 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0"
+            android:background="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
@@ -213,6 +215,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginTop="10dp"
+
         android:elevation="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLocation">
@@ -222,6 +225,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0"
+            android:background="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
@@ -233,6 +237,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginTop="10dp"
+
         android:elevation="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewEmail">
@@ -242,6 +247,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0"
+            android:background="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
@@ -252,6 +258,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginTop="10dp"
+
         android:elevation="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDateOfBirth">
@@ -261,6 +268,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0"
+            android:background="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
