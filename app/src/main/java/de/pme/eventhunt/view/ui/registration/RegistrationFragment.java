@@ -247,7 +247,7 @@ public class RegistrationFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "user created !", Toast.LENGTH_SHORT).show();
+
                         //Check location
                         if (userLocation == null) {
                             Toast.makeText(context, "No location set!", Toast.LENGTH_SHORT).show();
@@ -266,7 +266,7 @@ public class RegistrationFragment extends Fragment {
 
                         if (dobLD.compareTo(LocalDate.now()) >= 0) {
                             Toast.makeText(context, "Date of Birth has to be  before now!", Toast.LENGTH_SHORT).show();
-
+                            return;
                         }
                         String dobString = dob.toLocalDateString();
 

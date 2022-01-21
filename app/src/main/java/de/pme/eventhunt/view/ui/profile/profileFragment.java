@@ -121,7 +121,8 @@ public class profileFragment extends BaseFragment {
                             String dobString = user.getDateOfBirth();
                             LocalDate dobLDT = LocalDate.parse(dobString);
                             Period period = Period.between(dobLDT, LocalDate.now());
-                            String age = period.toString();
+                            int periodInYears = period.getYears();
+                            String age =String.valueOf(periodInYears); ;
                           //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
                             ageTextView.setText(age);
 

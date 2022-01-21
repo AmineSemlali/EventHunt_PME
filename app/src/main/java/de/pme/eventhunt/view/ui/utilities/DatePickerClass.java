@@ -52,30 +52,27 @@ public class DatePickerClass implements DatePickerDialog.OnDateSetListener {
     {
         getDateCalendar();
         new DatePickerDialog(context, this, year, month, day).show();
+
     }
 
 
 
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        if(dayOfMonth < 10) date.day = "0"+dayOfMonth;
+        else date.day = String.valueOf(dayOfMonth);
+        if(month < 10) date.month = "0"+(month +1);
+        else date.month = String.valueOf(month +1);
+        date.year = String.valueOf(year);
 
+        getDateCalendar();
 
+        showDate();
+    }
 
     private void showDate() {
         this.editText.setText(new String(date.day+"."
                 + date.month + "."
                 + date.year ));
-    }
-
-
-    @Override
-    public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
-        if(day < 10) date.day = "0"+day;
-        else date.day = String.valueOf(day);
-        if(month < 10) date.month = "0"+(month+1);
-        else date.month = String.valueOf(month+1);
-        date.year = String.valueOf(year);
-
-//        getDateCalendar();
-
-        showDate();
     }
 }
