@@ -61,7 +61,7 @@ public class DatePickerClass implements DatePickerDialog.OnDateSetListener {
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         if(dayOfMonth < 10) date.day = "0"+dayOfMonth;
         else date.day = String.valueOf(dayOfMonth);
-        if(month < 10) date.month = "0"+(month +1);
+        if(month < 9) date.month = "0"+(month +1);
         else date.month = String.valueOf(month +1);
         date.year = String.valueOf(year);
 

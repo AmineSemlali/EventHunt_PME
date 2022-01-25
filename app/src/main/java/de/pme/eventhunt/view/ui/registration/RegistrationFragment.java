@@ -59,10 +59,9 @@ import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.repositories.UserRepository;
 import de.pme.eventhunt.model.utilities.EventLocation;
 import de.pme.eventhunt.model.utilities.Image;
+import de.pme.eventhunt.model.utilities.PasswordValidator;
 import de.pme.eventhunt.model.utilities.UserLocation;
 import de.pme.eventhunt.view.ui.utilities.Date;
-import de.pme.eventhunt.view.ui.utilities.DateAndTime;
-import de.pme.eventhunt.view.ui.utilities.DateAndTimePicker;
 import de.pme.eventhunt.view.ui.utilities.DatePickerClass;
 
 
@@ -224,6 +223,8 @@ public class RegistrationFragment extends Fragment {
                     {
                         Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
                     }
+//                    PasswordValidator checkpass = new PasswordValidator();
+//                    checkpass.isValid(txt_password);
                     else registerUser(txt_email, txt_password, txt_firstName, txt_lastName,datePickerDOB,userLocation);
                 }
             }

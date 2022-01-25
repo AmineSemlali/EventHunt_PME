@@ -90,7 +90,51 @@ public class Image {
         });
 
     }
+    public void editProfileImage(User user, Activity activity)
+    {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
 
+        String referenceId = UUID.randomUUID().toString();
+        StorageReference imageRef = storageRef.child(referenceId);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmapLarge.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        uploadStarted = true;
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                uploadStarted = false;
+                exception.printStackTrace();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
+                firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        String url = uri.toString();
+                        Log.e("TAG:", "the url is: " + url);
+
+                        String ref = imageRef.getName();
+                        Log.e("TAG:", "the ref is: " + ref);
+
+                        downloadUrlSmall = url;
+                        user.setImageSmallRef(downloadUrlSmall);
+                        Toast.makeText(activity, "updating user successful!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+
+    }
     public void CreateBitmapSmall(Uri imageUri)
     {
         if(bitmapSmall == null)

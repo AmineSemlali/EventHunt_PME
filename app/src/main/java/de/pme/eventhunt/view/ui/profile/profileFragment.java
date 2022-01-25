@@ -1,6 +1,7 @@
 package de.pme.eventhunt.view.ui.profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,6 +40,8 @@ import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.utilities.UserLocation;
+import de.pme.eventhunt.view.MainActivity;
+import de.pme.eventhunt.view.StartActivity;
 import de.pme.eventhunt.view.ui.core.BaseFragment;
 import de.pme.eventhunt.view.ui.detail_view.DetailViewViewModel;
 import de.pme.eventhunt.view.ui.utilities.Date;
@@ -55,6 +62,7 @@ public class profileFragment extends BaseFragment {
     TextView ageTextView;
     ImageView settingsButton;
     ImageView editProfileButton;
+    ImageView buttonLogOut;
     TextView locationTextView;
     TextView emailTextView;
     TextView dateOfBirthTextView;
@@ -85,6 +93,8 @@ public class profileFragment extends BaseFragment {
         ageTextView = view.findViewById(R.id.Age);
         settingsButton = view.findViewById(R.id.buttonSettingsImage);
         editProfileButton = view.findViewById(R.id.buttonEditProfileImage);
+        buttonLogOut = view.findViewById(R.id.buttonLogOutImage);
+
         locationTextView = view.findViewById(R.id.LocationInput);
         emailTextView = view.findViewById(R.id.EmailInput);
         dateOfBirthTextView = view.findViewById(R.id.DateOfBirthInput);
@@ -142,12 +152,27 @@ public class profileFragment extends BaseFragment {
                                     navController.navigate(R.id.action_navigation_profile_to_editprofile);
                                 }
                             });
+
+                            buttonLogOut.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    logoutUser();
+                                }
+                            });
                         }
                         });
         }
 
         return view;
     }
+    private void logoutUser() {
+
+        auth.signOut();
+        startActivity(new Intent(getActivity(), StartActivity.class));
+        Toast.makeText(getActivity(), "you are logged out!", Toast.LENGTH_SHORT).show();
+
+            }
+
 
     private String getAge(int year, int month, int day){
         Calendar dob = Calendar.getInstance();
