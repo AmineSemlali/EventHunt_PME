@@ -3,9 +3,47 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/edit_profile.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_chat_24.xml" value="0.3425925925925926" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_date_range_24.xml" value="0.3425925925925926" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.38358974358974357" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.22" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_settings_1_24.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.34444444444444444" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_baseline_settings_applications_24.xml" value="0.3425925925925926" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/ic_location_icon.xml" value="0.3425925925925926" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/image_add_event.xml" value="0.38958333333333334" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/drawable/image_placeholder_icon.xml" value="0.38958333333333334" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/font/allerta.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/font/archivo_black.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/activity_maps.xml" value="0.19067028985507245" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/activity_start.xml" value="0.3233695652173913" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/dropdown_item.xml" value="0.2884963768115942" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_create_event.xml" value="0.2884963768115942" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_detail_view.xml" value="0.22554347826086957" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_edit_profile.xml" value="0.18161094224924013" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_events.xml" value="0.2884963768115942" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_filter_events.xml" value="0.18161094224924013" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_home.xml" value="0.2884963768115942" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_login.xml" value="0.21965579710144928" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_notifications.xml" value="0.18161094224924013" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_profile.xml" value="0.18161094224924013" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_registation.xml" value="0.29846014492753625" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/fragment_settings.xml" value="0.18161094224924013" />
         <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/list_item_event.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/layout/list_item_notification.xml" value="0.1" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3734375" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3425925925925926" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/activity_start.xml" value="0.25" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/fragment_detail_view.xml" value="0.25" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/fragment_registation.xml" value="0.25" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
+        <entry key="..\:/Users/semla/Downloads/EventHunt_PME/app/src/main/res/menu/bottom_nav_menu.xml" value="0.14479166666666668" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/drawable/ic_baseline_date_range_24.xml" value="0.2140625" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/dev/pme/EventHunt_PME/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
@@ -47,7 +85,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

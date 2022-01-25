@@ -38,21 +38,6 @@ public class NotificationsViewModel extends AndroidViewModel {
     }
 
     public List<Notification>getNotifications() {
-
-//        Task<QuerySnapshot> events = db.collection("eventUser").whereEqualTo("UserId", auth.getUid()).get();
-//        List<EventUser> eventUsers = events.getResult().toObjects(EventUser.class);
-//        eventUsers.forEach(eventUser -> {
-//            Task<QuerySnapshot> notificationsForEvent = db.collection(Notification.collection)
-//                    .whereEqualTo("EventId", eventUser.getEventId())
-//                    .whereGreaterThanOrEqualTo("CreatedAt", eventUser.getJoinedAt()).get();
-//
-//            List<Notification> eventNotifications = notificationsForEvent.getResult().toObjects(Notification.class);
-//            notifications.addAll(eventNotifications);
-//
-//            adapter.setNotifications(notifications);
-//        });
-
-
         db.collection("notification").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -63,6 +48,7 @@ public class NotificationsViewModel extends AndroidViewModel {
 
         return notifications;
     }
+
 
 
 

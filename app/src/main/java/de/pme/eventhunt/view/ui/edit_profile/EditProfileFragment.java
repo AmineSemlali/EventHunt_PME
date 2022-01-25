@@ -1,4 +1,4 @@
-package de.pme.eventhunt.view.ui.registration;
+package de.pme.eventhunt.view.ui.edit_profile;
 
 import static android.provider.CallLog.Locations.LATITUDE;
 import static android.provider.CallLog.Locations.LONGITUDE;
@@ -41,16 +41,19 @@ import com.adevinta.leku.LocationPickerActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import de.pme.eventhunt.R;
@@ -59,14 +62,14 @@ import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.repositories.UserRepository;
 import de.pme.eventhunt.model.utilities.EventLocation;
 import de.pme.eventhunt.model.utilities.Image;
-import de.pme.eventhunt.model.utilities.PasswordValidator;
 import de.pme.eventhunt.model.utilities.UserLocation;
+import de.pme.eventhunt.view.ui.registration.RegistrationViewModel;
 import de.pme.eventhunt.view.ui.utilities.Date;
 import de.pme.eventhunt.view.ui.utilities.DatePickerClass;
 
 
-public class RegistrationFragment extends Fragment {
 
+public class EditProfileFragment extends Fragment {
 
     Context context;
     Activity activity;
@@ -81,45 +84,33 @@ public class RegistrationFragment extends Fragment {
     Uri imageUri;
     double lastLongitude = 0.0;
     double lastLatitude = 0.0;
-
+User user;
     private TextInputEditText email;
     private TextInputEditText password;
     private TextInputEditText firstName;
     private TextInputEditText lastName;
-    private Button registrationButton;
+    private Button editButton;
     private ImageView getUserImageView;
     private TextInputEditText dateOfBirth;
-    TextInputEditText locationEditText;
+    private TextInputEditText locationEditText;
 
     //firebase
+
     private FirebaseAuth auth;
     FirebaseFirestore db;
     FirebaseStorage storage;
-    private RegistrationViewModel registrationViewModel;
+    private EditProfileViewModel editProfileViewModel;
     NavController navController;
     UserRepository userRepository;
 
-
-
-
-
-    public RegistrationFragment() {
+    public EditProfileFragment() {
         // Required empty public constructor
-    }
-
-    public static RegistrationFragment newInstance(String param1, String param2) {
-        RegistrationFragment fragment = new RegistrationFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
-
-
     }
 
     @Override
@@ -128,23 +119,23 @@ public class RegistrationFragment extends Fragment {
         context = getContext();
         activity = getActivity();
 
-        view = inflater.inflate(R.layout.fragment_registation, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
-        registrationViewModel = new ViewModelProvider(this).get(RegistrationViewModel.class);
+        editProfileViewModel = new ViewModelProvider(this).get(EditProfileViewModel.class);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment)fragmentManager.findFragmentById(R.id.nav_host_fragment_start);
+        NavHostFragment navHostFragment = (NavHostFragment)fragmentManager.findFragmentById(R.id.nav_host_fragment_main);
         navController = navHostFragment.getNavController();
-
 
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         userRepository = new UserRepository();
 
+
         email = view.findViewById(R.id.email_registration);
         password = view.findViewById(R.id.password_registration);
         firstName = view.findViewById(R.id.firstName_registration);
         lastName = view.findViewById(R.id.lastName_registration);
-        registrationButton = view.findViewById(R.id.finish_registration);
+        editButton = view.findViewById(R.id.finish_edit);
         dateOfBirth = view.findViewById(R.id.editTextDateOfBirth);
         getUserImageView = view.findViewById(R.id.imageViewGetImage);
         locationEditText = view.findViewById(R.id.editTextLocation);
@@ -152,8 +143,6 @@ public class RegistrationFragment extends Fragment {
         userImage = new Image();
 
         DatePickerClass datePickerDOB = new DatePickerClass(context, dateOfBirth);
-
-
 
 
         getUserImageView.setOnClickListener(new View.OnClickListener() {
@@ -199,9 +188,7 @@ public class RegistrationFragment extends Fragment {
             }
         });
 
-
-
-        registrationButton.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -223,9 +210,7 @@ public class RegistrationFragment extends Fragment {
                     {
                         Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
                     }
-//                    PasswordValidator checkpass = new PasswordValidator();
-//                    checkpass.isValid(txt_password);
-                    else registerUser(txt_email, txt_password, txt_firstName, txt_lastName,datePickerDOB,userLocation);
+                    else updateUser(txt_email, txt_password, txt_firstName, txt_lastName,datePickerDOB,userLocation);
                 }
             }
         });
@@ -241,55 +226,63 @@ public class RegistrationFragment extends Fragment {
 
         startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
     }
+    private void updateUser(String email, String password, String firstName, String lastName, DatePickerClass datePickerDob, UserLocation location) {
 
 
-        private void registerUser(String email, String password, String firstName, String lastName, DatePickerClass datePickerDob, UserLocation location) {
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-
-                        //Check location
-                        if (userLocation == null) {
-                            Toast.makeText(context, "No location set!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        //Check start & end date
-                        Date dob = datePickerDob.getDate();
-
-                        if (dob.day.isEmpty() || dob.month.isEmpty() || dob.year.isEmpty()) {
-                            Toast.makeText(context, "Please select a start date and time!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        LocalDate dobLD = dob.toLocalDate();
-
-                        if (dobLD.compareTo(LocalDate.now()) >= 0) {
-                            Toast.makeText(context, "Date of Birth has to be  before now!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        String dobString = dob.toLocalDateString();
-
-                        // Check image
-                        if (imageUri == null) {
-                            Toast.makeText(context, "Please select an image!", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-
-                            String userId = auth.getCurrentUser().getUid();
-                            User user = new User(userId, email, firstName, lastName, dobString, userLocation, userImage.getDownloadUrlSmall());
-
-                            userImage.UploadProfileImage(user, activity);
-
-
-                            navController.navigate(R.id.action_registationFragment_to_loginFragment);
-
-                        }
+                    //Check location
+                    if (userLocation == null) {
+                        Toast.makeText(context, "No location set!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-            };
-        });
-    }
+
+                    //Check start & end date
+                    Date dob = datePickerDob.getDate();
+
+                    if (dob.day.isEmpty() || dob.month.isEmpty() || dob.year.isEmpty()) {
+                        Toast.makeText(context, "Please select a start date and time!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    LocalDate dobLD = dob.toLocalDate();
+
+                    if (dobLD.compareTo(LocalDate.now()) >= 0) {
+                        Toast.makeText(context, "Date of Birth has to be  before now!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String dobString = dob.toLocalDateString();
+
+                    // Check image
+                    if (imageUri == null) {
+                        Toast.makeText(context, "Please select an image!", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+
+                        String userId = auth.getCurrentUser().getUid();
+                        Task<QuerySnapshot> userQuery;
+                        userQuery = db.collection("user").whereEqualTo("id", userId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                List<User> users = queryDocumentSnapshots.toObjects(User.class);
+                                user = users.get(0);
+                                user.setId(userId);
+                                user.setFirstName(firstName);
+                                user.setLastName(lastName);
+                                user.setDateOfBirth(dobString);
+                                user.setLocation(userLocation);
+                                user.setEmail(email);
+                                userImage.editProfileImage(user, activity);
+
+
+                            }
+                        });
+
+
+
+                        navController.navigate(R.id.action_edit_profile_to_navigation_profile);
+
+                    }
+                }
+
 
     void pickLocation(View view) {
 
@@ -330,6 +323,7 @@ public class RegistrationFragment extends Fragment {
 
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override

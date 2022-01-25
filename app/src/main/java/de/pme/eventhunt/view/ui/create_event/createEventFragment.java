@@ -56,6 +56,7 @@ import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.repositories.EventRepository;
 import de.pme.eventhunt.model.utilities.Image;
 import de.pme.eventhunt.model.utilities.EventLocation;
+import de.pme.eventhunt.view.MainActivity;
 import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 import de.pme.eventhunt.view.ui.utilities.DateAndTimePicker;
 
@@ -123,6 +124,7 @@ public class createEventFragment extends Fragment {
         activity = getActivity();
 
         view = inflater.inflate(R.layout.fragment_create_event, container, false);
+
         createEventViewModel = new ViewModelProvider(this).get(CreateEventViewModel.class);
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -228,6 +230,7 @@ public class createEventFragment extends Fragment {
 
                 createEvent(title_txt, description_txt, category_txt,
                         dateAndTimePickerStart, dateAndTimePickerEnd, eventLocation);
+
             }
 
 
@@ -263,7 +266,7 @@ public class createEventFragment extends Fragment {
         }
 
         //Check description
-        if (description.length() < 20) {
+        if (description.length() < 10) {
             Toast.makeText(context, "Description too short!", Toast.LENGTH_SHORT).show();
             return;
         } else if (description.length() > 250) {
@@ -340,6 +343,7 @@ public class createEventFragment extends Fragment {
                     category, eventLocation, startDateString, endDateString,
                     eventImage.getDownloadUrlSmall(), eventImage.getDownloadUrlLarge());
             eventRepository.createEvent(newEvent);
+            startActivity(new Intent(getActivity(), MainActivity.class));
         }
     }
 
@@ -366,8 +370,8 @@ public class createEventFragment extends Fragment {
 
                     Intent locationPickerIntent = new LocationPickerActivity.Builder()
                             .withLocation(lastLatitude, lastLongitude)
-                            .withGeolocApiKey("AIzaSyCjgZOgBTM-zW6FMBDNJGvXcK6-D7O6sYY")
-                            .withGooglePlacesApiKey("AIzaSyCjgZOgBTM-zW6FMBDNJGvXcK6-D7O6sYY")
+                            .withGeolocApiKey("AIzaSyBOYMpJcVgIx7_kx-Oi7jHICLUuAdG9g8s")
+                            .withGooglePlacesApiKey("AIzaSyBOYMpJcVgIx7_kx-Oi7jHICLUuAdG9g8s")
                             .shouldReturnOkOnBackPressed()
                             .withCityHidden()
                             .withZipCodeHidden()

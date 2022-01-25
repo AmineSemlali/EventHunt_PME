@@ -5,6 +5,7 @@ public class Notification
 {
 
     public static String collection = "notification";
+    private String NotificationId;
     private String EventId;
     private String NotificationDescription;
     private String NotificationCategory;
@@ -22,6 +23,13 @@ public class Notification
         EventId = eventId;
     }
 
+    public String getNotificationId() {
+        return NotificationId;
+    }
+
+    public void setNotificationIdId(String notificationId) {
+        NotificationId = notificationId;
+    }
 
     public String getNotificationDescription() {
         return NotificationDescription ;
