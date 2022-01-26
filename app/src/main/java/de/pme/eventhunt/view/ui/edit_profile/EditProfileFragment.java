@@ -44,8 +44,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -84,9 +87,10 @@ public class EditProfileFragment extends Fragment {
     Uri imageUri;
     double lastLongitude = 0.0;
     double lastLatitude = 0.0;
-User user;
+    User userRepo;
     private TextInputEditText email;
     private TextInputEditText password;
+    private TextInputEditText oldPassword;
     private TextInputEditText firstName;
     private TextInputEditText lastName;
     private Button editButton;
@@ -133,6 +137,7 @@ User user;
 
         email = view.findViewById(R.id.email_registration);
         password = view.findViewById(R.id.password_registration);
+        oldPassword = view.findViewById(R.id.old_password);
         firstName = view.findViewById(R.id.firstName_registration);
         lastName = view.findViewById(R.id.lastName_registration);
         editButton = view.findViewById(R.id.finish_edit);
@@ -193,7 +198,7 @@ User user;
             @Override
             public void onClick(View view) {
                 if (email == null || email.toString().isEmpty() ||
-                        password == null || password.toString().isEmpty() ||
+                        password == null || password.toString().isEmpty() || oldPassword == null || oldPassword.toString().isEmpty() ||
                         firstName == null || firstName.toString().isEmpty() ||
                         lastName == null || lastName.toString().isEmpty())
                 {
@@ -203,6 +208,7 @@ User user;
                 {
                     String txt_email = email.getText().toString();
                     String txt_password = password.getText().toString();
+                    String txt_oldPassword = oldPassword.getText().toString();
                     String txt_firstName = firstName.getText().toString();
                     String txt_lastName = lastName.getText().toString();
 
@@ -210,7 +216,7 @@ User user;
                     {
                         Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
                     }
-                    else updateUser(txt_email, txt_password, txt_firstName, txt_lastName,datePickerDOB,userLocation);
+                    else updateUser(txt_email, txt_password,txt_oldPassword, txt_firstName, txt_lastName,datePickerDOB,userLocation);
                 }
             }
         });
@@ -226,7 +232,7 @@ User user;
 
         startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
     }
-    private void updateUser(String email, String password, String firstName, String lastName, DatePickerClass datePickerDob, UserLocation location) {
+    private void updateUser(String email, String password, String oldPassword, String firstName, String lastName, DatePickerClass datePickerDob, UserLocation location) {
 
 
                     //Check location
@@ -263,22 +269,53 @@ User user;
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 List<User> users = queryDocumentSnapshots.toObjects(User.class);
-                                user = users.get(0);
-                                user.setId(userId);
-                                user.setFirstName(firstName);
-                                user.setLastName(lastName);
-                                user.setDateOfBirth(dobString);
-                                user.setLocation(userLocation);
-                                user.setEmail(email);
-                                userImage.editProfileImage(user, activity);
+                                userRepo = users.get(0);
+                                String oldEmail = userRepo.getEmail();
+
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                AuthCredential credential = EmailAuthProvider
+                                        .getCredential(oldEmail, oldPassword);
+
+                                user.reauthenticate(credential)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Log.d("Re-authentication", "User re-authenticated.");
+
+                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                user.updateEmail(email)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    Log.d("Email updated", "User email address updated.");
+
+                                                                }
+                                                            }
+                                                        });
+                                                user.updatePassword(password).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Log.d("Email updated", "User email address updated.");
+
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        });
 
 
+
+                                userRepository.updateUser(userRepo,email,firstName,lastName,dobString,userLocation);
+                                userImage.editProfileImage(userRepo, activity);
                             }
                         });
 
 
 
-                        navController.navigate(R.id.action_edit_profile_to_navigation_profile);
+                        navController.navigate(R.id.action_edit_profile_to_navigation_home);
 
                     }
                 }
