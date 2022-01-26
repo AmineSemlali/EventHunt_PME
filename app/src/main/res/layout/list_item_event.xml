@@ -47,9 +47,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="80dp"
         android:fontFamily="@font/archivo_black"
         android:text="Location"
         android:textColor="@color/textInput_grey"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/listTextView_title" />
 

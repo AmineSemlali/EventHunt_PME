@@ -193,7 +193,9 @@ public class DetailViewFragment extends BaseFragment {
                                 editButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        //go to edit fragment
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("eventId", eventId);
+                                        navController.navigate(R.id.action_detail_view_to_editEvent, bundle);
                                     }
                                 });
                             }

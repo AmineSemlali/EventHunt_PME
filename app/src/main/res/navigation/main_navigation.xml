@@ -57,6 +57,9 @@
         <argument
             android:name="eventId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detail_view_to_editEvent"
+            app:destination="@id/editEvent" />
     </fragment>
 
 
@@ -93,5 +96,10 @@
 <!--            android:id="@+id/action_navigation_profile_to_start_navigation"-->
 <!--            app:destination="@id/start_navigation" />-->
     </fragment>
-<!--    <include app:graph="@navigation/start_navigation" />-->
+    <fragment
+        android:id="@+id/editEvent"
+        android:name="de.pme.eventhunt.view.ui.edit_event.EditEventFragment"
+        android:label="fragment_edit_event"
+        tools:layout="@layout/fragment_edit_event" />
+    <!--    <include app:graph="@navigation/start_navigation" />-->
 </navigation>
