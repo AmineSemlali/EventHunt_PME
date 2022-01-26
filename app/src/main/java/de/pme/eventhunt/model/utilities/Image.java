@@ -126,7 +126,9 @@ public class Image {
                         Log.e("TAG:", "the ref is: " + ref);
 
                         downloadUrlSmall = url;
-                        user.setImageSmallRef(downloadUrlSmall);
+                        UserRepository userRepository = new UserRepository();
+                        userRepository.updateUserImage(user,downloadUrlSmall);
+
                         Toast.makeText(activity, "updating user successful!", Toast.LENGTH_SHORT).show();
 
                     }
