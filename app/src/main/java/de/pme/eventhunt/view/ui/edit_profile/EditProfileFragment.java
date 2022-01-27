@@ -63,6 +63,7 @@ import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.repositories.UserRepository;
+import de.pme.eventhunt.model.utilities.EmailAndPasswordValidator;
 import de.pme.eventhunt.model.utilities.EventLocation;
 import de.pme.eventhunt.model.utilities.Image;
 import de.pme.eventhunt.model.utilities.UserLocation;
@@ -212,9 +213,16 @@ public class EditProfileFragment extends Fragment {
                     String txt_firstName = firstName.getText().toString();
                     String txt_lastName = lastName.getText().toString();
 
-                    if(txt_password.length() < 6)
+                    EmailAndPasswordValidator checkPass = new EmailAndPasswordValidator();
+
+                    if(!checkPass.isPasswordValid(txt_password))
                     {
-                        Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Password conditions not fulfilled!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if(!checkPass.isEmailValid(txt_email))
+                    {
+                        Toast.makeText(getActivity(), "Email conditions not fulfilled!", Toast.LENGTH_SHORT).show();
                     }
                     else updateUser(txt_email, txt_password,txt_oldPassword, txt_firstName, txt_lastName,datePickerDOB,userLocation);
                 }

@@ -6,7 +6,6 @@ import static android.provider.CallLog.Locations.LONGITUDE;
 import android.Manifest;
 import android.app.Activity;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.content.Context;
@@ -21,11 +20,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +30,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -50,16 +46,12 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 import de.pme.eventhunt.R;
-import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.repositories.UserRepository;
-import de.pme.eventhunt.model.utilities.EventLocation;
 import de.pme.eventhunt.model.utilities.Image;
-import de.pme.eventhunt.model.utilities.PasswordValidator;
+import de.pme.eventhunt.model.utilities.EmailAndPasswordValidator;
 import de.pme.eventhunt.model.utilities.UserLocation;
 import de.pme.eventhunt.view.ui.utilities.Date;
 import de.pme.eventhunt.view.ui.utilities.DatePickerClass;
@@ -219,12 +211,18 @@ public class RegistrationFragment extends Fragment {
                     String txt_firstName = firstName.getText().toString();
                     String txt_lastName = lastName.getText().toString();
 
-                    if(txt_password.length() < 6)
+                    EmailAndPasswordValidator checkPass = new EmailAndPasswordValidator();
+
+                    if(!checkPass.isPasswordValid(txt_password))
                     {
-                        Toast.makeText(getActivity(), "Password too short!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Password conditions not fulfilled!", Toast.LENGTH_SHORT).show();
                     }
-//                    PasswordValidator checkpass = new PasswordValidator();
-//                    checkpass.isValid(txt_password);
+
+                    if(!checkPass.isEmailValid(txt_email))
+                    {
+                        Toast.makeText(getActivity(), "Email conditions not fulfilled!", Toast.LENGTH_SHORT).show();
+                    }
+
                     else registerUser(txt_email, txt_password, txt_firstName, txt_lastName,datePickerDOB,userLocation);
                 }
             }
