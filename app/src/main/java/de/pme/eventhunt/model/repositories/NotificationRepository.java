@@ -2,8 +2,10 @@ package de.pme.eventhunt.model.repositories;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -12,6 +14,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,6 +29,8 @@ public class NotificationRepository {
     FirebaseFirestore db;
     FirebaseAuth auth;
     EventUserRepository eventUserRepository;
+
+    String notificationText = "";
 
     public NotificationRepository()
     {
@@ -42,6 +47,45 @@ public class NotificationRepository {
         });
         // to add
         // whether the data is complete gets checked in the fragments
+    }
+
+    public void addNotificationsForEvent(int notificationType, Event event)
+    {
+        if(notificationType == 0)
+        {
+            notificationText = "\"" + event.getTitle() + "\" " + "has been updated";
+        }
+        else if(notificationType == 1)
+        {
+            notificationText = "\"" + event.getTitle() + "\" " + "has been cancelled";
+        }
+        else
+        {
+            notificationText = "\"" + event.getTitle() + "\" " + "notification";
+        }
+
+        db.collection("eventUser").whereEqualTo("eventId", event.getEventId()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<EventUser> eventUsers = task.getResult().toObjects(EventUser.class);
+
+                        eventUsers.forEach(eventUser -> {
+                            Notification notification = new Notification();
+                            notification.setNotificationDescription(notificationText);
+                            notification.setEventId(eventUser.getEventId());
+                            notification.setUserId(eventUser.getUserId());
+
+                            String createdAt = LocalDateTime.now().toString();
+                            createdAt = createdAt.substring(0, createdAt.indexOf("."));
+                            notification.setCreatedAt(createdAt);
+
+                            notification.setEventImage(event.getImageSmallRef());
+
+                            db.collection(Notification.collection).document(notification.getNotificationId()).set(notification);
+                        });
+                    }
+                });
     }
 
     public void deleteNotification(String notificationID)

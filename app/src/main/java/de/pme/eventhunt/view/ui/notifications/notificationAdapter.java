@@ -115,6 +115,10 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         //mRecentlyDeletedItem = notificationList.get(position);
         //mRecentlyDeletedItemPosition = position;
         //notificationRepository.deleteNotification(mRecentlyDeletedItem.getNotificationId());
+        Notification deletedNotification = notificationList.get(position);
+        db.collection(Notification.collection).document(deletedNotification.getNotificationId()).delete();
+
+
         notificationList.remove(position);
         notifyItemRemoved(position);
 

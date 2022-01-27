@@ -38,7 +38,7 @@ public class NotificationsViewModel extends AndroidViewModel {
     }
 
     public List<Notification>getNotifications() {
-        db.collection("notification").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("notification").whereEqualTo("userId", auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 notifications = task.getResult().toObjects(Notification.class);

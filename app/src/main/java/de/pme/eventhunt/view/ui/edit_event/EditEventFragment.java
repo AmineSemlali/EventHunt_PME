@@ -37,6 +37,7 @@ import com.adevinta.leku.LocationPickerActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,6 +56,7 @@ import java.util.UUID;
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.repositories.EventRepository;
+import de.pme.eventhunt.model.repositories.NotificationRepository;
 import de.pme.eventhunt.model.utilities.EventLocation;
 import de.pme.eventhunt.model.utilities.Image;
 import de.pme.eventhunt.view.MainActivity;
@@ -78,6 +80,7 @@ public class EditEventFragment extends BaseFragment {
     EventRepository eventRepository;
     CreateEventViewModel createEventViewModel;
     FirebaseStorage storage;
+    NotificationRepository notificationRepository;
 
     TextInputEditText titleEditText;
     TextInputEditText descriptionEditText;
@@ -144,6 +147,7 @@ public class EditEventFragment extends BaseFragment {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         eventRepository = new EventRepository();
+        notificationRepository = new NotificationRepository();
 
 
         titleEditText = view.findViewById(R.id.editTextTitle);
@@ -449,7 +453,13 @@ public class EditEventFragment extends BaseFragment {
                     curEvent.setImageLargeRef(eventImage.getDownloadUrlLarge());
                 }
 
-                db.collection(Event.collection).document(curEvent.getEventId()).set(curEvent);
+                db.collection(Event.collection).document(curEvent.getEventId()).set(curEvent).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        notificationRepository.addNotificationsForEvent(0, curEvent);
+                    }
+                });
+
 
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }

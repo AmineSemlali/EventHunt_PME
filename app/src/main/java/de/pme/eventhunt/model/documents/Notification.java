@@ -1,5 +1,8 @@
 package de.pme.eventhunt.model.documents;
 
+
+import java.util.UUID;
+
 public class Notification
 
 {
@@ -7,13 +10,14 @@ public class Notification
     public static String collection = "notification";
     private String NotificationId;
     private String EventId;
+    private String UserId;
     private String NotificationDescription;
-    private String NotificationCategory;
+    private int NotificationCategory; // 0 means changed, 1 means deleted
     private String CreatedAt;
     private String EventImage;
 
 
-    public Notification() {};
+    public Notification() { NotificationId = UUID.randomUUID().toString(); };
 
     public String getEventId() {
         return EventId;
@@ -23,11 +27,19 @@ public class Notification
         EventId = eventId;
     }
 
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
+    }
+
     public String getNotificationId() {
         return NotificationId;
     }
 
-    public void setNotificationIdId(String notificationId) {
+    public void setNotificationId(String notificationId) {
         NotificationId = notificationId;
     }
 
@@ -38,12 +50,12 @@ public class Notification
     public void setNotificationDescription(String notificationDescription) {
         NotificationDescription = notificationDescription;
     }
-    public String getNotificationCategory() {
+    public int getNotificationCategory() {
         return NotificationCategory;
     }
 
-    public void setNotificationCategory(String notificationCategory) {
-        NotificationDescription = notificationCategory;
+    public void setNotificationCategory(int notificationCategory) {
+        NotificationCategory = notificationCategory;
     }
 
     public String getCreatedAt() {
@@ -59,7 +71,7 @@ public class Notification
     }
 
     public void setEventImage(String eventImage) {
-        this.CreatedAt = eventImage;
+        this.EventImage = eventImage;
     }
 
 

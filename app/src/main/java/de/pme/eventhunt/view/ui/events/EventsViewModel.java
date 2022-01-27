@@ -55,10 +55,6 @@ public class EventsViewModel extends AndroidViewModel {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         List<EventUser> eventUsers = task.getResult().toObjects(EventUser.class);
                         if(eventUsers.isEmpty())    adapter.setEventList(events);
-                        else
-                        {
-
-                        }
 
                         eventUsers.forEach(eventUser -> {
                             db.collection("event").whereEqualTo("eventId", eventUser.getEventId()).get()
