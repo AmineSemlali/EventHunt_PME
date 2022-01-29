@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.List;
 
@@ -50,20 +51,26 @@ public class UserRepository {
        return users;
    }
 
-    public void updateUser(User user, String email, String firstName, String lastName, String dobString, UserLocation userLocation)
+    public void updateUser(User user, String email, String firstName, String lastName)
     {
         db.collection("user").document(user.getId()).update("email", email);
         db.collection("user").document(user.getId()).update("firstName", firstName);
         db.collection("user").document(user.getId()).update("lastName", lastName);
-        db.collection("user").document(user.getId()).update("dateOfBirth", dobString);
+
+    }
+
+public void updateDateOfBirth(User user, String dobString)
+{
+    db.collection("user").document(user.getId()).update("dateOfBirth", dobString);
+}
+    public void updateLocation(User user, UserLocation userLocation)
+    {
         db.collection("user").document(user.getId()).update("location.latitude", userLocation.getLatitude());
         db.collection("user").document(user.getId()).update("location.longitude", userLocation.getLongitude());
-        db.collection("user").document(user.getId()).update("imageSmallRef", user.getImageSmallRef());
     }
 
     public void updateUserImage(User user, String url)
     {
-
         db.collection("user").document(user.getId()).update("imageSmallRef", url);
     }
 }

@@ -257,7 +257,7 @@ public class RegistrationFragment extends Fragment {
                         Date dob = datePickerDob.getDate();
 
                         if (dob.day.isEmpty() || dob.month.isEmpty() || dob.year.isEmpty()) {
-                            Toast.makeText(context, "Please select a start date and time!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Please select a date of birth!", Toast.LENGTH_SHORT).show();
                             return;
                         }
 

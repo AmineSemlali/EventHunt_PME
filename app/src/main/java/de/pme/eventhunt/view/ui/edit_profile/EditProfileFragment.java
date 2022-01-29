@@ -52,6 +52,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -69,6 +70,7 @@ import de.pme.eventhunt.model.utilities.Image;
 import de.pme.eventhunt.model.utilities.UserLocation;
 import de.pme.eventhunt.view.ui.registration.RegistrationViewModel;
 import de.pme.eventhunt.view.ui.utilities.Date;
+import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 import de.pme.eventhunt.view.ui.utilities.DatePickerClass;
 
 
@@ -88,7 +90,16 @@ public class EditProfileFragment extends Fragment {
     Uri imageUri;
     double lastLongitude = 0.0;
     double lastLatitude = 0.0;
+    String dobString;
     User userRepo;
+    boolean firstNameChanged = false,
+            lastNameChanged = false,
+            locationChanged = false,locationTouched = false,
+            emailChanged = false,
+            dateOfBirthChanged = false, dateOfBirthTouched = false ,
+            imageTouched = false, imageChanged = false;
+
+
     private TextInputEditText email;
     private TextInputEditText password;
     private TextInputEditText oldPassword;
@@ -149,11 +160,45 @@ public class EditProfileFragment extends Fragment {
         userImage = new Image();
 
         DatePickerClass datePickerDOB = new DatePickerClass(context, dateOfBirth);
+        String currentUserId = auth.getUid();
+
+
+        if (currentUserId != null && !currentUserId.isEmpty()) {
+            db.collection("user").whereEqualTo("id", currentUserId).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            List<User> users = task.getResult().toObjects(User.class);
+                            userRepo = users.get(0);
+
+                            Picasso.get()
+                                    .load(userRepo.getImageSmallRef())
+                                    .into(getUserImageView);
+
+                            firstName.setText(userRepo.getFirstName());
+                            lastName.setText(userRepo.getLastName());
+                            email.setText(userRepo.getEmail());
+                            UserLocation userLocation = userRepo.getLocation();
+                            try {
+                                locationEditText.setText(userLocation.getLocationString(context));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Date dateBirth = new Date();
+                            dateBirth.setDate(LocalDate.parse(userRepo.getDateOfBirth()));
+                            dateOfBirth.setText(dateOfBirth.getText() + dateBirth.formatString());
+                        }
+
+                    });
 
 
         getUserImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { getImage(); }
+            public void onClick(View view) {
+                getImage();
+                imageTouched = true;
+            }
         });
 
         locationEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -168,6 +213,7 @@ public class EditProfileFragment extends Fragment {
                     if (user.getRawX() >= (locationEditText.getRight() - locationEditText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         // your action here
                         pickLocation(view);
+                        locationTouched = true;
                         return true;
                     }
                 }
@@ -187,6 +233,7 @@ public class EditProfileFragment extends Fragment {
                     if (user.getRawX() >= (dateOfBirth.getRight() - dateOfBirth.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         // your action here
                         datePickerDOB.pickDate();
+                        dateOfBirthTouched = true;
                         return true;
                     }
                 }
@@ -218,17 +265,19 @@ public class EditProfileFragment extends Fragment {
                     if(!checkPass.isPasswordValid(txt_password))
                     {
                         Toast.makeText(getActivity(), "Password conditions not fulfilled!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
                     if(!checkPass.isEmailValid(txt_email))
                     {
                         Toast.makeText(getActivity(), "Email conditions not fulfilled!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                     else updateUser(txt_email, txt_password,txt_oldPassword, txt_firstName, txt_lastName,datePickerDOB,userLocation);
                 }
             }
         });
-
+        }
         // Inflate the layout for this fragment
         return view;
     }
@@ -244,29 +293,31 @@ public class EditProfileFragment extends Fragment {
 
 
                     //Check location
-                    if (userLocation == null) {
+                    if (userLocation == null && locationTouched) {
                         Toast.makeText(context, "No location set!", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    if(dateOfBirthTouched) {
+                        //Check date of birth
+                        Date dob = datePickerDob.getDate();
 
-                    //Check start & end date
-                    Date dob = datePickerDob.getDate();
+                        if (dob.day.isEmpty() || dob.month.isEmpty() || dob.year.isEmpty()) {
+                            Toast.makeText(context, "Please select a date of birth!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
-                    if (dob.day.isEmpty() || dob.month.isEmpty() || dob.year.isEmpty()) {
-                        Toast.makeText(context, "Please select a start date and time!", Toast.LENGTH_SHORT).show();
-                        return;
+                        LocalDate dobLD = dob.toLocalDate();
+
+                        if (dobLD.compareTo(LocalDate.now()) >= 0) {
+                            Toast.makeText(context, "Date of Birth has to be  before now!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        dobString = dob.toLocalDateString();
+                        dateOfBirthChanged = true;
                     }
-
-                    LocalDate dobLD = dob.toLocalDate();
-
-                    if (dobLD.compareTo(LocalDate.now()) >= 0) {
-                        Toast.makeText(context, "Date of Birth has to be  before now!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    String dobString = dob.toLocalDateString();
 
                     // Check image
-                    if (imageUri == null) {
+                    if (imageUri == null && imageTouched ) {
                         Toast.makeText(context, "Please select an image!", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
@@ -315,9 +366,20 @@ public class EditProfileFragment extends Fragment {
                                         });
 
 
+                                userRepository.updateUser(userRepo, email, firstName, lastName);
 
-                                userRepository.updateUser(userRepo,email,firstName,lastName,dobString,userLocation);
-                                userImage.editProfileImage(userRepo, activity);
+                                if(imageChanged) {
+                                    userImage.editProfileImage(userRepo, activity);
+                                }
+                                if(locationChanged)
+                                {
+                                    userRepository.updateLocation(userRepo,userLocation);
+                                }
+                                if(dateOfBirthChanged)
+                                {
+                                    userRepository.updateDateOfBirth(userRepo,dobString);
+                                }
+                                Toast.makeText(activity, "updating user successful!", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -390,6 +452,7 @@ public class EditProfileFragment extends Fragment {
                 getUserImageView.getLayoutParams().width = (int) ((int) 250 * context.getResources().getDisplayMetrics().density);
                 getUserImageView.getLayoutParams().height = (int) ((int) 175 * context.getResources().getDisplayMetrics().density);
                 getUserImageView.requestLayout();
+                imageChanged = true;
             }
         }
         else if (resultCode == Activity.RESULT_OK && data != null && requestCode == PLACE_PICKER_REQUEST) {
@@ -401,8 +464,10 @@ public class EditProfileFragment extends Fragment {
             Log.d("LONGITUDE****", longitude+"");
 
             userLocation = new UserLocation(latitude, longitude);
+
             try {
                 locationEditText.setText(userLocation.getLocationString(context));
+                locationChanged = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }

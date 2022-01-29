@@ -129,7 +129,7 @@ public class Image {
                         UserRepository userRepository = new UserRepository();
                         userRepository.updateUserImage(user,downloadUrlSmall);
 
-                        Toast.makeText(activity, "updating user successful!", Toast.LENGTH_SHORT).show();
+
 
                     }
                 });
