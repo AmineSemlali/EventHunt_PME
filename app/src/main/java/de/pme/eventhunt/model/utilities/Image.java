@@ -51,7 +51,7 @@ public class Image {
         StorageReference imageRef = storageRef.child(referenceId);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmapLarge.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmapSmall.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
         uploadStarted = true;
@@ -93,13 +93,15 @@ public class Image {
     public void editProfileImage(User user, Activity activity)
     {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
+        StorageReference storageRefOld = storage.getReferenceFromUrl(user.getImageSmallRef());
+        storageRefOld.delete();
 
+        StorageReference storageRef = storage.getReference();
         String referenceId = UUID.randomUUID().toString();
         StorageReference imageRef = storageRef.child(referenceId);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmapLarge.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmapSmall.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
         uploadStarted = true;
