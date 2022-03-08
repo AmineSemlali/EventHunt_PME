@@ -39,6 +39,8 @@ import java.util.List;
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.documents.User;
+import de.pme.eventhunt.model.documents.UserSettings;
+import de.pme.eventhunt.model.repositories.UserSettingsRepository;
 import de.pme.eventhunt.model.utilities.UserLocation;
 import de.pme.eventhunt.view.MainActivity;
 import de.pme.eventhunt.view.StartActivity;
@@ -55,6 +57,9 @@ public class profileFragment extends BaseFragment {
 
     FirebaseFirestore db;
     FirebaseAuth auth;
+
+    private UserSettings userSettings;
+    private UserSettingsRepository userSettingsRepository;
     NavController navController;
 
     ImageView profileImage;
@@ -81,6 +86,7 @@ public class profileFragment extends BaseFragment {
         view =  inflater.inflate(R.layout.fragment_profile, container, false);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        userSettingsRepository = new UserSettingsRepository();
         context = getContext();
         profileViewModel = this.getViewModel(ProfileViewModel.class);
 
@@ -103,41 +109,70 @@ public class profileFragment extends BaseFragment {
 
         if(userId != null && !userId.isEmpty())
         {
+            db.collection("userSettings").whereEqualTo("userId",userId).get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            List<UserSettings> userSettingsList = task.getResult().toObjects(UserSettings.class);
+                            userSettings = userSettingsList.get(0);
+                        }
+                        });
+
             db.collection("user").whereEqualTo("id",userId).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
                             List<User> users = task.getResult().toObjects(User.class);
                             User user = users.get(0);
 
                             UserLocation userLocation = user.getLocation();
-                            try {
-                                locationTextView.setText(userLocation.getCityCountryString(context));
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            if(userSettings.getShowLocation()) {
+                                try {
+                                    locationTextView.setText(userLocation.getCityCountryString(context));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            else {
+                                locationTextView.setText(" HIDDEN ! ");
                             }
 
-                            Picasso.get()
-                                    .load(user.getImageSmallRef())
-                                    .into(profileImage);
+                                Picasso.get()
+                                        .load(user.getImageSmallRef())
+                                        .into(profileImage);
 
-                            Date dateOfBirth = new Date();
+                            if(userSettings.getShowAge()) {
+                                Date dateOfBirth = new Date();
 
-                            dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
+                                dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
+                                dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
 
+                                String dobString = user.getDateOfBirth();
+                                LocalDate dobLDT = LocalDate.parse(dobString);
+                                Period period = Period.between(dobLDT, LocalDate.now());
+                                int periodInYears = period.getYears();
+                                String age =String.valueOf(periodInYears); ;
+                                //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
+                                ageTextView.setText(age);
+                            }
+                            else {
+                                dateOfBirthTextView.setText(" HIDDEN ! ");
+                                ageTextView.setText(" AGE HIDDEN ! ");
+                            }
 
-                            dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
-                            emailTextView.setText(user.getEmail());
-                            String dobString = user.getDateOfBirth();
-                            LocalDate dobLDT = LocalDate.parse(dobString);
-                            Period period = Period.between(dobLDT, LocalDate.now());
-                            int periodInYears = period.getYears();
-                            String age =String.valueOf(periodInYears); ;
-                          //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
-                            ageTextView.setText(age);
-
-
-                            nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
+                            if(userSettings.getShowEmail()) {
+                                emailTextView.setText(user.getEmail());
+                            }
+                            else {
+                                emailTextView.setText(" HIDDEN ! ");
+                            }
+                            if(userSettings.getShowName()) {
+                                nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
+                            }
+                            else {
+                                nameTextView.setText(" NAME HIDDEN ! ");
+                            }
 
                             settingsButton.setOnClickListener(new View.OnClickListener() {
                                 @Override

@@ -23,7 +23,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.UUID;
 
 import de.pme.eventhunt.model.documents.User;
+import de.pme.eventhunt.model.documents.UserSettings;
 import de.pme.eventhunt.model.repositories.UserRepository;
+import de.pme.eventhunt.model.repositories.UserSettingsRepository;
 
 public class Image {
 
@@ -81,6 +83,10 @@ public class Image {
                         user.setImageSmallRef(downloadUrlSmall);
                         UserRepository userRepository = new UserRepository();
                         userRepository.createUser(user);
+
+                        UserSettings userSettings = new UserSettings(user.getId());
+                        UserSettingsRepository userSettingsRepository = new UserSettingsRepository();
+                        userSettingsRepository.createUserSettings(user,userSettings);
 
                         Toast.makeText(activity, "Registering user successful!", Toast.LENGTH_SHORT).show();
 

@@ -78,7 +78,7 @@ dependencies {
 
     //Images
     implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'androidx.preference:preference:1.2.0'
 
 
 }
