@@ -72,10 +72,12 @@ public class profileFragment extends BaseFragment {
     TextView emailTextView;
     TextView dateOfBirthTextView;
     private Period period;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,93 +111,95 @@ public class profileFragment extends BaseFragment {
 
         if(userId != null && !userId.isEmpty())
         {
-            db.collection("userSettings").whereEqualTo("userId",userId).get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            userSettings = new UserSettings();
+
+            Task<QuerySnapshot> userSettingsQuery;
+            userSettingsQuery = db.collection("userSettings").whereEqualTo("userId",userId).get();
+            userSettingsQuery.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            List<UserSettings> userSettingsList = task.getResult().toObjects(UserSettings.class);
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            List<UserSettings> userSettingsList = userSettingsQuery.getResult().toObjects(UserSettings.class);
                             userSettings = userSettingsList.get(0);
                         }
                         });
 
-            db.collection("user").whereEqualTo("id",userId).get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                db.collection("user").whereEqualTo("id", userId).get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            List<User> users = task.getResult().toObjects(User.class);
-                            User user = users.get(0);
-
-                            UserLocation userLocation = user.getLocation();
-                            if(userSettings.getShowLocation()) {
-                                try {
-                                    locationTextView.setText(userLocation.getCityCountryString(context));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                List<User> users = task.getResult().toObjects(User.class);
+                                User user = users.get(0);
+               if (userSettings!= null )
+                   {
+                                UserLocation userLocation = user.getLocation();
+                                if (userSettings.getShowLocation()) {
+                                    try {
+                                        locationTextView.setText(userLocation.getCityCountryString(context));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    locationTextView.setText(" HIDDEN ! ");
                                 }
-                            }
-                            else {
-                                locationTextView.setText(" HIDDEN ! ");
-                            }
 
                                 Picasso.get()
                                         .load(user.getImageSmallRef())
                                         .into(profileImage);
 
-                            if(userSettings.getShowAge()) {
-                                Date dateOfBirth = new Date();
+                                if (userSettings.getShowAge()) {
+                                    Date dateOfBirth = new Date();
 
-                                dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
-                                dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
+                                    dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
+                                    dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
 
-                                String dobString = user.getDateOfBirth();
-                                LocalDate dobLDT = LocalDate.parse(dobString);
-                                Period period = Period.between(dobLDT, LocalDate.now());
-                                int periodInYears = period.getYears();
-                                String age =String.valueOf(periodInYears); ;
-                                //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
-                                ageTextView.setText(age);
-                            }
-                            else {
-                                dateOfBirthTextView.setText(" HIDDEN ! ");
-                                ageTextView.setText(" AGE HIDDEN ! ");
-                            }
-
-                            if(userSettings.getShowEmail()) {
-                                emailTextView.setText(user.getEmail());
-                            }
-                            else {
-                                emailTextView.setText(" HIDDEN ! ");
-                            }
-                            if(userSettings.getShowName()) {
-                                nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
-                            }
-                            else {
-                                nameTextView.setText(" NAME HIDDEN ! ");
-                            }
-
-                            settingsButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    navController.navigate(R.id.action_navigation_profile_to_settings);
+                                    String dobString = user.getDateOfBirth();
+                                    LocalDate dobLDT = LocalDate.parse(dobString);
+                                    Period period = Period.between(dobLDT, LocalDate.now());
+                                    int periodInYears = period.getYears();
+                                    String age = String.valueOf(periodInYears);
+                                    ;
+                                    //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
+                                    ageTextView.setText(age);
+                                } else {
+                                    dateOfBirthTextView.setText(" HIDDEN ! ");
+                                    ageTextView.setText(" AGE HIDDEN ! ");
                                 }
-                            });
 
-                            editProfileButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    navController.navigate(R.id.action_navigation_profile_to_editprofile);
+                                if (userSettings.getShowEmail()) {
+                                    emailTextView.setText(user.getEmail());
+                                } else {
+                                    emailTextView.setText(" HIDDEN ! ");
                                 }
-                            });
+                                if (userSettings.getShowName()) {
+                                    nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
+                                } else {
+                                    nameTextView.setText(" NAME HIDDEN ! ");
+                                }
+                   }
+                                settingsButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        navController.navigate(R.id.action_navigation_profile_to_settings);
+                                    }
+                                });
 
-                            buttonLogOut.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    logoutUser();
-                                }
-                            });
-                        }
+                                editProfileButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        navController.navigate(R.id.action_navigation_profile_to_editprofile);
+                                    }
+                                });
+
+                                buttonLogOut.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        logoutUser();
+                                    }
+                                });
+                            }
                         });
+
         }
 
         return view;
