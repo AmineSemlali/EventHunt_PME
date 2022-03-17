@@ -24,11 +24,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.documents.UserSettings;
+import de.pme.eventhunt.model.repositories.NotificationRepository;
+import de.pme.eventhunt.model.repositories.UserRepository;
 import de.pme.eventhunt.model.repositories.UserSettingsRepository;
 
 
@@ -41,13 +44,16 @@ public class SettingsFragment extends Fragment {
     private Switch emailSwitch;
     private Switch ageSwitch;
 
-    private UserSettings userSettings;
-    private UserSettingsRepository userSettingsRepository;
+    UserSettings userSettings;
+    UserSettingsRepository userSettingsRepository;
+    NotificationRepository notificationRepository;
+
+    boolean showSettingsDone = false;
     FirebaseFirestore db;
     FirebaseAuth auth;
     Context context;
 
-    private SettingsViewModel settingsViewModel;
+    SettingsViewModel settingsViewModel;
     NavController navController;
 
 
@@ -70,11 +76,13 @@ public class SettingsFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         userSettingsRepository = new UserSettingsRepository();
+        notificationRepository = new NotificationRepository();
+
         context = getContext();
 
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment)fragmentManager.findFragmentById(R.id.nav_host_fragment_main);
+        NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById(R.id.nav_host_fragment_main);
         navController = navHostFragment.getNavController();
 
         locationSwitch = view.findViewById(R.id.switchLocation);
@@ -84,111 +92,115 @@ public class SettingsFragment extends Fragment {
 
         String userId = auth.getCurrentUser().getUid();
 
-        if(userId != null && !userId.isEmpty())
-        {
-            db.collection("userSettings").whereEqualTo("userId",userId).get()
+
+        if (userId != null && !userId.isEmpty()) {
+
+            db.collection("userSettings").whereEqualTo("userId", userId).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                               @Override
-                                               public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                   List<UserSettings> userSettingsList = task.getResult().toObjects(UserSettings.class);
-                                                   userSettings = userSettingsList.get(0);
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            List<UserSettings> userSettingsList = task.getResult().toObjects(UserSettings.class);
+                            userSettings = userSettingsList.get(0);
 
-                                                   if (userSettings.getShowAge())
-                                                   {
-                                                       ageSwitch.setChecked(true);
-                                                   }
-                                                   else
-                                                   {
-                                                       ageSwitch.setChecked(false);
-                                                   }
+                            if (userSettings.getShowAge()) {
+                                ageSwitch.setChecked(true);
+                            } else {
+                                ageSwitch.setChecked(false);
+                            }
 
-                                                   if (userSettings.getShowLocation())
-                                                   {
-                                                       locationSwitch.setChecked(true);
-                                                   }
-                                                   else
-                                                   {
-                                                       locationSwitch.setChecked(false);
-                                                   }
+                            if (userSettings.getShowLocation()) {
+                                locationSwitch.setChecked(true);
+                            } else {
+                                locationSwitch.setChecked(false);
+                            }
 
-                                                   if (userSettings.getShowEmail())
-                                                   {
-                                                       emailSwitch.setChecked(true);
-                                                   }
-                                                   else
-                                                   {
-                                                       emailSwitch.setChecked(false);
-                                                   }
+                            if (userSettings.getShowEmail()) {
+                                emailSwitch.setChecked(true);
+                            } else {
+                                emailSwitch.setChecked(false);
+                            }
 
-                                                   if (userSettings.getShowName())
-                                                   {
-                                                       nameSwitch.setChecked(true);
-                                                   }
-                                                   else
-                                                   {
-                                                       nameSwitch.setChecked(false);
-                                                   }
-                                               }
+                            if (userSettings.getShowName()) {
+                                nameSwitch.setChecked(true);
+                            } else {
+                                nameSwitch.setChecked(false);
+                            }
+
+                                listen();
+                        }
+
+                        private void listen() {
+
+
+                            nameSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean checked1) {
+                                    if (checked1) {
+
+                                        userSettings.setShowName(true);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(0, userId);
+                                    } else
+
+                                        userSettings.setShowName(false);
+                                    userSettingsRepository.updateUserSettings(userSettings);
+                                    notificationRepository.addNotificationsForSettings(1, userId);
+                                }
+                            });
+
+                            emailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean checked2) {
+                                    if (checked2) {
+                                        userSettings.setShowEmail(true);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(2, userId);
+                                    } else
+                                        userSettings.setShowEmail(false);
+                                    userSettingsRepository.updateUserSettings(userSettings);
+                                    notificationRepository.addNotificationsForSettings(3, userId);
+                                }
+                            });
+                            locationSwitch.setOnCheckedChangeListener(null);
+                            locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean checked3) {
+                                    if (checked3) {
+                                        userSettings.setShowLocation(true);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(4, userId);
+                                    } else
+                                        userSettings.setShowLocation(false);
+                                    userSettingsRepository.updateUserSettings(userSettings);
+                                    notificationRepository.addNotificationsForSettings(5, userId);
+                                }
+                            });
+
+                            ageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean checked4) {
+                                    if (checked4) {
+                                        userSettings.setShowAge(true);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(6, userId);
+                                    } else
+                                        userSettings.setShowAge(false);
+                                    userSettingsRepository.updateUserSettings(userSettings);
+                                    notificationRepository.addNotificationsForSettings(7, userId);
+                                }
+                            });
+                        }
+
                     });
 
-
-            nameSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean checked){
-                    if (checked) {
-                        userSettings.setShowName(true);
-                        userSettingsRepository.updateUserSettings(userSettings);
-                    }
-                    else
-                        userSettings.setShowName(false);
-                        userSettingsRepository.updateUserSettings(userSettings);
-                }
-            });
-
-            emailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean checked){
-                    if (checked) {
-                        userSettings.setShowEmail(true);
-                        userSettingsRepository.updateUserSettings(userSettings);
-                    }
-                    else
-                        userSettings.setShowEmail(false);
-                    userSettingsRepository.updateUserSettings(userSettings);
-                }
-            });
-
-            locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean checked){
-                    if (checked) {
-                        userSettings.setShowLocation(true);
-                        userSettingsRepository.updateUserSettings(userSettings);
-                    }
-                    else
-                        userSettings.setShowLocation(false);
-                    userSettingsRepository.updateUserSettings(userSettings);
-                }
-            });
-
-            ageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean checked){
-                    if (checked) {
-                        userSettings.setShowAge(true);
-                        userSettingsRepository.updateUserSettings(userSettings);
-                    }
-                    else
-                        userSettings.setShowAge(false);
-                    userSettingsRepository.updateUserSettings(userSettings);
-                }
-            });
         }
+
 
 
         // Inflate the layout for this fragment
         return view;
     }
+
 }
 
 

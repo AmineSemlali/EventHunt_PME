@@ -58,8 +58,8 @@ public class profileFragment extends BaseFragment {
     FirebaseFirestore db;
     FirebaseAuth auth;
 
-    private UserSettings userSettings;
-    private UserSettingsRepository userSettingsRepository;
+    UserSettings userSettings;
+    UserSettingsRepository userSettingsRepository;
     NavController navController;
 
     ImageView profileImage;
@@ -111,7 +111,6 @@ public class profileFragment extends BaseFragment {
 
         if(userId != null && !userId.isEmpty())
         {
-            userSettings = new UserSettings();
 
             Task<QuerySnapshot> userSettingsQuery;
             userSettingsQuery = db.collection("userSettings").whereEqualTo("userId",userId).get();
@@ -119,64 +118,68 @@ public class profileFragment extends BaseFragment {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             List<UserSettings> userSettingsList = userSettingsQuery.getResult().toObjects(UserSettings.class);
-                            userSettings = userSettingsList.get(0);
+                           userSettings = userSettingsList.get(0);
+                           fetch();
                         }
-                        });
 
-                db.collection("user").whereEqualTo("id", userId).get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                private void fetch() {
+                    db.collection("user").whereEqualTo("id", userId).get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                List<User> users = task.getResult().toObjects(User.class);
-                                User user = users.get(0);
-               if (userSettings!= null )
-                   {
-                                UserLocation userLocation = user.getLocation();
-                                if (userSettings.getShowLocation()) {
-                                    try {
-                                        locationTextView.setText(userLocation.getCityCountryString(context));
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                    List<User> users = task.getResult().toObjects(User.class);
+                                    User user = users.get(0);
+
+                                    UserLocation userLocation = user.getLocation();
+                                    if (userSettings.getShowLocation()) {
+                                        try {
+                                            locationTextView.setText(userLocation.getCityCountryString(context));
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        locationTextView.setText(" HIDDEN ! ");
                                     }
-                                } else {
-                                    locationTextView.setText(" HIDDEN ! ");
-                                }
 
-                                Picasso.get()
-                                        .load(user.getImageSmallRef())
-                                        .into(profileImage);
+                                    Picasso.get()
+                                            .load(user.getImageSmallRef())
+                                            .into(profileImage);
 
-                                if (userSettings.getShowAge()) {
-                                    Date dateOfBirth = new Date();
+                                    if (userSettings.getShowAge()) {
+                                        Date dateOfBirth = new Date();
 
-                                    dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
-                                    dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
+                                        dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
+                                        dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString());
 
-                                    String dobString = user.getDateOfBirth();
-                                    LocalDate dobLDT = LocalDate.parse(dobString);
-                                    Period period = Period.between(dobLDT, LocalDate.now());
-                                    int periodInYears = period.getYears();
-                                    String age = String.valueOf(periodInYears);
-                                    ;
-                                    //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
-                                    ageTextView.setText(age);
-                                } else {
-                                    dateOfBirthTextView.setText(" HIDDEN ! ");
-                                    ageTextView.setText(" AGE HIDDEN ! ");
-                                }
+                                        String dobString = user.getDateOfBirth();
+                                        LocalDate dobLDT = LocalDate.parse(dobString);
+                                        Period period = Period.between(dobLDT, LocalDate.now());
+                                        int periodInYears = period.getYears();
+                                        String age = String.valueOf(periodInYears);
+                                        ;
+                                        //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
+                                        ageTextView.setText(age);
+                                    } else {
+                                        dateOfBirthTextView.setText(" HIDDEN ! ");
+                                        ageTextView.setText(" AGE HIDDEN ! ");
+                                    }
 
-                                if (userSettings.getShowEmail()) {
-                                    emailTextView.setText(user.getEmail());
-                                } else {
-                                    emailTextView.setText(" HIDDEN ! ");
-                                }
-                                if (userSettings.getShowName()) {
-                                    nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
-                                } else {
-                                    nameTextView.setText(" NAME HIDDEN ! ");
-                                }
-                   }
+                                    if (userSettings.getShowEmail()) {
+                                        emailTextView.setText(user.getEmail());
+                                    } else {
+                                        emailTextView.setText(" HIDDEN ! ");
+                                    }
+                                    if (userSettings.getShowName()) {
+                                        nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
+                                    } else {
+                                        nameTextView.setText(" NAME HIDDEN ! ");
+                                    }
+                }
+            });
+
+
+
                                 settingsButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

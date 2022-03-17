@@ -87,6 +87,61 @@ public class NotificationRepository {
                     }
                 });
     }
+    public void addNotificationsForSettings(int notificationType,String userId)
+    {
+        if(notificationType == 0)
+        {
+            notificationText = "you changed the Settings, your name is now shown on your profile !";
+        }
+        else if(notificationType == 1)
+        {
+            notificationText = "you changed the Settings, your name is now hidden on your profile !";
+        }
+        else if(notificationType == 2)
+        {
+            notificationText = "you changed the Settings, your email is now shown on your profile !";
+        }
+        else if(notificationType == 3)
+        {
+            notificationText = "you changed the Settings, your email is now hidden on your profile !";
+        }
+        else if(notificationType == 4)
+        {
+            notificationText = "you changed the Settings, your location is now shown on your profile !";
+        }
+        else if(notificationType == 5)
+        {
+            notificationText = "you changed the Settings, your location is now hidden on your profile !";
+        }
+        else if(notificationType == 6)
+        {
+            notificationText = "you changed the Settings, your age is now shown on your profile !";
+        }
+        else if(notificationType == 7)
+        {
+            notificationText = "you changed the Settings, your age is now hidden on your profile !";
+        }
+
+        db.collection("user").whereEqualTo("id", userId).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<User> users = task.getResult().toObjects(User.class);
+                        User user = users.get(0);
+                            Notification notification = new Notification();
+                            notification.setNotificationDescription(notificationText);
+                            notification.setUserId(userId);
+
+                            String createdAt = LocalDateTime.now().toString();
+                            createdAt = createdAt.substring(0, createdAt.indexOf("."));
+                            notification.setCreatedAt(createdAt);
+
+                            notification.setEventImage(user.getImageSmallRef());
+
+                            db.collection(Notification.collection).document(notification.getNotificationId()).set(notification);
+                    }
+                });
+    }
 
     public void deleteNotification(String notificationID)
     {
