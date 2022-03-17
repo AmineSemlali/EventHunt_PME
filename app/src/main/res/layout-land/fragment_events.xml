@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#264653"
+    tools:context=".view.ui.events.EventsFragment"
+    android:layout_marginBottom="50dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".view.ui.events.EventsFragment">
+
+
+    <View
+        android:id="@+id/myEvents_separator"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:background="@color/blue"
+        android:backgroundTint="@color/blue"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_getJoined"
+        app:layout_constraintEnd_toStartOf="@+id/button_getOwn"
+        app:layout_constraintStart_toEndOf="@+id/button_getJoined"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_myEvents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_getOwn"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/list_item_event" />
+
+    <Button
+        android:id="@+id/button_getJoined"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:text="JOINED"
+        android:backgroundTint="@color/orange"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="206dp" />
+
+    <Button
+        android:id="@+id/button_getOwn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="OWN"
+        app:cornerRadius="0dp"
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_getJoined"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

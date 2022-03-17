@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#264653"
+    tools:context=".view.MainActivity"
+    android:layout_marginBottom="50dp">
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,15 +20,15 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:backgroundTint="@color/yellow"
         android:background="@color/yellow"
+        android:backgroundTint="@color/yellow"
+        android:translationZ="90dp"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
-        app:layout_constraintEnd_toStartOf="parent"
-        android:translationZ="90dp"/>
+        app:layout_constraintEnd_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="0dp"
+        android:layout_width="725dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
@@ -32,19 +41,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_main"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="725dp"
+        android:layout_height="693dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/main_navigation" />
 
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

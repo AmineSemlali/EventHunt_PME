@@ -24,7 +24,8 @@ import de.pme.eventhunt.model.documents.EventUser;
 import de.pme.eventhunt.model.documents.Notification;
 import de.pme.eventhunt.model.documents.User;
 
-public class NotificationRepository {
+public class
+NotificationRepository {
 
     FirebaseFirestore db;
     FirebaseAuth auth;
