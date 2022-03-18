@@ -17,11 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -49,9 +47,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 import de.pme.eventhunt.R;
 import de.pme.eventhunt.model.documents.Event;
@@ -66,14 +62,10 @@ import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 import de.pme.eventhunt.view.ui.utilities.DateAndTimePicker;
 
 public class EditEventFragment extends BaseFragment {
+
+    // environmental Variables
     Context context;
     Activity activity;
-
-    Event curEvent;
-
-    private static final int PICK_IMAGE = 1;
-    private final static int PLACE_PICKER_REQUEST = 2;
-
     View view;
     FirebaseAuth auth;
     FirebaseFirestore db;
@@ -82,6 +74,14 @@ public class EditEventFragment extends BaseFragment {
     FirebaseStorage storage;
     NotificationRepository notificationRepository;
 
+    // event to be edited
+    Event curEvent;
+
+    // codes for actions
+    private static final int PICK_IMAGE = 1;
+    private final static int PLACE_PICKER_REQUEST = 2;
+
+    // input fields
     TextInputEditText titleEditText;
     TextInputEditText descriptionEditText;
     AutoCompleteTextView categoryEditText;
@@ -89,13 +89,17 @@ public class EditEventFragment extends BaseFragment {
     TextInputEditText dateStartEditText;
     TextInputEditText dateEndEditText;
     ImageView getEventImageView;
+    ImageView deleteEventImageView;
 
+    // variables for holding image and location data
     Image eventImage;
+    Uri imageUri;
     EventLocation eventLocation;
 
     double lastLongitude = 0.0;
     double lastLatitude = 0.0;
 
+    // hold information on which event data changed
     boolean titleChanged = false,
             categoryChanged = false,
             locationChanged = false,
@@ -104,11 +108,10 @@ public class EditEventFragment extends BaseFragment {
             descriptionChanged = false,
             imageChanged = false;
 
-
-
-
     private Boolean imageAdjusted = false;
-    Uri imageUri;
+
+
+
 
     public EditEventFragment() {
         // Required empty public constructor
@@ -118,7 +121,7 @@ public class EditEventFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-
+        // get and set category names for the dropdown
         String[] eventCategories = getResources().getStringArray(R.array.eventCategories);
         ArrayAdapter arrayAdapter = new ArrayAdapter(requireContext(), R.layout.dropdown_item, eventCategories);
         AutoCompleteTextView textView = view.findViewById(R.id.editTextCategory);
@@ -127,19 +130,17 @@ public class EditEventFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // initialize variables
         context = getContext();
         activity = getActivity();
-
         view = inflater.inflate(R.layout.fragment_create_event, container, false);
 
         createEventViewModel = new ViewModelProvider(this).get(CreateEventViewModel.class);
@@ -149,26 +150,26 @@ public class EditEventFragment extends BaseFragment {
         eventRepository = new EventRepository();
         notificationRepository = new NotificationRepository();
 
-
         titleEditText = view.findViewById(R.id.editTextTitle);
         descriptionEditText = view.findViewById(R.id.editTextDescription);
         categoryEditText = view.findViewById(R.id.editTextCategory);
         locationEditText = view.findViewById(R.id.editTextLocation);
         dateStartEditText = view.findViewById(R.id.editTextDateStart);
         dateEndEditText = view.findViewById(R.id.editTextDateEnd);
-
         getEventImageView = view.findViewById(R.id.imageViewGetImage);
+        Button updateButton = view.findViewById(R.id.buttonCreateEvent);
+        deleteEventImageView = view.findViewById(R.id.imageView_DeleteEvent);
 
         eventImage = new Image();
 
-
-        Button createButton = view.findViewById(R.id.buttonCreateEvent);
-
+        // initialize date pickers
         DateAndTimePicker dateAndTimePickerStart = new DateAndTimePicker(context, dateStartEditText);
         DateAndTimePicker dateAndTimePickerEnd = new DateAndTimePicker(context, dateEndEditText);
 
+        // get event-id given by the previous fragment
         String eventId = getArguments().getString("eventId");
 
+        // check if eventId is set and retrieve associated data
         if (eventId != null && !eventId.isEmpty()) {
             db.collection("event").whereEqualTo("eventId", eventId).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -272,7 +273,8 @@ public class EditEventFragment extends BaseFragment {
                 }
             });
 
-            createButton.setOnClickListener(new View.OnClickListener() {
+            // update event, data is checked inside updateEvent function
+            updateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String title_txt = "";
@@ -288,13 +290,22 @@ public class EditEventFragment extends BaseFragment {
                     Editable category_editable = categoryEditText.getText();
                     if (category_editable != null) category_txt = category_editable.toString();
 
-                    createEvent(title_txt, description_txt, category_txt,
+                    updateEvent(title_txt, description_txt, category_txt,
                             dateAndTimePickerStart, dateAndTimePickerEnd, eventLocation);
 
                 }
 
 
             });
+
+            // delete image (would be nice to have a popup instead of instant deletion)
+/*            deleteEventImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    eventRepository.deleteEvent(curEvent);
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                }
+            });*/
 
 
 
@@ -311,8 +322,8 @@ public class EditEventFragment extends BaseFragment {
         }
 
 
-        private void createEvent (String title, String description, String category,
-                DateAndTimePicker dateAndTimePickerStart, DateAndTimePicker
+        private void updateEvent(String title, String description, String category,
+                                 DateAndTimePicker dateAndTimePickerStart, DateAndTimePicker
         dateAndTimePickerEnd, EventLocation location){
 
 
