@@ -2,6 +2,7 @@ package de.pme.eventhunt.view.ui.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -139,7 +140,13 @@ public class profileFragment extends BaseFragment {
                                             e.printStackTrace();
                                         }
                                     } else {
-                                        locationTextView.setText(" HIDDEN ! ");
+                                        try {
+                                        locationTextView.setText(userLocation.getCityCountryString(context) + " (not visible for other users)");
+                                            locationTextView.setTextColor(Color.parseColor("#FF0000")
+                                            );
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
 
                                     Picasso.get()
@@ -161,19 +168,35 @@ public class profileFragment extends BaseFragment {
                                         //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
                                         ageTextView.setText(age);
                                     } else {
-                                        dateOfBirthTextView.setText(" HIDDEN ! ");
-                                        ageTextView.setText(" AGE HIDDEN ! ");
+                                        Date dateOfBirth = new Date();
+
+                                        dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
+                                        dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString() + " (not visible for other users)");
+                                        dateOfBirthTextView.setTextColor(Color.parseColor("#FF0000"));
+                                        String dobString = user.getDateOfBirth();
+                                        LocalDate dobLDT = LocalDate.parse(dobString);
+                                        Period period = Period.between(dobLDT, LocalDate.now());
+                                        int periodInYears = period.getYears();
+                                        String age = String.valueOf(periodInYears);
+                                        ;
+                                        //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
+                                        ageTextView.setText(age + " (age not visible for other users)");
+                                        ageTextView.setTextColor(Color.parseColor("#FF0000"));
+//                                        dateOfBirthTextView.setText(" HIDDEN ! ");
+//                                        ageTextView.setText(" AGE HIDDEN ! ");
                                     }
 
                                     if (userSettings.getShowEmail()) {
                                         emailTextView.setText(user.getEmail());
                                     } else {
-                                        emailTextView.setText(" HIDDEN ! ");
+                                        emailTextView.setText(user.getEmail() + " (not visible for other users)");
+                                        emailTextView.setTextColor(Color.parseColor("#FF0000"));
                                     }
                                     if (userSettings.getShowName()) {
                                         nameTextView.setText(user.getFirstName() + ' ' + user.getLastName());
                                     } else {
-                                        nameTextView.setText(" NAME HIDDEN ! ");
+                                        nameTextView.setText(user.getFirstName() + ' ' + user.getLastName() + " ( name not visible for other users)");
+                                        nameTextView.setTextColor(Color.parseColor("#FF0000"));
                                     }
                 }
             });
