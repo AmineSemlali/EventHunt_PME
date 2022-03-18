@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ import de.pme.eventhunt.model.documents.User;
 public class EventRepository {
     FirebaseAuth auth;
     FirebaseFirestore db;
+    FirebaseStorage storage;
+
+    NotificationRepository notificationRepository;
 
     List<Event> events;
 
@@ -31,6 +35,8 @@ public class EventRepository {
     public EventRepository(){
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        notificationRepository = new NotificationRepository();
     }
 
 
@@ -51,6 +57,24 @@ public class EventRepository {
             Log.e("createEvent: ", e.toString());
         });
 
+    }
+
+    public void deleteEvent(Event event)
+    {
+        notificationRepository.addNotificationsForEvent(1, event);
+
+        db.collection(EventUser.collection).whereEqualTo("eventId", event.getEventId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                task.getResult().forEach(queryDocumentSnapshot -> {
+                    db.document(queryDocumentSnapshot.getReference().toString()).delete();
+                });
+            }
+        });
+
+        storage.getReference(event.getImageSmallRef()).delete();
+        storage.getReference(event.getImageLargeRef()).delete();
+        db.collection(Event.collection).document(event.getEventId()).delete();
     }
 
 }
