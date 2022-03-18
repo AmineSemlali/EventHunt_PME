@@ -135,58 +135,59 @@ public class SettingsFragment extends Fragment {
                             nameSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked1) {
-                                    if (checked1) {
-
-                                        userSettings.setShowName(true);
+                                    if (!checked1) {
+                                        userSettings.setShowName(false);
                                         userSettingsRepository.updateUserSettings(userSettings);
                                         notificationRepository.addNotificationsForSettings(0, userId);
+
                                     } else
 
-                                        userSettings.setShowName(false);
+                                        userSettings.setShowName(true);
                                     userSettingsRepository.updateUserSettings(userSettings);
-                                    notificationRepository.addNotificationsForSettings(1, userId);
+
                                 }
                             });
 
                             emailSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked2) {
-                                    if (checked2) {
-                                        userSettings.setShowEmail(true);
-                                        userSettingsRepository.updateUserSettings(userSettings);
-                                        notificationRepository.addNotificationsForSettings(2, userId);
-                                    } else
+                                    if (!checked2) {
                                         userSettings.setShowEmail(false);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(1, userId);
+                                    } else
+                                        userSettings.setShowEmail(true);
                                     userSettingsRepository.updateUserSettings(userSettings);
-                                    notificationRepository.addNotificationsForSettings(3, userId);
+
+
                                 }
                             });
-                            locationSwitch.setOnCheckedChangeListener(null);
                             locationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked3) {
-                                    if (checked3) {
-                                        userSettings.setShowLocation(true);
-                                        userSettingsRepository.updateUserSettings(userSettings);
-                                        notificationRepository.addNotificationsForSettings(4, userId);
-                                    } else
+                                    if (!checked3) {
                                         userSettings.setShowLocation(false);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(2, userId);
+                                    } else
+
+                                        userSettings.setShowLocation(true);
                                     userSettingsRepository.updateUserSettings(userSettings);
-                                    notificationRepository.addNotificationsForSettings(5, userId);
+
                                 }
                             });
 
                             ageSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked4) {
-                                    if (checked4) {
-                                        userSettings.setShowAge(true);
-                                        userSettingsRepository.updateUserSettings(userSettings);
-                                        notificationRepository.addNotificationsForSettings(6, userId);
-                                    } else
+                                    if (!checked4) {
                                         userSettings.setShowAge(false);
+                                        userSettingsRepository.updateUserSettings(userSettings);
+                                        notificationRepository.addNotificationsForSettings(3, userId);
+                                    } else
+                                        userSettings.setShowAge(true);
                                     userSettingsRepository.updateUserSettings(userSettings);
-                                    notificationRepository.addNotificationsForSettings(7, userId);
+
                                 }
                             });
                         }
