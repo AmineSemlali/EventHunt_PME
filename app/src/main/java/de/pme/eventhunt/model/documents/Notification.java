@@ -6,6 +6,7 @@ import java.util.UUID;
 public class Notification
 
 {
+// notification class contains attributes needed to create notifications
 
     public static String collection = "notification";
     private String NotificationId;

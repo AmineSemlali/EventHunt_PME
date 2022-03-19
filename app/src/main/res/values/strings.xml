@@ -3,7 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="category_text">Category</string>
-    <string name="api_key">AIzaSyCjgZOgBTM-zW6FMBDNJGvXcK6-D7O6sYY</string>
+    <string name="api_key">AIzaSyBOYMpJcVgIx7_kx-Oi7jHICLUuAdG9g8s</string>
 
     <string-array name="eventCategories">
         <item>Socializing</item>

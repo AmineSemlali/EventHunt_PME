@@ -299,13 +299,14 @@ public class EditEventFragment extends BaseFragment {
             });
 
             // delete image (would be nice to have a popup instead of instant deletion)
-/*            deleteEventImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    eventRepository.deleteEvent(curEvent);
-                    startActivity(new Intent(getActivity(), MainActivity.class));
-                }
-            });*/
+//           deleteEventImageView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    eventRepository = new EventRepository();
+//                    eventRepository.deleteEvent(curEvent);
+//                    startActivity(new Intent(getActivity(), MainActivity.class));
+//                }
+//            });
 
 
 
