@@ -500,8 +500,8 @@ public class EditEventFragment extends BaseFragment {
 
                     Intent locationPickerIntent = new LocationPickerActivity.Builder()
                             .withLocation(lastLatitude, lastLongitude)
-                            .withGeolocApiKey("AIzaSyBOYMpJcVgIx7_kx-Oi7jHICLUuAdG9g8s")
-                            .withGooglePlacesApiKey("AIzaSyBOYMpJcVgIx7_kx-Oi7jHICLUuAdG9g8s")
+                            .withGeolocApiKey("@string/api_key")
+                            .withGooglePlacesApiKey("@string/api_key" )
                             .shouldReturnOkOnBackPressed()
                             .withCityHidden()
                             .withZipCodeHidden()
