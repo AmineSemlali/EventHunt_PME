@@ -6,7 +6,7 @@
 
 Das Projekt EventHunt, eine für Android entwickelte App, entstand im Rahmen des Moduls "Programmierung mobiler Endgeräte".
 Ziel der App ist es, Nutzern eine Plattform zum erstellen, verwalten von und teilnehmen an lokalen Events zu bieten.
-Hierfür werden verschiedene Funktionalitäten zur Verfügung gestellt. EventHunt wurde in der Android Studio Umgebung entwickelt.
+Hierfür werden verschiedene Funktionalitäten zur Verfügung gestellt. <br>EventHunt wurde in der Android Studio Umgebung entwickelt.
 
 <br>
 
