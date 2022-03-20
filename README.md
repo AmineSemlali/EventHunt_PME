@@ -16,9 +16,11 @@ Hierfür werden verschiedene Funktionalitäten zur Verfügung gestellt. <br>Even
 
 ## Projektteam
 
-*  **Jonas Weigelt** - [Profil](https://github.com/noergel1)
-*  **Amine Semlali** - [Profil](https://github.com/AmineSemlali)
-*  **Sarah Al Khodari** - [Profil](https://github.com/SarahElk1)
+*  **Jonas Weigelt** - [Profil](https://github.com/noergel1)        
+*  **Amine Semlali** - [Profil](https://github.com/AmineSemlali)    
+*  **Sarah Al Khodari** - [Profil](https://github.com/SarahElk1)    
+  
+  
 
 ## Funktionalitäten
 
@@ -176,7 +178,7 @@ Grafiken:
   <br>
   
   - die Performance ist (zumindest auf Emulatoren mit API 31 und höher) nicht optimal. Selbst bei passender API Version kann es zu Problemen kommen. <br>
-  - es ist kein funktionierender Landscapemode für die Fragmente implementiert. Einen Entwurf für diese kann man im dazugehörigen Branch finden.
+  - es ist kein funktionierender Landscapemode für die Fragmente implementiert. Einen Entwurf für diese kann man im dazugehörigen Branch finden. Die Fehler konnten wir nicht mehr rechtzeitig beheben.
   - ViewModels speichern Formulardaten nicht zwischen
   - einige kleinere Funktionen sind nicht implementiert.
     - Events können nicht gelöscht werden (bitte sehen sie sich das Layout des EditEvent Fragments an, aus uns unbekannten Gründen verändert sich das Layout nicht mehr -> Button erscheint nicht, Schrift des unteren Buttons unverändert)
