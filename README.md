@@ -33,12 +33,82 @@ Der Nutzer kann
 - das eigene Profil bearbeiten
 </details>
 
-<details>
-<summary> Diagramme </summary>
-<br>
+<details><summary> Diagramme </summary><blockquote>
+
+<details><summary> Aktivitätsdiagramme </summary><blockquote>
+
+<details><summary> Registration und Login </summary>
   
-  
+![alt text](Files/Diagramme/activity_diagram/registration_login_activitydiagramm.png)
 </details>
+<details><summary> Logout </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/logout_activitydiagram.png)
+</details>
+  
+<details><summary> Filter Events </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/filter_event_activitydiagram.png)
+</details>
+<details><summary> Create Event </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/create_event_activitydiagram.png)
+</details>
+  
+<details><summary> Edit Event </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/edit_event_activitydiagram.png)
+</details>
+<details><summary> Show Event Details </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/show_details_activitydiagram.png)
+</details>
+  
+<details><summary> Show and Edit Profile </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/profile_activity_diagram.png)
+</details>
+<details><summary> Owned/Joined Events Summary </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/owned_joined_activity_diagram.png)
+</details>
+  
+  <details><summary> Show and Delete Notifications </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/notification_activity_diagram.png)
+</details>
+<details><summary> Change Settings </summary>
+  
+![alt text](Files/Diagramme/activity_diagram/change_settings_activity_diagram.png)
+</details>
+
+</blockquote></details>
+
+<details><summary> Use-Case Diagramme </summary><blockquote>
+
+  <details><summary> Registration und Login </summary>
+  
+![alt text](Files/Diagramme/use_cases/signup_login_usecase.png)
+</details>
+<details><summary> Event Management </summary>
+  
+![alt text](Files/Diagramme/use_cases/event_management_usecase.png)
+</details>
+    <details><summary> Profil Management </summary>
+  
+![alt text](Files/Diagramme/use_cases/profile_management_usecase.png)
+</details>
+<details><summary> Erstellen und Bearbeiten von Events </summary>
+  
+![alt text](Files/Diagramme/use_cases/edit_create_event_filter_usecase.png)
+</details>
+      <details><summary> Settings und Notifications </summary>
+  
+![alt text](Files/Diagramme/use_cases/settings_and_notifications_usecase.png)
+</details>
+</blockquote></details>
+
+</blockquote></details>
 
 <details>
 <summary> Verwendung </summary>
