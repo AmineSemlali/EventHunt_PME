@@ -46,6 +46,7 @@ import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 
 public class DetailViewFragment extends BaseFragment {
 
+    // environmental Variables
     View view;
     Context context;
 
@@ -53,11 +54,11 @@ public class DetailViewFragment extends BaseFragment {
     FirebaseAuth auth;
     NavController navController;
 
-    Boolean isJoined = false;
-
-
     DetailViewViewModel detailViewViewModel;
 
+    Boolean isJoined = false;
+
+    // input fields & views
     ImageView eventImage;
     TextView captionTitleTextView;
     TextView captionLocationTextView;
@@ -82,6 +83,8 @@ public class DetailViewFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // initialize variables
         view =  inflater.inflate(R.layout.fragment_detail_view, container, false);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -108,12 +111,13 @@ public class DetailViewFragment extends BaseFragment {
         locationCityTextView = view.findViewById(R.id.textViewLocationCityDetail);
         descriptionTextView = view.findViewById(R.id.textViewDescriptionDetail);
 
-        /* assert savedInstanceState != null;
-        String eventId = savedInstanceState.getString("eventId");*/
+
+        // get event id provided by the previous fragment
         String eventId = getArguments().getString("eventId");
 
         if(eventId != null && !eventId.isEmpty())
         {
+            // get data of viewed event and set fields to obtained data
             db.collection("event").whereEqualTo("eventId", eventId).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -158,6 +162,8 @@ public class DetailViewFragment extends BaseFragment {
 
                             descriptionTextView.setText(event.getDescription());
 
+                            // check for eventUser with both the users and the events id
+                            // to see if the user already joined the event
                             db.collection("eventUser").whereEqualTo("eventId", eventId)
                                     .whereEqualTo("userId", auth.getCurrentUser().getUid())
                                     .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -188,6 +194,9 @@ public class DetailViewFragment extends BaseFragment {
                                 }
                             });
 
+
+                            // check if the user is the owner of the event
+                            // if yes he can edit it
                             if(auth.getCurrentUser().getUid().equals(event.getCreatorId()))
                             {
                                 editButton.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +243,7 @@ public class DetailViewFragment extends BaseFragment {
                                 }
                             });
 
-
+                            // no chat implemented
                             chatButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

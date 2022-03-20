@@ -207,6 +207,8 @@ public class EditEventFragment extends BaseFragment {
                     });
 
 
+            // ontouch and onclick listeners
+
             getEventImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -298,7 +300,7 @@ public class EditEventFragment extends BaseFragment {
 
             });
 
-            // delete image (would be nice to have a popup instead of instant deletion)
+            // delete image. Doesnt work because editevent layout couldnt be changed
 //           deleteEventImageView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -314,6 +316,7 @@ public class EditEventFragment extends BaseFragment {
         return view;
     };
 
+        //starts intent for picking an image
         private void getImage () {
             Intent gallery = new Intent();
             gallery.setType("image/*");
@@ -322,7 +325,7 @@ public class EditEventFragment extends BaseFragment {
             startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
         }
 
-
+        // updates event data and checks if data provided by the user is correct
         private void updateEvent(String title, String description, String category,
                                  DateAndTimePicker dateAndTimePickerStart, DateAndTimePicker
         dateAndTimePickerEnd, EventLocation location){
@@ -422,7 +425,6 @@ public class EditEventFragment extends BaseFragment {
 
 
             // Check image
-
             if(imageChanged)
             {
                 if (imageUri == null) {

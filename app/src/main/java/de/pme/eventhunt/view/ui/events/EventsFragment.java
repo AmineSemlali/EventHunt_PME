@@ -26,7 +26,9 @@ import de.pme.eventhunt.view.ui.filter_event.FilterEventViewModel;
 import de.pme.eventhunt.view.ui.home.EventListAdapter;
 import de.pme.eventhunt.view.ui.home.HomeViewModel;
 
+// this fragment shows a list of all events, or the events kept after applying filters
 public class EventsFragment extends BaseFragment  implements MyEventListAdapter.MyEventListViewHolder.OnNoteListener {
+
 
     private EventsViewModel eventsViewModel;
     private FilterEventViewModel filterEventViewModel;

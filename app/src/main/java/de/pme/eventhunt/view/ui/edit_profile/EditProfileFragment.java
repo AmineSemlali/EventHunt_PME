@@ -77,29 +77,22 @@ import de.pme.eventhunt.view.ui.utilities.DatePickerClass;
 
 public class EditProfileFragment extends Fragment {
 
+    // environmental Variables
     Context context;
     Activity activity;
+    View view;
+    private FirebaseAuth auth;
+    FirebaseFirestore db;
+    FirebaseStorage storage;
+    private EditProfileViewModel editProfileViewModel;
+    NavController navController;
+    UserRepository userRepository;
 
+    // action codes
     private static final int PICK_IMAGE = 1;
     private final static int PLACE_PICKER_REQUEST = 2;
 
-    View view;
-    UserLocation userLocation;
-    Image userImage;
-    private Boolean imageAdjusted = false;
-    Uri imageUri;
-    double lastLongitude = 0.0;
-    double lastLatitude = 0.0;
-    String dobString;
-    User userRepo;
-    boolean firstNameChanged = false,
-            lastNameChanged = false,
-            locationChanged = false,locationTouched = false,
-            emailChanged = false,
-            dateOfBirthChanged = false, dateOfBirthTouched = false ,
-            imageTouched = false, imageChanged = false;
-
-
+    // forms and views
     private TextInputEditText email;
     private TextInputEditText password;
     private TextInputEditText oldPassword;
@@ -110,14 +103,24 @@ public class EditProfileFragment extends Fragment {
     private TextInputEditText dateOfBirth;
     private TextInputEditText locationEditText;
 
-    //firebase
+    // variables for holding data like images
+    UserLocation userLocation;
+    Image userImage;
+    private Boolean imageAdjusted = false;
+    Uri imageUri;
+    double lastLongitude = 0.0;
+    double lastLatitude = 0.0;
+    String dobString;
+    User userRepo;
 
-    private FirebaseAuth auth;
-    FirebaseFirestore db;
-    FirebaseStorage storage;
-    private EditProfileViewModel editProfileViewModel;
-    NavController navController;
-    UserRepository userRepository;
+    // to note which profile data changed
+    boolean firstNameChanged = false,
+            lastNameChanged = false,
+            locationChanged = false,locationTouched = false,
+            emailChanged = false,
+            dateOfBirthChanged = false, dateOfBirthTouched = false ,
+            imageTouched = false, imageChanged = false;
+
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -132,6 +135,8 @@ public class EditProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // initialize variables
         context = getContext();
         activity = getActivity();
 
@@ -147,6 +152,7 @@ public class EditProfileFragment extends Fragment {
         userRepository = new UserRepository();
 
 
+        // initialize forms and views
         email = view.findViewById(R.id.email_registration);
         password = view.findViewById(R.id.password_registration);
         oldPassword = view.findViewById(R.id.old_password);
@@ -159,10 +165,11 @@ public class EditProfileFragment extends Fragment {
 
         userImage = new Image();
 
+        // initialize date picker
         DatePickerClass datePickerDOB = new DatePickerClass(context, dateOfBirth);
         String currentUserId = auth.getUid();
 
-
+        // get data of current user and set the inputs accordingly
         if (currentUserId != null && !currentUserId.isEmpty()) {
             db.collection("user").whereEqualTo("id", currentUserId).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -193,6 +200,7 @@ public class EditProfileFragment extends Fragment {
                     });
 
 
+        // onclick and ontouch listeners
         getUserImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -62,19 +62,21 @@ import de.pme.eventhunt.view.ui.utilities.DateAndTimePicker;
 
 public class createEventFragment extends Fragment {
 
-
+    // environmental Variables
     Context context;
     Activity activity;
-
-    private static final int PICK_IMAGE = 1;
-    private final static int PLACE_PICKER_REQUEST = 2;
-
     View view;
     FirebaseAuth auth;
     EventRepository eventRepository;
     CreateEventViewModel createEventViewModel;
     FirebaseStorage storage;
 
+    // codes for actions
+    private static final int PICK_IMAGE = 1;
+    private final static int PLACE_PICKER_REQUEST = 2;
+
+
+    // input fields & views
     TextInputEditText titleEditText;
     TextInputEditText descriptionEditText;
     AutoCompleteTextView categoryEditText;
@@ -83,6 +85,7 @@ public class createEventFragment extends Fragment {
     TextInputEditText dateEndEditText;
     ImageView getEventImageView;
 
+    // variables for holding image and location data
     Image eventImage;
     EventLocation eventLocation;
 
@@ -101,7 +104,7 @@ public class createEventFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-
+        // get and set category names for the dropdown
         String[] eventCategories = getResources().getStringArray(R.array.eventCategories);
         ArrayAdapter arrayAdapter = new ArrayAdapter(requireContext(), R.layout.dropdown_item, eventCategories);
         AutoCompleteTextView textView = view.findViewById(R.id.editTextCategory);
@@ -120,6 +123,8 @@ public class createEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // initialize variables
         context = getContext();
         activity = getActivity();
 
@@ -142,13 +147,15 @@ public class createEventFragment extends Fragment {
 
         eventImage = new Image();
 
-
         Button createButton = view.findViewById(R.id.buttonCreateEvent);
 
+
+        // initialize date pickers
         DateAndTimePicker dateAndTimePickerStart = new DateAndTimePicker(context, dateStartEditText);
         DateAndTimePicker dateAndTimePickerEnd = new DateAndTimePicker(context, dateEndEditText);
 
 
+        // ontouch and onclick listeners
         getEventImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -240,6 +247,7 @@ public class createEventFragment extends Fragment {
         return view;
     }
 
+    //starts intent for picking an image
     private void getImage() {
         Intent gallery = new Intent();
         gallery.setType("image/*");
@@ -249,6 +257,7 @@ public class createEventFragment extends Fragment {
     }
 
 
+    // checks provided data and creates an event if passed
     private void createEvent(String title, String description, String category,
                              DateAndTimePicker dateAndTimePickerStart, DateAndTimePicker dateAndTimePickerEnd, EventLocation location) {
 
