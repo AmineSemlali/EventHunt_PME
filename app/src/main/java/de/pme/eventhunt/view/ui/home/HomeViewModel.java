@@ -126,9 +126,12 @@ public class HomeViewModel extends AndroidViewModel {
 
                 // check if date filter set
                 LocalDateTime firstDate;
-                firstDate = LocalDateTime.parse(eventFilter.filterFirstDate);
+                if(!eventFilter.filterFirstDate.isEmpty()) {
+                    firstDate = LocalDateTime.parse(eventFilter.filterFirstDate);
+                    if(firstDate.isAfter(LocalDateTime.now())) map.put("firstDate", firstDate);
+                };
 
-                if(firstDate.isAfter(LocalDateTime.now())) map.put("firstDate", firstDate);
+
 
                 String filterLastDate = eventFilter.filterLastDate;
                 if(!filterLastDate.equals("2100-01-01T12:00:00"))
