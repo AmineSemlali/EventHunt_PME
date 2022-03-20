@@ -29,9 +29,44 @@ Der Nutzer kann
 - sich alle Events anschauen und nach einer Liste von Optionen filtern
 - eine Auflistung der beigetretenen und eigenen Events ausgeben lassen
 - rudimentäre Settings verändern (kein realer usecase momentan)
-- notifications erhalten (z.B. bei geänderten Eventdaten) und diese löschen
+- Notifications erhalten (z.B. bei geänderten Eventdaten) und diese löschen
 - das eigene Profil bearbeiten<br><br>
 </details>
+
+<details>
+<summary> Installation </summary>
+<br>
+
+  Um EventHunt lokal auszuführen, clonen sie sich das Repository wie gewohnt, und öffnen das Projekt in Android Studio.
+  Für die bestmögliche Performance empfehlen wir einen Emulator mit Android API Level 30. Google Play ist zwingend notwendig.
+  Außerdem sollten sie bei einem neu erstellten Image Google Maps mindestens einmal starten, da eine Standortbestimmung sonst nicht möglich ist.
+    <br>
+  ### BITTE BEACHTEN
+  
+  Eventuell ist die Verwendung von Standort-Funktionalitäten nicht möglich. Sollte dies der Fall sein, müssen sie den in der App hinterlegten Google API-Key ändern.
+  Hierfür muss ein eigener Key vom Nutzer erstellt werden. <br> 
+  Wie dies geht finden sie [hier](https://developers.google.com/maps/documentation/javascript/get-api-key).
+  
+      Folgende APIs müssen aktiviert sein:
+      [Geolocation API](https://console.cloud.google.com/apis/library/geolocation.googleapis.com)
+      [Google Maps SDK for Android](https://console.cloud.google.com/apis/library/maps-android-backend.googleapis.com)
+      [Places API](https://console.cloud.google.com/apis/library/places-backend.googleapis.com)
+      [Geocoding API](https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com)
+  
+  Sobald sie den passenden Key erstellt haben, müssen sie die in
+  <b>app/src/main/res/values/strings.xml</b>
+  gespeicherte Variable <b>"api_key"</b> mit ihrem Schlüssel ersetzen <br> <br>
+            ```<string name="api_key">{  YOUR KEY  }</string>```
+  
+  <br>
+  Bereits bestehender Testaccount<br>
+  Email: viktor@web.de<br>
+  Password: pass123456<br><br>
+  
+  Um den Distanzfilter an unseren vorgefertigten Events zu testen, empfehlen wir eine Position im Raum Erfurt/Weimar zu wählen.<br><br>
+  
+</details>
+
 
 <details><summary> Diagramme </summary><blockquote>
 
@@ -110,39 +145,6 @@ Der Nutzer kann
 
 </blockquote></details>
 
-<details>
-<summary> Verwendung </summary>
-<br>
-
-  Um EventHunt lokal auszuführen, clonen sie sich das Repository wie gewohnt, und öffnen das Projekt in Android Studio.
-  Für die bestmögliche Performance empfehlen wir einen Emulator mit Android API Level 30. Google Play ist zwingend Notwendig.
-  Außerdem sollten sie bei einem neu erstellten Image Google Maps mindestens einmal starten, da es sonst zu Fehlern kommen kann.
-    <br>
-  ### BITTE BEACHTEN
-  
-  Eventuell ist die Verwendung von Standort-Funktionalitäten nicht möglich. Sollte dies der Fall sein, müssen sie den Google API-Key ändern.
-  Hierfür muss ein eigener Key vom Nutzer erstellt werden. <br> 
-  Wie dies geht finden sie [hier](https://developers.google.com/maps/documentation/javascript/get-api-key).
-  
-      Folgende APIs müssen aktiviert sein:
-      [Geolocation API](https://console.cloud.google.com/apis/library/geolocation.googleapis.com)
-      [Google Maps SDK for Android](https://console.cloud.google.com/apis/library/maps-android-backend.googleapis.com)
-      [Places API](https://console.cloud.google.com/apis/library/places-backend.googleapis.com)
-      [Geocoding API](https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com)
-  
-  Sobald sie den passenden Key erstellt haben, müssen sie die in
-      app/src/main/res/values/strings.xml
-  gespeicherte Variable "api_key" mit ihrem Schlüssel ersetzen <br> <br>
-            ```<string name="api_key">{  YOUR KEY  }</string>```
-  
-  <br>
-  Bereits bestehender Testaccount<br>
-  Email: viktor@web.de<br>
-  Password: pass123456<br><br>
-  
-  Um den Distanzfilter an unseren vorgefertigten Events zu testen empfehlen wir eine Position im Raum Erfurt/Weimar zu wählen.<br><br>
-  
-</details>
 
 <details>
 <summary> Genutzte Tools </summary>
@@ -174,8 +176,8 @@ Grafiken:
   <br>
   
   - die Performance ist (zumindest auf Emulatoren mit API 31 und höher) nicht optimal. Selbst bei passender API Version kann es zu Problemen kommen. <br>
-  - es ist kein Funktionierender Landscapemode für die Fragmente implementiert. Einen Entwurf für diese kann man im dazugehörigen Branch finden.
-  - ViewModels speichern Formulardaten nicht
+  - es ist kein funktionierender Landscapemode für die Fragmente implementiert. Einen Entwurf für diese kann man im dazugehörigen Branch finden.
+  - ViewModels speichern Formulardaten nicht zwischen
   - einige kleinere Funktionen sind nicht implementiert.
     - Events können nicht gelöscht werden (bitte sehen sie sich das Layout des EditEvent Fragments an, aus uns unbekannten Gründen verändert sich das Layout nicht mehr -> Button erscheint nicht, Schrift des unteren Buttons unverändert)
     - Settings haben noch keine echte Verwendung. Man kann über diese bestimmen, welche Daten andere Nutzer sehen können. Allerdings gibts es keine Teilnehmerliste o.Ä. um diese zu betrachten.
@@ -187,7 +189,7 @@ Grafiken:
 <br>
   
   - Beseitigen der Bugs und erstellen Funktionaler Landscapes mit Speichern der Formulardaten (Siehe Abschnitt Bekannte Probleme und Mängel)
-  - Implementieren eines Chats innerhalb der Events. Ansonsten ist eine Koordination des Events schwierig.
+  - Implementieren eines Chats innerhalb der Events. Ansonsten ist eine Koordination von Events schwierig.
   - Weitere Komfortfunktionen wie z.B. Events mit Passwörtern versehen.
   <br><br>
 </details>
