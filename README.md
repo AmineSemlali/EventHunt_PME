@@ -30,7 +30,7 @@ Der Nutzer kann
 - eine Auflistung der beigetretenen und eigenen Events ausgeben lassen
 - rudimentäre Settings verändern (kein realer usecase momentan)
 - notifications erhalten (z.B. bei geänderten Eventdaten) und diese löschen
-- das eigene Profil bearbeiten
+- das eigene Profil bearbeiten<br><br>
 </details>
 
 <details><summary> Diagramme </summary><blockquote>
@@ -135,6 +135,13 @@ Der Nutzer kann
   gespeicherte Variable "api_key" mit ihrem Schlüssel ersetzen <br> <br>
             ```<string name="api_key">{  YOUR KEY  }</string>```
   
+  <br>
+  Bereits bestehender Testaccount<br>
+  Email: viktor@web.de<br>
+  Password: pass123456<br><br>
+  
+  Um den Distanzfilter an unseren vorgefertigten Events zu testen empfehlen wir eine Position im Raum Erfurt/Weimar zu wählen.<br><br>
+  
 </details>
 
 <details>
@@ -159,7 +166,7 @@ Grafiken:
   Kommunikation:
   - Discord
   - WhatsApp
-  
+  <br><br>
 </details>
 
 <details>
@@ -172,7 +179,7 @@ Grafiken:
   - einige kleinere Funktionen sind nicht implementiert.
     - Events können nicht gelöscht werden (bitte sehen sie sich das Layout des EditEvent Fragments an, aus uns unbekannten Gründen verändert sich das Layout nicht mehr -> Button erscheint nicht, Schrift des unteren Buttons unverändert)
     - Settings haben noch keine echte Verwendung. Man kann über diese bestimmen, welche Daten andere Nutzer sehen können. Allerdings gibts es keine Teilnehmerliste o.Ä. um diese zu betrachten.
-    - wie oben beschrieben funktioniert der API-Key nur beim Ersteller des Keys. Woran dies liegt wissen wir nicht. Das Problem besteht erst seit kurzem.
+    - wie oben beschrieben funktioniert der API-Key nur beim Ersteller des Keys. Woran dies liegt wissen wir nicht. Das Problem besteht erst seit kurzem.<br><br>
 </details>
 
 <details>
@@ -182,6 +189,7 @@ Grafiken:
   - Beseitigen der Bugs und erstellen Funktionaler Landscapes mit Speichern der Formulardaten (Siehe Abschnitt Bekannte Probleme und Mängel)
   - Implementieren eines Chats innerhalb der Events. Ansonsten ist eine Koordination des Events schwierig.
   - Weitere Komfortfunktionen wie z.B. Events mit Passwörtern versehen.
+  <br><br>
 </details>
 
 <details>
@@ -189,5 +197,5 @@ Grafiken:
 <br>
   Wir haben sehr motiviert angefangen, und schnell die meisten von uns geplanten Funktionen implementiert. Durch die Prüfungsphase und Unzufriedenheiten mit der Gruppendynamik haben wir aber unser Tempo gegen Ende verloren. Leider ist EventHunt dadurch zum Zeitpunkt der Abgabe nicht so ausgereift, wie wir es uns wünschen würden. <br>
   Gelernt haben wir, dass Kommunikation (im Team und mit der Lehrkraft) das wahrscheinlich wichtigste ist, um ein Projekt erfolgreich zum Abschluss zu bringen.<br>
-  Alles in allem hatten wir dennoch viel Spaß während der Entwicklung des Projekts und sind zufrieden mit der von uns erbrachten Leistung.
+  Alles in allem hatten wir dennoch viel Spaß während der Entwicklung des Projekts und sind zufrieden mit der von uns erbrachten Leistung.<br><br>
 </details>
