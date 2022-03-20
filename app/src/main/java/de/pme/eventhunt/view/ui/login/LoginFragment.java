@@ -30,17 +30,19 @@ import de.pme.eventhunt.view.ui.core.BaseFragment;
 
 public class LoginFragment extends BaseFragment {
 
-    //firebase
+    // environmental Variables
     private FirebaseAuth auth;
     LoginViewModel loginViewModel;
     NavController navController;
+    Context context;
 
+    // input fields & buttons
     Button toRegistrationButton;
     Button loginButton;
     TextInputEditText email;
     TextInputEditText password;
 
-    Context context;
+
 
 
     @Override
@@ -51,6 +53,8 @@ public class LoginFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // initialize variables
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         context = getContext();
 
@@ -68,6 +72,8 @@ public class LoginFragment extends BaseFragment {
         toRegistrationButton = view.findViewById(R.id.button_to_registration);
         loginButton = view.findViewById(R.id.finish_login);
 
+
+// onclick listeners
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +115,7 @@ public class LoginFragment extends BaseFragment {
         return view;
     }
 
+    // login after data verification
     private void loginUser(String email, String password) {
 
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {

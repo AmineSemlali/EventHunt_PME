@@ -2,7 +2,7 @@ package de.pme.eventhunt.view.ui.utilities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+// class for managing localdate and generating Strings
 public class Date {
     public String day = "";
     public String month = "";
@@ -78,6 +78,6 @@ public class Date {
         }
         else return true;
     }
-
+//constructor
     public Date(){};
 }

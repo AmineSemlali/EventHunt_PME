@@ -1,7 +1,7 @@
 package de.pme.eventhunt.view.ui.utilities;
 
 import java.time.LocalDateTime;
-
+// class for managing localdatetime and generating Strings
 public class DateAndTime {
         public String day = "";;
         public String month = "";;

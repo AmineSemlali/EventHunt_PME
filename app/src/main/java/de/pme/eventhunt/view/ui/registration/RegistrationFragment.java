@@ -59,14 +59,23 @@ import de.pme.eventhunt.view.ui.utilities.DatePickerClass;
 
 public class RegistrationFragment extends Fragment {
 
-
+    // environmental Variables
     Context context;
     Activity activity;
+    View view;
+    private FirebaseAuth auth;
+    FirebaseFirestore db;
+    FirebaseStorage storage;
+    private RegistrationViewModel registrationViewModel;
+    NavController navController;
+    UserRepository userRepository;
 
+    // codes for actions
     private static final int PICK_IMAGE = 1;
     private final static int PLACE_PICKER_REQUEST = 2;
 
-    View view;
+
+    // variables for holding image and location data
     UserLocation userLocation;
     Image userImage;
     private Boolean imageAdjusted = false;
@@ -74,6 +83,7 @@ public class RegistrationFragment extends Fragment {
     double lastLongitude = 0.0;
     double lastLatitude = 0.0;
 
+    // input fields,buttons & views
     private TextInputEditText email;
     private TextInputEditText password;
     private TextInputEditText firstName;
@@ -83,18 +93,12 @@ public class RegistrationFragment extends Fragment {
     private TextInputEditText dateOfBirth;
     TextInputEditText locationEditText;
 
-    //firebase
-    private FirebaseAuth auth;
-    FirebaseFirestore db;
-    FirebaseStorage storage;
-    private RegistrationViewModel registrationViewModel;
-    NavController navController;
-    UserRepository userRepository;
 
 
 
 
 
+// constructors
     public RegistrationFragment() {
         // Required empty public constructor
     }
@@ -111,12 +115,12 @@ public class RegistrationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         db = FirebaseFirestore.getInstance();
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // initialize variables
         context = getContext();
         activity = getActivity();
 
@@ -132,6 +136,7 @@ public class RegistrationFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         userRepository = new UserRepository();
 
+// initialize forms and views
         email = view.findViewById(R.id.email_registration);
         password = view.findViewById(R.id.password_registration);
         firstName = view.findViewById(R.id.firstName_registration);
@@ -142,12 +147,12 @@ public class RegistrationFragment extends Fragment {
         locationEditText = view.findViewById(R.id.editTextLocation);
 
         userImage = new Image();
-
+// initialize date picker
         DatePickerClass datePickerDOB = new DatePickerClass(context, dateOfBirth);
 
 
 
-
+// onclick and ontouch listeners
         getUserImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { getImage(); }
@@ -240,7 +245,7 @@ public class RegistrationFragment extends Fragment {
         startActivityForResult(Intent.createChooser(gallery, "Select Picture"), PICK_IMAGE);
     }
 
-
+// registering user through method of userImage attribute, the user alongside user settings documents will be created there
         private void registerUser(String email, String password, String firstName, String lastName, DatePickerClass datePickerDob, UserLocation location) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                 @Override

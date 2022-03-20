@@ -37,12 +37,8 @@ import de.pme.eventhunt.model.repositories.UserSettingsRepository;
 
 public class SettingsFragment extends Fragment {
 
+    // environmental Variables
     View view;
-
-    private Switch locationSwitch;
-    private Switch nameSwitch;
-    private Switch emailSwitch;
-    private Switch ageSwitch;
 
     UserSettings userSettings;
     UserSettingsRepository userSettingsRepository;
@@ -56,7 +52,14 @@ public class SettingsFragment extends Fragment {
     SettingsViewModel settingsViewModel;
     NavController navController;
 
+    //switches
 
+    private Switch locationSwitch;
+    private Switch nameSwitch;
+    private Switch emailSwitch;
+    private Switch ageSwitch;
+
+    //constructor
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -71,6 +74,7 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //initialize variables
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         db = FirebaseFirestore.getInstance();
@@ -90,17 +94,23 @@ public class SettingsFragment extends Fragment {
         emailSwitch = view.findViewById(R.id.switchEmail);
         ageSwitch = view.findViewById(R.id.switchAge);
 
+
+
+
+        // get user id from authentication
         String userId = auth.getCurrentUser().getUid();
 
 
         if (userId != null && !userId.isEmpty()) {
-
+            // get the user settings with help of the user id
             db.collection("userSettings").whereEqualTo("userId", userId).get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             List<UserSettings> userSettingsList = task.getResult().toObjects(UserSettings.class);
                             userSettings = userSettingsList.get(0);
+
+                            //show the switches checked or unchecked according to user settings
 
                             if (userSettings.getShowAge()) {
                                 ageSwitch.setChecked(true);
@@ -126,16 +136,20 @@ public class SettingsFragment extends Fragment {
                                 nameSwitch.setChecked(false);
                             }
 
-                                listen();
+                                listen(); // listen for change in switches
                         }
 
                         private void listen() {
+
+                            //if switch is turned off, change the user settings document and create notification document "settings are changed"
+                            //if switch turned on, change the user settings document
 
 
                             nameSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton compoundButton, boolean checked1) {
                                     if (!checked1) {
+
                                         userSettings.setShowName(false);
                                         userSettingsRepository.updateUserSettings(userSettings);
                                         notificationRepository.addNotificationsForSettings(0, userId);

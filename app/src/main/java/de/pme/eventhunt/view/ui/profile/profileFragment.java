@@ -51,7 +51,7 @@ import de.pme.eventhunt.view.ui.utilities.Date;
 import de.pme.eventhunt.view.ui.utilities.DateAndTime;
 
 public class profileFragment extends BaseFragment {
-
+    // environmental Variables
     private ProfileViewModel profileViewModel;
     View view;
     Context context;
@@ -63,6 +63,7 @@ public class profileFragment extends BaseFragment {
     UserSettingsRepository userSettingsRepository;
     NavController navController;
 
+    // forms and views
     ImageView profileImage;
     TextView nameTextView;
     TextView ageTextView;
@@ -85,7 +86,7 @@ public class profileFragment extends BaseFragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-
+        // initialize variables
         view =  inflater.inflate(R.layout.fragment_profile, container, false);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -108,11 +109,12 @@ public class profileFragment extends BaseFragment {
         emailTextView = view.findViewById(R.id.EmailInput);
         dateOfBirthTextView = view.findViewById(R.id.DateOfBirthInput);
 
+        // get user id from authentication
         String userId = auth.getCurrentUser().getUid();
 
         if(userId != null && !userId.isEmpty())
         {
-
+            // get the user settings with help of the user id
             Task<QuerySnapshot> userSettingsQuery;
             userSettingsQuery = db.collection("userSettings").whereEqualTo("userId",userId).get();
             userSettingsQuery.addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -120,10 +122,11 @@ public class profileFragment extends BaseFragment {
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             List<UserSettings> userSettingsList = userSettingsQuery.getResult().toObjects(UserSettings.class);
                            userSettings = userSettingsList.get(0);
-                           fetch();
+                           fetch(); // show profile data according to user settings
                         }
 
                 private void fetch() {
+                    // get the user with help of the user id
                     db.collection("user").whereEqualTo("id", userId).get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
@@ -142,7 +145,10 @@ public class profileFragment extends BaseFragment {
                                     } else {
                                         try {
                                         locationTextView.setText(userLocation.getCityCountryString(context) + " (not visible for other users)");
+                                            // change color of text if it should not be visible to other users
+                                            // on the profile
                                             locationTextView.setTextColor(Color.parseColor("#FF0000")
+
                                             );
                                         } catch (IOException e) {
                                             e.printStackTrace();
@@ -171,6 +177,8 @@ public class profileFragment extends BaseFragment {
                                         dateOfBirth.setDate(LocalDate.parse(user.getDateOfBirth()));
                                         dateOfBirthTextView.setText(dateOfBirthTextView.getText() + dateOfBirth.formatString() + " (not visible for other users)");
                                         dateOfBirthTextView.setTextColor(Color.parseColor("#FF0000"));
+                                        // change color of text if it should not be visible to other users
+                                        // on the profile
                                         String dobString = user.getDateOfBirth();
                                         LocalDate dobLDT = LocalDate.parse(dobString);
                                         Period period = Period.between(dobLDT, LocalDate.now());
@@ -178,6 +186,8 @@ public class profileFragment extends BaseFragment {
                                         String age = String.valueOf(periodInYears);
                                         ageTextView.setText(age + " (age not visible for other users)");
                                         ageTextView.setTextColor(Color.parseColor("#FF0000"));
+                                        // change color of text if it should not be visible to other users
+                                        // on the profile
                                     }
 
                                     if (userSettings.getShowEmail()) {
@@ -191,12 +201,14 @@ public class profileFragment extends BaseFragment {
                                     } else {
                                         nameTextView.setText(user.getFirstName() + ' ' + user.getLastName() + " ( name not visible for other users)");
                                         nameTextView.setTextColor(Color.parseColor("#FF0000"));
+                                        // change color of text if it should not be visible to other users
+                                        // on the profile
                                     }
                 }
             });
 
 
-
+                                // on click listeners
                                 settingsButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
@@ -214,7 +226,7 @@ public class profileFragment extends BaseFragment {
                                 buttonLogOut.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        logoutUser();
+                                        logoutUser(); // logout user
                                     }
                                 });
                             }

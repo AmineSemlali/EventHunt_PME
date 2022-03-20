@@ -49,12 +49,6 @@ public class NotificationsViewModel extends AndroidViewModel {
         return notifications;
     }
 
-
-
-
-
-
-
     public void setAdapterList(notificationAdapter adapter)
     {
         this.adapter = adapter;

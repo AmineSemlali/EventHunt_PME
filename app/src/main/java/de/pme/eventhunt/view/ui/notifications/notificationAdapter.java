@@ -36,6 +36,7 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     // Counter for the number of child items - demo/debug purpose only
     static int counter = 0;
 
+    // environmental Variables
     private final LayoutInflater inflater;
     private List<Notification> notificationList; // Cached Copy of Notifications
     FirebaseFirestore db;
@@ -44,7 +45,7 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     Notification mRecentlyDeletedItem;
     int mRecentlyDeletedItemPosition;
 
-
+// constructor
     public notificationAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
     }
@@ -53,6 +54,7 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     @NonNull
     @Override
     public NotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // initialize variables
         View itemView = this.inflater.inflate(R.layout.list_item_notification, parent, false);
         Log.i( "OnCreateViewHolder", "Count: " + ++notificationAdapter.counter);
         db = FirebaseFirestore.getInstance();
@@ -112,9 +114,7 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
 
 
     public void deleteItem(int position) {
-        //mRecentlyDeletedItem = notificationList.get(position);
-        //mRecentlyDeletedItemPosition = position;
-        //notificationRepository.deleteNotification(mRecentlyDeletedItem.getNotificationId());
+
         Notification deletedNotification = notificationList.get(position);
         db.collection(Notification.collection).document(deletedNotification.getNotificationId()).delete();
 
@@ -122,16 +122,9 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
         notificationList.remove(position);
         notifyItemRemoved(position);
 
-//        showUndoSnackbar();
     }
 
-//    private void showUndoSnackbar() {
-//        View view = mActivity.findViewById(R.id.coordinator_layout);
-//        Snackbar snackbar = Snackbar.make(view, R.string.snack_bar_text,
-//                Snackbar.LENGTH_LONG);
-//        snackbar.setAction(R.string.snack_bar_undo, v -> undoDelete());
-//        snackbar.show();
-//    }
+
 
     @Override
     public int getItemCount() {

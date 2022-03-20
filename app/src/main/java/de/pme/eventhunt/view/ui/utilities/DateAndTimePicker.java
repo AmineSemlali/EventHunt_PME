@@ -12,7 +12,7 @@ import android.widget.TimePicker;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
-
+// class for managing dateandtime pickers
 public class DateAndTimePicker implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     Context context;
