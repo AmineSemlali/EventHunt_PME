@@ -65,10 +65,13 @@ public class HomeViewModel extends AndroidViewModel {
 
     public void setAdapterList(EventListAdapter adapter, FilterEventViewModel filterEventViewModel) {
         this.adapter = adapter;
+
+        // checks if filter is applied, function chosen accordingly
         if (filterEventViewModel.isDefault()) getAllEvents();
         else getLocationAndFilter(filterEventViewModel.eventFilter);
     }
 
+    // checks for user location and goes into filter function if gps is activated
     public void getLocationAndFilter(EventFilter eventFilter)
     {
         if(lastLocation == null)
@@ -95,6 +98,11 @@ public class HomeViewModel extends AndroidViewModel {
         else getFilteredEvents(eventFilter);
     }
 
+    //  1)    goes through all filters
+    //  2)    if one is activated it is put into a hashmap
+    //  3)    checks every event for every key-value pair in hashmap.
+    //        if event doesnt meet requirement, it is removed from the event list
+    //  4)    sets adapter list
     private List<Event> getFilteredEvents(EventFilter eventFilter) {
 
         db.collection("event").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -134,7 +142,7 @@ public class HomeViewModel extends AndroidViewModel {
 
 
                 String filterLastDate = eventFilter.filterLastDate;
-                if(!filterLastDate.equals("2100-01-01T12:00:00"))
+                if(!filterLastDate.equals("2100-01-01T12:00:00") && !filterLastDate.isEmpty())
                     map.put("lastDate", LocalDateTime.parse(filterLastDate));
 
 

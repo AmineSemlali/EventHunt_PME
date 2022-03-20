@@ -33,6 +33,7 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
     private List<Event> eventList;
     private EventListViewHolder.OnNoteListener mOnNoteListener;
 
+
     public EventListAdapter(Context context, EventListViewHolder.OnNoteListener onNoteListener) {
         this.inflater = LayoutInflater.from(context);
         this.mOnNoteListener = onNoteListener;
@@ -53,6 +54,7 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
     public void onBindViewHolder(@NonNull EventListViewHolder holder, int position) {
         if(this.eventList != null && !this.eventList.isEmpty())
         {
+            // get event data and set fields
             Event current = this.eventList.get(position);
 
             // Set id
@@ -133,6 +135,8 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
 
 
         public EventListViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
+
+            // get references to views in the viewholder
             super(itemView);
             this.eventTitle = itemView.findViewById(R.id.listTextView_title);
             this.eventLocation = itemView.findViewById(R.id.listTextView_location);;
@@ -151,6 +155,7 @@ public class EventListAdapter extends  RecyclerView.Adapter<EventListAdapter.Eve
             this.onNoteListener.onNoteClick(getAdapterPosition());
         }
 
+        // interface for the onclick listener
         public interface OnNoteListener{
             void onNoteClick(int position);
         }

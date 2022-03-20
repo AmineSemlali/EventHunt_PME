@@ -95,6 +95,7 @@ public class HomeFragment extends BaseFragment implements EventListAdapter.Event
         return view;
     }
 
+    // function to be set on list items in the EventListAdapter
     @Override
     public void onNoteClick(int position) {
         String eventId = homeViewModel.events.get(position).getEventId();

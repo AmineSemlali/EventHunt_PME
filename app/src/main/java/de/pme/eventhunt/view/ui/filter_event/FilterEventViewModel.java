@@ -25,7 +25,7 @@ public class FilterEventViewModel extends AndroidViewModel {
         eventFilter.filterTitle = "";
         eventFilter.filterFirstDate = "";
         eventFilter.filterLastDate = "";
-        eventFilter.filterDistance = 100;
+        eventFilter.filterDistance = 0;
     }
 
     public Boolean isDefault()

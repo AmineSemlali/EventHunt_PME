@@ -30,6 +30,7 @@ import de.pme.eventhunt.view.ui.home.HomeViewModel;
 public class EventsFragment extends BaseFragment  implements MyEventListAdapter.MyEventListViewHolder.OnNoteListener {
 
 
+    // environmental variables
     private EventsViewModel eventsViewModel;
     private FilterEventViewModel filterEventViewModel;
     private NavController navController;
@@ -38,6 +39,7 @@ public class EventsFragment extends BaseFragment  implements MyEventListAdapter.
     RecyclerView eventListView;
     MyEventListAdapter adapter;
 
+    // buttons
     Button joinedEventsButton;
     Button ownEventsButton;
 
@@ -51,7 +53,7 @@ public class EventsFragment extends BaseFragment  implements MyEventListAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // initialize variables
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         Context context = getContext();
 
@@ -65,16 +67,13 @@ public class EventsFragment extends BaseFragment  implements MyEventListAdapter.
 
 
         eventsViewModel = this.getViewModel(EventsViewModel.class);
-        //filterEventViewModel = this.getViewModel(FilterEventViewModel.class);
         filterEventViewModel = new ViewModelProvider(requireActivity()).get(FilterEventViewModel.class);
 
         // For Recyclerview
         eventListView = view.findViewById(R.id.list_myEvents);
 
+        // styling for list items
         DividerItemDecoration itemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL);
-        //itemDecoration.setDrawable(context.getDrawable(R.drawable.recyclerview_divider));
-        //itemDecoration.setDrawable(new ColorDrawable(getResources().getColor(R.color.yellow)));
-
         eventListView.addItemDecoration(itemDecoration);
 
         // Create Adapter
@@ -85,6 +84,7 @@ public class EventsFragment extends BaseFragment  implements MyEventListAdapter.
         eventsViewModel.setAdapterListJoined(adapter);
 
 
+        // onclick and ontouch listeners
         joinedEventsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +111,7 @@ public class EventsFragment extends BaseFragment  implements MyEventListAdapter.
 
         return view;
     }
+
 
     @Override
     public void onNoteClick(int position) {
