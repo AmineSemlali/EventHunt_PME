@@ -196,8 +196,6 @@ public class SettingsFragment extends Fragment {
 
         }
 
-
-
         // Inflate the layout for this fragment
         return view;
     }

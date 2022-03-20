@@ -164,8 +164,6 @@ public class profileFragment extends BaseFragment {
                                         Period period = Period.between(dobLDT, LocalDate.now());
                                         int periodInYears = period.getYears();
                                         String age = String.valueOf(periodInYears);
-                                        ;
-                                        //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
                                         ageTextView.setText(age);
                                     } else {
                                         Date dateOfBirth = new Date();
@@ -178,12 +176,8 @@ public class profileFragment extends BaseFragment {
                                         Period period = Period.between(dobLDT, LocalDate.now());
                                         int periodInYears = period.getYears();
                                         String age = String.valueOf(periodInYears);
-                                        ;
-                                        //  String age = getAge(dobLDT.getYear(), dobLDT.getMonthValue(), dobLDT.getDayOfMonth());
                                         ageTextView.setText(age + " (age not visible for other users)");
                                         ageTextView.setTextColor(Color.parseColor("#FF0000"));
-//                                        dateOfBirthTextView.setText(" HIDDEN ! ");
-//                                        ageTextView.setText(" AGE HIDDEN ! ");
                                     }
 
                                     if (userSettings.getShowEmail()) {
@@ -237,24 +231,5 @@ public class profileFragment extends BaseFragment {
         Toast.makeText(getActivity(), "you are logged out!", Toast.LENGTH_SHORT).show();
 
             }
-
-
-    private String getAge(int year, int month, int day){
-        Calendar dob = Calendar.getInstance();
-        Calendar today = Calendar.getInstance();
-
-        dob.set(year, month, day);
-
-        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-
-        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
-            age--;
-        }
-
-        Integer ageInt = new Integer(age);
-        String ageS = ageInt.toString();
-
-        return ageS;
-    }
 
 }

@@ -17,10 +17,14 @@ import de.pme.eventhunt.model.documents.User;
 
 
 // Repository for managing m:n relation between User and Event
+
 public class EventUserRepository {
+
+    ////////////////////////attributes
     FirebaseFirestore db;
     FirebaseAuth auth;
 
+    //////////////////////////// constructors
     public EventUserRepository(){
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();

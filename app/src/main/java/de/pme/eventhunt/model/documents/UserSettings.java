@@ -1,17 +1,19 @@
 package de.pme.eventhunt.model.documents;
 
+
+/* UserSettings class for managing user settings */
+
 public class UserSettings {
 
+    ////////////////////////attributes
     public static String collection = "userSettings";
-
-
-
     private String UserId;
     private Boolean showLocation;
     private Boolean showName;
     private Boolean showEmail;
     private Boolean showAge;
 
+    /////////////////////// getters and setters
 
     public String getUserId() {
         return UserId;
@@ -57,6 +59,7 @@ public class UserSettings {
         this.showAge = showAge;
     }
 
+    //////////////////////////// constructors
 
     public UserSettings ( String userId)
     {

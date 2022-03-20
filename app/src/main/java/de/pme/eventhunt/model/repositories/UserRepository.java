@@ -15,13 +15,21 @@ import de.pme.eventhunt.model.documents.EventUser;
 import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.utilities.UserLocation;
 
+// class for managing user documents in firebase firestore
 public class UserRepository {
 
+    ////////////////////////attributes
     FirebaseFirestore db;
     List<User> users;
+
+
+    //////////////////////////// constructors
     public UserRepository() {
         db = FirebaseFirestore.getInstance();
     }
+
+
+    /* this function saves an user document in firebase fireStore when a user is created */
 
     public void createUser(User user)
     {
@@ -50,6 +58,7 @@ public class UserRepository {
 
        return users;
    }
+    /* this method updates a user document in firebase fireStore, it updates the email first name and last name*/
 
     public void updateUser(User user, String email, String firstName, String lastName)
     {
@@ -58,17 +67,19 @@ public class UserRepository {
         db.collection("user").document(user.getId()).update("lastName", lastName);
 
     }
-
-public void updateDateOfBirth(User user, String dobString)
+    /* this method updates a user document in firebase fireStore, it updates the date of birth */
+    public void updateDateOfBirth(User user, String dobString)
 {
     db.collection("user").document(user.getId()).update("dateOfBirth", dobString);
 }
+
+    /* this method updates a user document in firebase fireStore, it updates the latitude and longitude */
     public void updateLocation(User user, UserLocation userLocation)
     {
         db.collection("user").document(user.getId()).update("location.latitude", userLocation.getLatitude());
         db.collection("user").document(user.getId()).update("location.longitude", userLocation.getLongitude());
     }
-
+    /* this method updates a user document in firebase fireStore, it updates the url of the image  */
     public void updateUserImage(User user, String url)
     {
         db.collection("user").document(user.getId()).update("imageSmallRef", url);

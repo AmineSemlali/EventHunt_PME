@@ -1,20 +1,15 @@
 package de.pme.eventhunt.model.documents;
-
-
 import de.pme.eventhunt.model.utilities.EventLocation;
+
+
+
+/* Event class for managing events */
 
 public class Event {
 
+    ////////////////////////attributes
+
     public static String collection = "event";
-
-    public String getEventId() {
-        return EventId;
-    }
-
-    public void setEventId(String eventId) {
-        EventId = eventId;
-    }
-
     private String EventId;
     private String CreatorId;
     private String Title;
@@ -23,10 +18,10 @@ public class Event {
     private EventLocation Location;
     private String StartTime;
     private String EndTime;
-
     private String ImageSmallRef;
     private String ImageLargeRef;
 
+//////////////////////////// constructors
 
     public Event(String eventId, String creatorId, String title, String description,
                  String category, EventLocation location, String startTime,
@@ -47,7 +42,15 @@ public class Event {
     public Event() {};
 
 
+/////////////////////// getters and setters
 
+    public String getEventId() {
+    return EventId;
+}
+
+    public void setEventId(String eventId) {
+        EventId = eventId;
+    }
 
     public String getCreatorId() {
         return CreatorId;

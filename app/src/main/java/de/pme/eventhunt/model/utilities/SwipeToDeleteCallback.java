@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import de.pme.eventhunt.view.ui.notifications.notificationAdapter;
 
+// class used for deleting notifications
+
 public class SwipeToDeleteCallback  extends ItemTouchHelper.SimpleCallback {
 
     private notificationAdapter adapter;

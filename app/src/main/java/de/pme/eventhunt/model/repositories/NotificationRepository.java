@@ -24,13 +24,18 @@ import de.pme.eventhunt.model.documents.EventUser;
 import de.pme.eventhunt.model.documents.Notification;
 import de.pme.eventhunt.model.documents.User;
 
+// class for managing notification documents in firebase firestore
 public class NotificationRepository {
+
+    ////////////////////////attributes
 
     FirebaseFirestore db;
     FirebaseAuth auth;
     EventUserRepository eventUserRepository;
-
     String notificationText = "";
+    List<Notification> notifications;
+
+    //////////////////////////// constructors
 
     public NotificationRepository()
     {
@@ -38,7 +43,7 @@ public class NotificationRepository {
         auth = FirebaseAuth.getInstance();
         eventUserRepository = new EventUserRepository();
     }
-    List<Notification> notifications;
+
 
     public void addNotification(Notification notification)
     {
@@ -64,6 +69,8 @@ public class NotificationRepository {
             notificationText = "\"" + event.getTitle() + "\" " + "notification";
         }
 
+        /* this method saves an notification document in firebase fireStore when an event is changed,
+for every user that has joined this event   */
         db.collection("eventUser").whereEqualTo("eventId", event.getEventId()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -87,6 +94,8 @@ public class NotificationRepository {
                     }
                 });
     }
+
+    /* this method saves an notification document in firebase fireStore when settings are changed */
     public void addNotificationsForSettings(int notificationType,String userId)
     {
         if(notificationType == 0)

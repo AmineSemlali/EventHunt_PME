@@ -2,9 +2,10 @@ package de.pme.eventhunt.model.documents;
 
 import de.pme.eventhunt.model.utilities.EventLocation;
 import de.pme.eventhunt.model.utilities.UserLocation;
-
+/* user class for managing users */
 public class User {
 
+    ////////////////////////attributes
     public static String collection = "user";
 
     private String Id;
@@ -14,6 +15,9 @@ public class User {
     private String DateOfBirth;
     private UserLocation Location;
     private String ImageSmallRef;
+
+    //////////////////////////// constructors
+
 public User () {};
 
     public User(String id, String email, String firstname,String lastname, String dateofbirth, UserLocation userlocation, String imagesmallref) {
@@ -26,6 +30,7 @@ public User () {};
         this.ImageSmallRef = imagesmallref;
     };
 
+    /////////////////////// getters and setters
 
     public UserLocation getLocation() {
         return Location;

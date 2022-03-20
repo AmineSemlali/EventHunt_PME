@@ -3,7 +3,7 @@ package de.pme.eventhunt.model.utilities;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+// class for checking the validity of the password and email when creating or updating an account
 public class EmailAndPasswordValidator {
 
     // Minimum eight characters, at least one letter and one number:

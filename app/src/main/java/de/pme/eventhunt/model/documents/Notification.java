@@ -3,11 +3,13 @@ package de.pme.eventhunt.model.documents;
 
 import java.util.UUID;
 
+///////////////////// Notification class contains attributes for managing notifications
+
 public class Notification
 
 {
-// notification class contains attributes needed to create notifications
 
+    ////////////////////////attributes
     public static String collection = "notification";
     private String NotificationId;
     private String EventId;
@@ -17,8 +19,11 @@ public class Notification
     private String CreatedAt;
     private String EventImage;
 
+////////////////////////////constructors
 
     public Notification() { NotificationId = UUID.randomUUID().toString(); };
+
+    //////////////////////// getters and setters
 
     public String getEventId() {
         return EventId;

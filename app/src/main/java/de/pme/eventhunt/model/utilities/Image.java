@@ -26,8 +26,14 @@ import de.pme.eventhunt.model.documents.User;
 import de.pme.eventhunt.model.documents.UserSettings;
 import de.pme.eventhunt.model.repositories.UserRepository;
 import de.pme.eventhunt.model.repositories.UserSettingsRepository;
+// class for managing images
+
 
 public class Image {
+
+
+
+// attributes
 
     private String downloadUrlSmall;
     private String downloadUrlLarge;
@@ -35,14 +41,21 @@ public class Image {
     private Bitmap bitmapSmall;
     private Bitmap bitmapLarge;
 
-
     private boolean uploadStarted = false;
+
+
+
+    //main method for uploading images, it stores the created url either in the attribute downloadUrlSmall or downloadUrlLarge
 
     public void StartUpload()
     {
         UploadImage(bitmapSmall, 0);
         UploadImage(bitmapLarge, 1);
     }
+
+
+    // when creating the user given in the arguments this method creates a url for image and creates the user document alongside with a new standard user settings document,
+// it also deletes the old reference to save space in the cloud
 
     public void UploadProfileImage(User user, Activity activity)
     {
@@ -96,6 +109,9 @@ public class Image {
         });
 
     }
+// when updating the user given in the arguments this method creates a url for image and updates the user's profile image ,
+// it also deletes the old reference to save space in the cloud
+
     public void editProfileImage(User user, Activity activity)
     {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -145,6 +161,8 @@ public class Image {
         });
 
     }
+
+    //helper method
     public void CreateBitmapSmall(Uri imageUri)
     {
         if(bitmapSmall == null)
@@ -198,7 +216,7 @@ public class Image {
                     });
         }
     }
-
+// helper method
     public void CreateBitmapLarge(Uri imageUri, ImageView imageView)
     {
         if(bitmapLarge == null)
@@ -226,6 +244,8 @@ public class Image {
                     });
         }
     }
+
+// this method create a url that will be stored in the attributes
 
     private void UploadImage(Bitmap bitmap, int smallOrLarge)
     {
@@ -275,13 +295,14 @@ public class Image {
             }
         });
     }
-
+// helper method
     public Boolean IsFinished()
     {
         if(downloadUrlLarge == null || downloadUrlSmall == null) return false;
         else return true;
     }
 
+    //getters
     public String getDownloadUrlSmall() {
         return downloadUrlSmall;
     }

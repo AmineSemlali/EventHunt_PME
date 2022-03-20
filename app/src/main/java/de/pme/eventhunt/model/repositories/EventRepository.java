@@ -22,16 +22,19 @@ import de.pme.eventhunt.model.documents.EventUser;
 import de.pme.eventhunt.model.documents.Notification;
 import de.pme.eventhunt.model.documents.User;
 
+// class for managing event documents in firebase firestore
+
 public class EventRepository {
+
+    ////////////////////////attributes
+
     FirebaseAuth auth;
     FirebaseFirestore db;
     FirebaseStorage storage;
-
     NotificationRepository notificationRepository;
-
     List<Event> events;
 
-
+    //////////////////////////// constructors
     public EventRepository(){
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -39,6 +42,8 @@ public class EventRepository {
         notificationRepository = new NotificationRepository();
     }
 
+/* this method saves an event document in firebase fireStore,
+also saves an EventUser document that contains both the event and user ids */
 
     public void createEvent(Event event)
     {
@@ -58,6 +63,7 @@ public class EventRepository {
         });
 
     }
+
 
     public void deleteEvent(Event event)
     {

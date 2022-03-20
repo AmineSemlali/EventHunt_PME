@@ -11,7 +11,7 @@ import java.util.List;
 import de.pme.eventhunt.model.documents.Event;
 import de.pme.eventhunt.model.documents.User;
 
-
+// class used for managing the user location
 public class UserLocation {
 
         private double latitude;
@@ -25,6 +25,7 @@ public class UserLocation {
 
     public UserLocation() {};
 
+    //returns the location as String
     public String getLocationString(Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context);
 
@@ -108,7 +109,7 @@ public class UserLocation {
 
         return addressString;
     }
-
+    // returns the city and country as String
     public String getCityCountryString(Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context);
 
@@ -143,6 +144,7 @@ public class UserLocation {
         return usersInRange;
     }
 
+    // getters and setters
     public double getLatitude() {
         return latitude;
     }

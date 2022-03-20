@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.pme.eventhunt.model.documents.Event;
+// class for managing the event location
 
 public class EventLocation {
     private double latitude;
@@ -22,6 +23,7 @@ public class EventLocation {
 
     public EventLocation() {};
 
+    //returns the location as String
     public String getLocationString(Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context);
 
@@ -61,7 +63,7 @@ public class EventLocation {
 
         return addressString;
     }
-
+// returns the street as String
     public String getStreetString(Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context);
 
@@ -79,7 +81,7 @@ public class EventLocation {
 
         return addressString;
     }
-
+    // returns the city as String
     public String getCityString(Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context);
 
@@ -105,7 +107,7 @@ public class EventLocation {
 
         return addressString;
     }
-
+    // returns the city and country as String
     public String getCityCountryString(Context context) throws IOException {
         Geocoder geocoder = new Geocoder(context);
 
@@ -139,7 +141,7 @@ public class EventLocation {
 
         return eventsInRage;
     }
-
+    // getters and setters
     public double getLatitude() {
         return latitude;
     }
